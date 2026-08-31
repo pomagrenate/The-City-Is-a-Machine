@@ -6,6 +6,7 @@ import styles from './Sidebar.module.css';
 
 const NAV = [
   { href: '/',           icon: '◈', label: 'Overview'        },
+  { href: '/executive',  icon: '⚡', label: 'CEO Center'     },
   { href: '/revenue',    icon: '◎', label: 'Revenue'         },
   { href: '/demand',     icon: '◌', label: 'Demand'          },
   { href: '/market-share', icon: '◰', label: 'Market Share'  },

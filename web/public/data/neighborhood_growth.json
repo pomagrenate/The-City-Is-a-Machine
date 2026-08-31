@@ -1,0 +1,42 @@
+[
+  {
+    "location_id": 255,
+    "zone": "Williamsburg (North Side)",
+    "borough": "Brooklyn",
+    "trip_count_2023": 850000,
+    "revenue_2023": 18700000.0,
+    "avg_fare_2023": 22.0,
+    "avg_distance_miles": 4.1,
+    "growth_rate_pct": 185.4
+  },
+  {
+    "location_id": 145,
+    "zone": "Long Island City",
+    "borough": "Queens",
+    "trip_count_2023": 920000,
+    "revenue_2023": 22080000.0,
+    "avg_fare_2023": 24.0,
+    "avg_distance_miles": 4.5,
+    "growth_rate_pct": 162.0
+  },
+  {
+    "location_id": 80,
+    "zone": "DUMBO/Vinegar Hill",
+    "borough": "Brooklyn",
+    "trip_count_2023": 640000,
+    "revenue_2023": 15360000.0,
+    "avg_fare_2023": 24.0,
+    "avg_distance_miles": 4.2,
+    "growth_rate_pct": 145.2
+  },
+  {
+    "location_id": 37,
+    "zone": "Bushwick South",
+    "borough": "Brooklyn",
+    "trip_count_2023": 510000,
+    "revenue_2023": 11220000.0,
+    "avg_fare_2023": 22.0,
+    "avg_distance_miles": 4.8,
+    "growth_rate_pct": 138.6
+  }
+]

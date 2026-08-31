@@ -226,6 +226,28 @@ export interface MultiYearTrends {
   midtown_8am_rush_trips: number;
 }
 
+export interface ExecutiveSimulation {
+  borough: string;
+  trip_count: number;
+  current_revenue: number;
+  avg_current_fare: number;
+  avg_distance_miles: number;
+  avg_duration_min: number;
+  pct_congestion_zone_trips: number;
+}
+
+export interface NeighborhoodGrowth {
+  location_id: number;
+  zone: string;
+  borough: string;
+  trip_count_2023: number;
+  revenue_2023: number;
+  avg_fare_2023: number;
+  avg_distance_miles: number;
+  growth_rate_pct?: number;
+}
+
+
 
 
 

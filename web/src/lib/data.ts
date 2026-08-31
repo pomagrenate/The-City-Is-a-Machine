@@ -35,6 +35,8 @@ export const getData = {
   surchargesTaxes:    () => fetchJson<import('@/types').SurchargesTaxes[]>('surcharges_taxes.json'),
   transitEquity:      () => fetchJson<import('@/types').TransitEquity[]>('transit_equity.json'),
   multiYearTrends:    () => fetchJson<import('@/types').MultiYearTrends[]>('multi_year_trends.json'),
+  executiveSimulation: () => fetchJson<import('@/types').ExecutiveSimulation[]>('executive_simulation.json'),
+  neighborhoodGrowth: () => fetchJson<import('@/types').NeighborhoodGrowth[]>('neighborhood_growth.json'),
 };
 
 export const MONTH_NAMES = [

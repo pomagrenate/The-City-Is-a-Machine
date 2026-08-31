@@ -258,6 +258,38 @@ QUERIES = {
         GROUP BY pickup_year
         ORDER BY pickup_year
     """,
+
+    "executive_simulation": """
+        SELECT
+            PUBorough                                       AS borough,
+            COUNT(*)                                        AS trip_count,
+            ROUND(SUM(total_amount), 2)                     AS current_revenue,
+            ROUND(AVG(total_amount), 2)                     AS avg_current_fare,
+            ROUND(AVG(trip_distance), 2)                    AS avg_distance_miles,
+            ROUND(AVG(trip_duration_min), 2)                AS avg_duration_min,
+            ROUND(SUM(CASE WHEN PULocationID <= 140 OR PULocationID IN (161,230,236,237) THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2)
+                                                            AS pct_congestion_zone_trips
+        FROM silver
+        WHERE PUBorough IS NOT NULL
+        GROUP BY PUBorough
+        ORDER BY current_revenue DESC
+    """,
+
+    "neighborhood_growth": """
+        SELECT
+            PULocationID                                    AS location_id,
+            FIRST(PUZone)                                   AS zone,
+            FIRST(PUBorough)                                AS borough,
+            COUNT(*)                                        AS trip_count_2023,
+            ROUND(SUM(total_amount), 2)                     AS revenue_2023,
+            ROUND(AVG(total_amount), 2)                     AS avg_fare_2023,
+            ROUND(AVG(trip_distance), 2)                    AS avg_distance_miles
+        FROM silver
+        WHERE PUZone IS NOT NULL
+        GROUP BY PULocationID
+        ORDER BY trip_count_2023 DESC
+        LIMIT 50
+    """,
 }
 
 

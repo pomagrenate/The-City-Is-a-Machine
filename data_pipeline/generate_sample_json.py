@@ -376,6 +376,27 @@ def generate_sample_data():
   with open(PUBLIC_DATA_DIR / "multi_year_trends.json", "w") as f:
     json.dump(multi_year_trends, f, indent=2)
 
+  # 18. Executive Simulation
+  executive_simulation = [
+    {'borough': 'Manhattan', 'trip_count': 32100000, 'current_revenue': 625950000.0, 'avg_current_fare': 19.5, 'avg_distance_miles': 2.8, 'avg_duration_min': 14.2, 'pct_congestion_zone_trips': 84.5},
+    {'borough': 'Queens', 'trip_count': 3400000, 'current_revenue': 129880000.0, 'avg_current_fare': 38.2, 'avg_distance_miles': 8.9, 'avg_duration_min': 28.5, 'pct_congestion_zone_trips': 42.0},
+    {'borough': 'Brooklyn', 'trip_count': 2100000, 'current_revenue': 55440000.0, 'avg_current_fare': 26.4, 'avg_distance_miles': 5.2, 'avg_duration_min': 21.0, 'pct_congestion_zone_trips': 38.5},
+    {'borough': 'Bronx', 'trip_count': 600000, 'current_revenue': 14460000.0, 'avg_current_fare': 24.1, 'avg_distance_miles': 4.8, 'avg_duration_min': 19.4, 'pct_congestion_zone_trips': 12.0},
+    {'borough': 'Staten Island', 'trip_count': 110000, 'current_revenue': 3410000.0, 'avg_current_fare': 31.0, 'avg_distance_miles': 7.5, 'avg_duration_min': 24.0, 'pct_congestion_zone_trips': 5.0},
+  ]
+  with open(PUBLIC_DATA_DIR / "executive_simulation.json", "w") as f:
+    json.dump(executive_simulation, f, indent=2)
+
+  # 19. Neighborhood Growth
+  neighborhood_growth = [
+    {'location_id': 255, 'zone': 'Williamsburg (North Side)', 'borough': 'Brooklyn', 'trip_count_2023': 850000, 'revenue_2023': 18700000.0, 'avg_fare_2023': 22.0, 'avg_distance_miles': 4.1, 'growth_rate_pct': 185.4},
+    {'location_id': 145, 'zone': 'Long Island City', 'borough': 'Queens', 'trip_count_2023': 920000, 'revenue_2023': 22080000.0, 'avg_fare_2023': 24.0, 'avg_distance_miles': 4.5, 'growth_rate_pct': 162.0},
+    {'location_id': 80,  'zone': 'DUMBO/Vinegar Hill', 'borough': 'Brooklyn', 'trip_count_2023': 640000, 'revenue_2023': 15360000.0, 'avg_fare_2023': 24.0, 'avg_distance_miles': 4.2, 'growth_rate_pct': 145.2},
+    {'location_id': 37,  'zone': 'Bushwick South', 'borough': 'Brooklyn', 'trip_count_2023': 510000, 'revenue_2023': 11220000.0, 'avg_fare_2023': 22.0, 'avg_distance_miles': 4.8, 'growth_rate_pct': 138.6},
+  ]
+  with open(PUBLIC_DATA_DIR / "neighborhood_growth.json", "w") as f:
+    json.dump(neighborhood_growth, f, indent=2)
+
   print("[OK] Sample JSON files created successfully in web/public/data/")
 
 if __name__ == "__main__":
