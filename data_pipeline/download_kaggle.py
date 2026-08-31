@@ -15,6 +15,7 @@ from pathlib import Path
 
 BASE_URL = "https://d37ci6vzurychx.cloudfront.net/trip-data"
 ZONE_URL = "https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv"
+WEATHER_URL = "https://raw.githubusercontent.com/pomagrenate/The-City-Is-a-Machine/main/data_pipeline/nyc_weather_2023.csv"
 
 
 def download_datasets(dest_dir: Path, years: list[int], modes: list[str], months: list[int]):
@@ -26,6 +27,16 @@ def download_datasets(dest_dir: Path, years: list[int], modes: list[str], months
         print("↓ Downloading taxi_zone_lookup.csv...")
         urllib.request.urlretrieve(ZONE_URL, zone_path)
         print("✓ Saved taxi_zone_lookup.csv")
+
+    # 2. Download Weather Dataset CSV
+    weather_path = dest_dir / "nyc_weather_2023.csv"
+    if not weather_path.exists():
+        print("↓ Downloading real NOAA nyc_weather_2023.csv...")
+        try:
+            urllib.request.urlretrieve(WEATHER_URL, weather_path)
+            print("✓ Saved real NOAA nyc_weather_2023.csv")
+        except Exception as e:
+            print(f"  ⚠ Could not fetch remote weather CSV: {e}")
 
     # 2. Download Parquet Trip Data
     for yr in years:

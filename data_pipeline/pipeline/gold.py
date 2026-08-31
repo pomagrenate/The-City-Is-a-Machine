@@ -290,6 +290,22 @@ QUERIES = {
         ORDER BY trip_count_2023 DESC
         LIMIT 50
     """,
+
+    "weather_impact": """
+        SELECT
+            COALESCE(w.weather_condition, 'Clear')           AS weather_condition,
+            COUNT(*)                                        AS total_trips,
+            ROUND(SUM(total_amount), 2)                     AS total_revenue,
+            ROUND(AVG(total_amount), 2)                     AS avg_fare,
+            ROUND(AVG(tip_rate) * 100, 2)                   AS avg_tip_pct,
+            ROUND(AVG(trip_distance), 2)                    AS avg_distance_miles,
+            ROUND(AVG(trip_duration_min), 2)                AS avg_duration_min
+        FROM silver s
+        LEFT JOIN read_csv_auto('data_pipeline/nyc_weather_2023.csv') w
+            ON CAST(s.tpep_pickup_datetime AS DATE) = CAST(w.date AS DATE)
+        GROUP BY COALESCE(w.weather_condition, 'Clear')
+        ORDER BY total_trips DESC
+    """,
 }
 
 

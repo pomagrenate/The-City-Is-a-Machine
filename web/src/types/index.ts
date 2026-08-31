@@ -247,6 +247,17 @@ export interface NeighborhoodGrowth {
   growth_rate_pct?: number;
 }
 
+export interface WeatherImpact {
+  weather_condition: string;
+  total_trips: number;
+  total_revenue: number;
+  avg_fare: number;
+  avg_tip_pct: number;
+  avg_distance_miles: number;
+  avg_duration_min: number;
+}
+
+
 
 
 

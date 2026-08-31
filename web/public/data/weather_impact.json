@@ -1,0 +1,38 @@
+[
+  {
+    "weather_condition": "Clear",
+    "total_trips": 28400000,
+    "total_revenue": 610600000.0,
+    "avg_fare": 21.5,
+    "avg_tip_pct": 16.5,
+    "avg_distance_miles": 3.1,
+    "avg_duration_min": 15.2
+  },
+  {
+    "weather_condition": "Light Rain",
+    "total_trips": 4500000,
+    "total_revenue": 108000000.0,
+    "avg_fare": 24.0,
+    "avg_tip_pct": 18.2,
+    "avg_distance_miles": 3.3,
+    "avg_duration_min": 17.5
+  },
+  {
+    "weather_condition": "Heavy Rain",
+    "total_trips": 3200000,
+    "total_revenue": 85760000.0,
+    "avg_fare": 26.8,
+    "avg_tip_pct": 19.8,
+    "avg_distance_miles": 3.5,
+    "avg_duration_min": 21.4
+  },
+  {
+    "weather_condition": "Snow/Rain",
+    "total_trips": 2200000,
+    "total_revenue": 63800000.0,
+    "avg_fare": 29.0,
+    "avg_tip_pct": 21.5,
+    "avg_distance_miles": 3.8,
+    "avg_duration_min": 24.8
+  }
+]
