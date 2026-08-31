@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# Data directories (exclude raw parquet and heavy intermediates)
+data/raw/
+data/bronze/
+data/silver/
+data/gold/
+data/*.parquet
+data/*.zip
+*.parquet
+
+# Next.js / Node
+web/node_modules/
+web/.next/
+web/out/
+web/build/
+.DS_Store
+*.log
