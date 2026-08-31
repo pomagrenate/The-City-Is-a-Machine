@@ -1,0 +1,38 @@
+[
+  {
+    "trip_category": "short",
+    "trip_count": 18500000,
+    "avg_distance_miles": 1.25,
+    "avg_duration_min": 9.2,
+    "avg_revenue": 14.8,
+    "avg_revenue_per_km": 7.36,
+    "avg_revenue_per_min": 1.61,
+    "avg_tip_rate_pct": 18.5,
+    "total_revenue": 273800000.0,
+    "revenue_share_pct": 34.8
+  },
+  {
+    "trip_category": "medium",
+    "trip_count": 14200000,
+    "avg_distance_miles": 4.6,
+    "avg_duration_min": 18.4,
+    "avg_revenue": 28.5,
+    "avg_revenue_per_km": 3.85,
+    "avg_revenue_per_min": 1.55,
+    "avg_tip_rate_pct": 16.2,
+    "total_revenue": 404700000.0,
+    "revenue_share_pct": 51.5
+  },
+  {
+    "trip_category": "long",
+    "trip_count": 2100000,
+    "avg_distance_miles": 14.8,
+    "avg_duration_min": 38.5,
+    "avg_revenue": 51.4,
+    "avg_revenue_per_km": 2.16,
+    "avg_revenue_per_min": 1.34,
+    "avg_tip_rate_pct": 14.8,
+    "total_revenue": 107940000.0,
+    "revenue_share_pct": 13.7
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "borough": "Manhattan",
+    "total_trips": 10487475,
+    "total_revenue": 331509417.21,
+    "avg_revenue_per_trip": 31.61,
+    "avg_revenue_per_km": 4.98,
+    "avg_distance_miles": 4.93,
+    "avg_duration_min": 17.99,
+    "avg_tip_rate_pct": 18.22,
+    "pct_peak_trips": 31.51,
+    "zone_count": 10
+  },
+  {
+    "borough": "Brooklyn",
+    "total_trips": 1029128,
+    "total_revenue": 31635977.55,
+    "avg_revenue_per_trip": 30.74,
+    "avg_revenue_per_km": 3.73,
+    "avg_distance_miles": 5.43,
+    "avg_duration_min": 14.78,
+    "avg_tip_rate_pct": 14.86,
+    "pct_peak_trips": 28.85,
+    "zone_count": 5
+  },
+  {
+    "borough": "Queens",
+    "total_trips": 670118,
+    "total_revenue": 19142416.42,
+    "avg_revenue_per_trip": 28.57,
+    "avg_revenue_per_km": 2.76,
+    "avg_distance_miles": 6.24,
+    "avg_duration_min": 18.88,
+    "avg_tip_rate_pct": 15.77,
+    "pct_peak_trips": 31.8,
+    "zone_count": 5
+  },
+  {
+    "borough": "Bronx",
+    "total_trips": 592763,
+    "total_revenue": 18738950.08,
+    "avg_revenue_per_trip": 31.61,
+    "avg_revenue_per_km": 3.23,
+    "avg_distance_miles": 5.95,
+    "avg_duration_min": 18.77,
+    "avg_tip_rate_pct": 15.22,
+    "pct_peak_trips": 37.48,
+    "zone_count": 3
+  },
+  {
+    "borough": "Staten Island",
+    "total_trips": 371912,
+    "total_revenue": 9537593.44,
+    "avg_revenue_per_trip": 25.64,
+    "avg_revenue_per_km": 5.14,
+    "avg_distance_miles": 2.98,
+    "avg_duration_min": 14.35,
+    "avg_tip_rate_pct": 13.09,
+    "pct_peak_trips": 29.13,
+    "zone_count": 2
+  }
+]

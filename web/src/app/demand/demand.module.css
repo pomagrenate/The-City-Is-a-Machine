@@ -1,0 +1,72 @@
+/* demand.module.css */
+.heatmapWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow-x: auto;
+}
+
+.heatmapHours {
+  display: flex;
+  margin-left: 48px;
+  gap: 3px;
+}
+
+.hourLabel {
+  width: 28px;
+  font-size: 9px;
+  color: var(--color-text-muted);
+  text-align: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.heatmapRow {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.dayLabel {
+  width: 40px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-align: right;
+  padding-right: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color var(--transition);
+}
+
+.dayLabel:hover { color: var(--color-blue); }
+.dayLabelActive { color: var(--color-blue); }
+
+.heatCell {
+  width: 28px;
+  height: 22px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  cursor: default;
+  transition: opacity var(--transition);
+}
+
+.heatCell:hover { opacity: 0.8; }
+
+.clearBtn {
+  padding: 6px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+
+.clearBtn:hover {
+  background: var(--color-red-light);
+  border-color: var(--color-red);
+  color: var(--color-red);
+}

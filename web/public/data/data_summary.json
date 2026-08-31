@@ -1,0 +1,14 @@
+{
+  "total_rows_processed": 36842105,
+  "silver_files": 12,
+  "tables_generated": [
+    "zone_revenue",
+    "hourly_demand",
+    "borough_summary",
+    "monthly_trends",
+    "unit_economics",
+    "daily_heatmap",
+    "simulator_base",
+    "benchmark_results"
+  ]
+}

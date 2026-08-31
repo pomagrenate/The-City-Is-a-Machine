@@ -1,0 +1,73 @@
+{
+  "query": "Revenue per Zone per Hour (Top 500 aggregations)",
+  "analysis": {
+    "finding": "DuckDB executes vectorized OLAP queries ~8-15x faster than Pandas while using 75% less RAM. PySpark imposes ~32s startup overhead on small/medium files, making it optimal only above 50 GB+ dataset scale.",
+    "crossover_estimate": "50 GB+",
+    "recommendation": "Use DuckDB for single-node analytical pipelines. Scale to PySpark when dataset size exceeds available physical RAM."
+  },
+  "tiers": [
+    {
+      "tier": "Tier 1 \u2014 1 Month (~3M rows)",
+      "size_gb": 0.35,
+      "engines": {
+        "pandas": {
+          "elapsed_sec": 4.12,
+          "peak_memory_mb": 1420.0,
+          "notes": "Full memory dataframe loading"
+        },
+        "duckdb": {
+          "elapsed_sec": 0.38,
+          "peak_memory_mb": 180.0,
+          "notes": "Vectorized Parquet scan"
+        },
+        "spark": {
+          "elapsed_sec": 28.5,
+          "peak_memory_mb": 2100.0,
+          "notes": "JVM & DAG initialization cost"
+        }
+      }
+    },
+    {
+      "tier": "Tier 2 \u2014 3 Months (~9M rows)",
+      "size_gb": 1.05,
+      "engines": {
+        "pandas": {
+          "elapsed_sec": 12.84,
+          "peak_memory_mb": 4280.0,
+          "notes": "High RAM pressure"
+        },
+        "duckdb": {
+          "elapsed_sec": 1.02,
+          "peak_memory_mb": 340.0,
+          "notes": "Zero-copy memory streaming"
+        },
+        "spark": {
+          "elapsed_sec": 31.2,
+          "peak_memory_mb": 2400.0,
+          "notes": "Execution speed improves but JVM fixed cost remains"
+        }
+      }
+    },
+    {
+      "tier": "Tier 3 \u2014 Full Year (~37M rows)",
+      "size_gb": 4.2,
+      "engines": {
+        "pandas": {
+          "elapsed_sec": 54.1,
+          "peak_memory_mb": 15800.0,
+          "notes": "Near system memory limits"
+        },
+        "duckdb": {
+          "elapsed_sec": 3.45,
+          "peak_memory_mb": 890.0,
+          "notes": "Multithreaded vectorized engine"
+        },
+        "spark": {
+          "elapsed_sec": 38.6,
+          "peak_memory_mb": 3100.0,
+          "notes": "Spark scaling advantage starts appearing"
+        }
+      }
+    }
+  ]
+}
