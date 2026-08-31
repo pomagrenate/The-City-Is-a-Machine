@@ -29,6 +29,7 @@ export const getData = {
   topRoutes:          () => fetchJson<TopRoute[]>('top_routes.json'),
   marketShare:        () => fetchJson<import('@/types').MarketShare[]>('market_share.json'),
   boroughMarketShare: () => fetchJson<import('@/types').BoroughMarketShare[]>('borough_market_share.json'),
+  airportAnalysis:    () => fetchJson<import('@/types').AirportAnalysis[]>('airport_analysis.json'),
 };
 
 export const MONTH_NAMES = [

@@ -1,0 +1,38 @@
+[
+  {
+    "airport": "JFK Airport",
+    "total_trips": 2450000,
+    "total_revenue": 171500000.0,
+    "avg_fare": 70.0,
+    "avg_tip": 13.65,
+    "avg_tip_rate_pct": 19.5,
+    "avg_distance_miles": 16.8,
+    "avg_duration_min": 44.2,
+    "peak_hour": 18,
+    "peak_day": "Sunday"
+  },
+  {
+    "airport": "LaGuardia (LGA)",
+    "total_trips": 3120000,
+    "total_revenue": 132600000.0,
+    "avg_fare": 42.5,
+    "avg_tip": 7.73,
+    "avg_tip_rate_pct": 18.2,
+    "avg_distance_miles": 9.4,
+    "avg_duration_min": 28.6,
+    "peak_hour": 19,
+    "peak_day": "Thursday"
+  },
+  {
+    "airport": "Newark (EWR)",
+    "total_trips": 380000,
+    "total_revenue": 28400000.0,
+    "avg_fare": 74.7,
+    "avg_tip": 12.7,
+    "avg_tip_rate_pct": 17.0,
+    "avg_distance_miles": 18.2,
+    "avg_duration_min": 48.1,
+    "peak_hour": 17,
+    "peak_day": "Friday"
+  }
+]

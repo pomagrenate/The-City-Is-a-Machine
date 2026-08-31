@@ -5,13 +5,15 @@ import { usePathname } from 'next/navigation';
 import styles from './Sidebar.module.css';
 
 const NAV = [
-  { href: '/',           icon: '◈', label: 'Overview'       },
-  { href: '/revenue',    icon: '◎', label: 'Revenue'        },
-  { href: '/demand',     icon: '◌', label: 'Demand'         },
-  { href: '/market-share', icon: '◰', label: 'Market Share' },
-  { href: '/economics',  icon: '◇', label: 'Unit Economics' },
-  { href: '/simulator',  icon: '◆', label: 'Simulator'      },
-  { href: '/technical',  icon: '◉', label: 'Technical'      },
+  { href: '/',           icon: '◈', label: 'Overview'        },
+  { href: '/revenue',    icon: '◎', label: 'Revenue'         },
+  { href: '/demand',     icon: '◌', label: 'Demand'          },
+  { href: '/market-share', icon: '◰', label: 'Market Share'  },
+  { href: '/routes',     icon: '⇄', label: 'Route Corridors' },
+  { href: '/airports',   icon: '✈', label: 'Airport Hubs'    },
+  { href: '/economics',  icon: '◇', label: 'Unit Economics'  },
+  { href: '/simulator',  icon: '◆', label: 'Simulator'       },
+  { href: '/technical',  icon: '◉', label: 'Technical'       },
 ];
 
 export default function Sidebar() {

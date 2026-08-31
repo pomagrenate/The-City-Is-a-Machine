@@ -163,3 +163,17 @@ export interface BoroughMarketShare {
   lyft_share_pct: number;
 }
 
+export interface AirportAnalysis {
+  airport: string;
+  total_trips: number;
+  total_revenue: number;
+  avg_fare: number;
+  avg_tip: number;
+  avg_tip_rate_pct: number;
+  avg_distance_miles: number;
+  avg_duration_min: number;
+  peak_hour: number;
+  peak_day: string;
+}
+
+

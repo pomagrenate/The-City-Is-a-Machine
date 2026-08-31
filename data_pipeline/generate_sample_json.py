@@ -297,6 +297,28 @@ def generate_sample_data():
   with open(PUBLIC_DATA_DIR / "borough_market_share.json", "w") as f:
     json.dump(borough_market_share, f, indent=2)
 
+  # 11. Top Routes
+  top_routes = [
+    {'pu_location_id': 237, 'do_location_id': 236, 'pu_zone': 'Upper East Side South', 'do_zone': 'Upper East Side North', 'pu_borough': 'Manhattan', 'do_borough': 'Manhattan', 'trip_count': 185000, 'total_revenue': 2220000.0, 'avg_revenue': 12.0, 'avg_distance_miles': 1.1, 'avg_duration_min': 7.8},
+    {'pu_location_id': 236, 'do_location_id': 237, 'pu_zone': 'Upper East Side North', 'do_zone': 'Upper East Side South', 'pu_borough': 'Manhattan', 'do_borough': 'Manhattan', 'trip_count': 172000, 'total_revenue': 2064000.0, 'avg_revenue': 12.0, 'avg_distance_miles': 1.1, 'avg_duration_min': 7.9},
+    {'pu_location_id': 161, 'do_location_id': 237, 'pu_zone': 'Midtown Center', 'do_zone': 'Upper East Side South', 'pu_borough': 'Manhattan', 'do_borough': 'Manhattan', 'trip_count': 145000, 'total_revenue': 2610000.0, 'avg_revenue': 18.0, 'avg_distance_miles': 2.2, 'avg_duration_min': 14.5},
+    {'pu_location_id': 132, 'do_location_id': 230, 'pu_zone': 'JFK Airport', 'do_zone': 'Times Sq/Theatre District', 'pu_borough': 'Queens', 'do_borough': 'Manhattan', 'trip_count': 128000, 'total_revenue': 10240000.0, 'avg_revenue': 80.0, 'avg_distance_miles': 17.5, 'avg_duration_min': 46.2},
+    {'pu_location_id': 138, 'do_location_id': 161, 'pu_zone': 'LaGuardia Airport', 'do_zone': 'Midtown Center', 'pu_borough': 'Queens', 'do_borough': 'Manhattan', 'trip_count': 118000, 'total_revenue': 5310000.0, 'avg_revenue': 45.0, 'avg_distance_miles': 9.8, 'avg_duration_min': 31.0},
+    {'pu_location_id': 79,  'do_location_id': 148, 'pu_zone': 'East Village', 'do_zone': 'Lower East Side', 'pu_borough': 'Manhattan', 'do_borough': 'Manhattan', 'trip_count': 105000, 'total_revenue': 1155000.0, 'avg_revenue': 11.0, 'avg_distance_miles': 0.9, 'avg_duration_min': 6.5},
+    {'pu_location_id': 230, 'do_location_id': 161, 'pu_zone': 'Times Sq/Theatre District', 'do_zone': 'Midtown Center', 'pu_borough': 'Manhattan', 'do_borough': 'Manhattan', 'trip_count': 98000, 'total_revenue': 1274000.0, 'avg_revenue': 13.0, 'avg_distance_miles': 1.2, 'avg_duration_min': 9.8},
+  ]
+  with open(PUBLIC_DATA_DIR / "top_routes.json", "w") as f:
+    json.dump(top_routes, f, indent=2)
+
+  # 12. Airport Analysis
+  airport_analysis = [
+    {'airport': 'JFK Airport', 'total_trips': 2450000, 'total_revenue': 171500000.0, 'avg_fare': 70.0, 'avg_tip': 13.65, 'avg_tip_rate_pct': 19.5, 'avg_distance_miles': 16.8, 'avg_duration_min': 44.2, 'peak_hour': 18, 'peak_day': 'Sunday'},
+    {'airport': 'LaGuardia (LGA)', 'total_trips': 3120000, 'total_revenue': 132600000.0, 'avg_fare': 42.5, 'avg_tip': 7.73, 'avg_tip_rate_pct': 18.2, 'avg_distance_miles': 9.4, 'avg_duration_min': 28.6, 'peak_hour': 19, 'peak_day': 'Thursday'},
+    {'airport': 'Newark (EWR)', 'total_trips': 380000, 'total_revenue': 28400000.0, 'avg_fare': 74.7, 'avg_tip': 12.7, 'avg_tip_rate_pct': 17.0, 'avg_distance_miles': 18.2, 'avg_duration_min': 48.1, 'peak_hour': 17, 'peak_day': 'Friday'},
+  ]
+  with open(PUBLIC_DATA_DIR / "airport_analysis.json", "w") as f:
+    json.dump(airport_analysis, f, indent=2)
+
   print("[OK] Sample JSON files created successfully in web/public/data/")
 
 if __name__ == "__main__":
