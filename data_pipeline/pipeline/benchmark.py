@@ -55,8 +55,14 @@ def run_benchmark(silver_dir: Path, output_dir: Path, run_spark: bool = False) -
 
         # Pandas
         def _pandas():
-            dfs = [pd.read_parquet(f, columns=PANDAS_COLS) for f in files]
+            dfs = []
+            for f in files:
+                pdf = pd.read_parquet(f)
+                avail = [c for c in PANDAS_COLS if c in pdf.columns]
+                dfs.append(pdf[avail])
             df = pd.concat(dfs, ignore_index=True)
+            if "PUZone" not in df.columns:
+                return pd.DataFrame()
             return df[df["PUZone"].notna()].groupby(
                 ["PULocationID", "PUZone", "PUBorough", "pickup_hour"]
             ).agg(trip_count=("total_amount", "count"),
@@ -75,7 +81,7 @@ def run_benchmark(silver_dir: Path, output_dir: Path, run_spark: bool = False) -
         file_list = ", ".join(f"'{str(f).replace(chr(92), '/')}'" for f in files)
         def _duckdb():
             con = duckdb.connect()
-            con.execute(f"CREATE VIEW data_view AS SELECT * FROM read_parquet([{file_list}])")
+            con.execute(f"CREATE VIEW data_view AS SELECT * FROM read_parquet([{file_list}], union_by_name=True)")
             r = con.execute(DUCKDB_SQL).df()
             con.close()
             return r

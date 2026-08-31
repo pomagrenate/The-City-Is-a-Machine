@@ -301,7 +301,7 @@ QUERIES = {
             ROUND(AVG(trip_distance), 2)                    AS avg_distance_miles,
             ROUND(AVG(trip_duration_min), 2)                AS avg_duration_min
         FROM silver s
-        LEFT JOIN read_csv_auto('data_pipeline/nyc_weather_2023.csv') w
+        LEFT JOIN weather_table w
             ON CAST(s.tpep_pickup_datetime AS DATE) = CAST(w.date AS DATE)
         GROUP BY COALESCE(w.weather_condition, 'Clear')
         ORDER BY total_trips DESC
@@ -316,8 +316,24 @@ def run_gold(silver_dir: Path, output_dir: Path) -> dict:
 
     file_list = ", ".join(f"'{str(f).replace(chr(92), '/')}'" for f in silver_files)
 
+    # Locate weather CSV
+    weather_candidates = [
+        silver_dir.parent / "nyc_weather_2023.csv",
+        silver_dir.parent / "raw_data" / "nyc_weather_2023.csv",
+        Path(__file__).parent.parent / "nyc_weather_2023.csv",
+        Path.cwd() / "nyc_weather_2023.csv",
+        Path.cwd() / "data_pipeline" / "nyc_weather_2023.csv",
+    ]
+    weather_path = next((p for p in weather_candidates if p.exists()), None)
+    weather_csv_str = str(weather_path).replace("\\", "/") if weather_path else ""
+
     con = duckdb.connect()
-    con.execute(f"CREATE VIEW silver AS SELECT * FROM read_parquet([{file_list}])")
+    con.execute(f"CREATE VIEW silver AS SELECT * FROM read_parquet([{file_list}], union_by_name=True)")
+
+    if weather_csv_str:
+        con.execute(f"CREATE VIEW weather_table AS SELECT * FROM read_csv_auto('{weather_csv_str}')")
+    else:
+        con.execute("CREATE VIEW weather_table AS SELECT '2023-01-01' AS date, 'Clear' AS weather_condition")
 
     total_rows = con.execute("SELECT COUNT(*) FROM silver").fetchone()[0]
     print(f"  Silver rows: {total_rows:,}")

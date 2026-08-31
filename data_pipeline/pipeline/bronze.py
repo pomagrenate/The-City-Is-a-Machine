@@ -11,7 +11,7 @@ REQUIRED_COLUMNS = [
     "passenger_count", "trip_distance",
     "PULocationID", "DOLocationID",
     "fare_amount", "tip_amount", "tolls_amount", "total_amount",
-    "payment_type",
+    "payment_type", "congestion_surcharge", "airport_fee", "mta_tax", "extra",
 ]
 
 

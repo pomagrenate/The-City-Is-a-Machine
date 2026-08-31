@@ -80,8 +80,8 @@ def run_silver(bronze_dir: Path, silver_dir: Path, zone_lookup_path: Path, year:
             (df["tpep_dropoff_datetime"] - df["tpep_pickup_datetime"]).dt.total_seconds() / 60
         )
 
-        # Year filter
-        df = df[df["tpep_pickup_datetime"].dt.year == year]
+        # Year filter (allow multi-year dataset processing: 2018-2024)
+        df = df[df["tpep_pickup_datetime"].dt.year.between(2018, 2024)]
 
         # Apply rules
         lo_f, hi_f = RULES["fare_amount"]
