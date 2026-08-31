@@ -54,7 +54,7 @@ export default function OverviewPage() {
   return (
     <div className="page-content">
       <div className={styles.hero}>
-        <div className={styles.heroEyebrow}>NYC Yellow Taxi · 2023</div>
+        <div className={styles.heroEyebrow}>NYC TLC Multi-Modal Telemetry (2019–2023) · 5.33 GB Data Suite</div>
         <h1 className={styles.heroTitle}>The City Is a Machine</h1>
         <p className={styles.heroSub}>
           Millions of trips happen every day. Where does the money go?
@@ -108,6 +108,56 @@ export default function OverviewPage() {
           />
         </div>
       )}
+
+      {/* Dataset & Volume Inventory */}
+      <div className="chart-card" style={{ marginTop: 24, marginBottom: 24 }}>
+        <div className="chart-card__header">
+          <div>
+            <div className="chart-card__title">Multi-Modal Dataset Inventory &amp; Volume Weights</div>
+            <div className="chart-card__subtitle">
+              Detailed breakdown of raw data sources, file weights, and analytical focus across 5.33 GB of urban telemetry
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
+          <div style={{ padding: 16, background: '#f8fafc', borderRadius: 10, border: '1px solid var(--color-border)' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-blue)', textTransform: 'uppercase' }}>Primary Dataset</div>
+            <div style={{ fontSize: '1.05rem', fontWeight: 800, margin: '4px 0', color: 'var(--color-text-primary)' }}>Yellow Taxi (2019–2023)</div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+              <strong>Data Volume:</strong> ~4.8 GB (110M+ Trips)<br />
+              <strong>Focus:</strong> Manhattan Commercial Core, Airport Corridors, Business Hours, Congestion Tariffs.
+            </div>
+          </div>
+
+          <div style={{ padding: 16, background: '#f8fafc', borderRadius: 10, border: '1px solid var(--color-border)' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-green)', textTransform: 'uppercase' }}>Transit Equity</div>
+            <div style={{ fontSize: '1.05rem', fontWeight: 800, margin: '4px 0', color: 'var(--color-text-primary)' }}>Green Taxi (Boro Taxi)</div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+              <strong>Data Volume:</strong> ~400 MB (10M+ Trips)<br />
+              <strong>Focus:</strong> Mandated Outer-Borough Coverage (Bronx, Brooklyn, Queens, Staten Island, Upper Manhattan).
+            </div>
+          </div>
+
+          <div style={{ padding: 16, background: '#f8fafc', borderRadius: 10, border: '1px solid var(--color-border)' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-purple)', textTransform: 'uppercase' }}>Environmental Telemetry</div>
+            <div style={{ fontSize: '1.05rem', fontWeight: 800, margin: '4px 0', color: 'var(--color-text-primary)' }}>NOAA NYC Weather (2023)</div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+              <strong>Data Volume:</strong> 365 Daily Records<br />
+              <strong>Focus:</strong> Rain &amp; Snowfall Surge Factors, Bad Weather Tip Premiums, Central Park Telemetry.
+            </div>
+          </div>
+
+          <div style={{ padding: 16, background: '#f8fafc', borderRadius: 10, border: '1px solid var(--color-border)' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-amber)', textTransform: 'uppercase' }}>Spatial &amp; Tariffs</div>
+            <div style={{ fontSize: '1.05rem', fontWeight: 800, margin: '4px 0', color: 'var(--color-text-primary)' }}>MTA Rules &amp; 263 Zones</div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+              <strong>Data Volume:</strong> 263 Spatial Zones<br />
+              <strong>Focus:</strong> $2.50 Base Fare, $2.50 Congestion Charge, $0.50 MTA Tax, Airport Surcharges.
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="grid-2">
         {/* Monthly Revenue Trend */}
