@@ -74,7 +74,7 @@ export default function TransitEquityPage() {
               <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${(v/1000000).toFixed(1)}M`} />
               <Tooltip
                 contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                formatter={(v: number) => [formatNumber(v), 'Trips']}
+                formatter={(v: any) => [formatNumber(Number(v) || 0), 'Trips']}
               />
               <Bar dataKey="total_trips" fill="var(--color-green)" radius={[4, 4, 0, 0]} maxBarSize={50} />
             </BarChart>

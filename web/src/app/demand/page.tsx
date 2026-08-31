@@ -147,7 +147,7 @@ export default function DemandPage() {
                    tickFormatter={v => `${(v/1000).toFixed(0)}K`} width={40} />
             <Tooltip
               contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-              formatter={(v: number) => [formatNumber(v), 'Trips']}
+              formatter={(v: any) => [formatNumber(Number(v) || 0), 'Trips']}
             />
             <Bar dataKey="trips" radius={[3, 3, 0, 0]} isAnimationActive maxBarSize={28}>
               {hourlyAgg.map((entry, i) => (

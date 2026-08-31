@@ -153,7 +153,7 @@ export default function ExecutivePage() {
               <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `$${(v/1000000).toFixed(0)}M`} />
               <Tooltip
                 contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                formatter={(v: number) => [formatCurrency(v), 'Amount']}
+                formatter={(v: any) => [formatCurrency(Number(v) || 0), 'Amount']}
               />
               <Legend />
               <Bar dataKey="Gross" name="Gross Passenger Receipts" fill="var(--color-brand)" radius={[4, 4, 0, 0]} />

@@ -106,7 +106,7 @@ export default function MarketSharePage() {
                 </Pie>
                 <Tooltip
                   contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 13 }}
-                  formatter={(v: number, name: string) => [formatNumber(v), name]}
+                  formatter={(v: any, name?: any) => [formatNumber(Number(v) || 0), String(name)]}
                 />
                 <Legend verticalAlign="bottom" height={36} />
               </PieChart>
@@ -129,7 +129,7 @@ export default function MarketSharePage() {
                 <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}%`} />
                 <Tooltip
                   contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                  formatter={(v: number) => [`${v.toFixed(1)}%`, 'Share']}
+                  formatter={(v: any) => [`${(Number(v) || 0).toFixed(1)}%`, 'Share']}
                 />
                 <Legend />
                 <Bar dataKey="yellow_share_pct" name="Yellow Taxi" stackId="a" fill={MODE_COLORS['Yellow Taxi']} />

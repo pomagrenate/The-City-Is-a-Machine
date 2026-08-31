@@ -164,16 +164,25 @@ export interface BoroughMarketShare {
 }
 
 export interface AirportAnalysis {
-  airport: string;
-  total_trips: number;
-  total_revenue: number;
-  avg_fare: number;
-  avg_tip: number;
-  avg_tip_rate_pct: number;
-  avg_distance_miles: number;
-  avg_duration_min: number;
-  peak_hour: number;
-  peak_day: string;
+  airport?: string;
+  zone?: string;
+  location_id?: number;
+  borough?: string;
+  is_airport_pickup?: number;
+  is_airport_dropoff?: number;
+  pickup_hour?: number;
+  trip_count?: number;
+  total_trips?: number;
+  total_revenue?: number;
+  avg_revenue?: number;
+  avg_fare?: number;
+  avg_tip?: number;
+  avg_tip_rate_pct?: number;
+  avg_distance_miles?: number;
+  avg_duration_min?: number;
+  avg_revenue_per_km?: number;
+  peak_hour?: number;
+  peak_day?: string;
 }
 
 export interface SpeedCongestion {

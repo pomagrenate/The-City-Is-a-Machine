@@ -27,8 +27,8 @@ export default function RoutesPage() {
       const matchBorough = puBorough === 'All' || r.pu_borough === puBorough;
       const q = searchQuery.toLowerCase();
       const matchSearch = !q ||
-        r.pu_zone.toLowerCase().includes(q) ||
-        r.do_zone.toLowerCase().includes(q);
+        (r.pu_zone && r.pu_zone.toLowerCase().includes(q)) ||
+        (r.do_zone && r.do_zone.toLowerCase().includes(q));
       return matchBorough && matchSearch;
     });
   }, [routes, puBorough, searchQuery]);
@@ -120,7 +120,7 @@ export default function RoutesPage() {
                      tick={{ fontSize: 11, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
               <Tooltip
                 contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                formatter={(v: number) => [formatNumber(v), 'Trips']}
+                formatter={(v: any) => [formatNumber(Number(v) || 0), 'Trips']}
               />
               <Bar dataKey="trips" fill="var(--color-blue)" radius={[0, 4, 4, 0]} maxBarSize={20} />
             </BarChart>

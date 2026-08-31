@@ -10,6 +10,9 @@ import {
 } from 'recharts';
 import styles from './page.module.css';
 
+import Link from 'next/link';
+import { FaDollarSign, FaServer, FaSearchLocation } from 'react-icons/fa';
+
 export default function OverviewPage() {
   const [boroughs, setBoroughs]   = useState<BoroughSummary[]>([]);
   const [monthly, setMonthly]     = useState<MonthlyTrend[]>([]);
@@ -54,12 +57,11 @@ export default function OverviewPage() {
   return (
     <div className="page-content">
       <div className={styles.hero}>
-        <div className={styles.heroEyebrow}>NYC TLC Multi-Modal Telemetry (2019–2023) · 5.33 GB Data Suite</div>
+        <div className={styles.heroEyebrow}>5.33 GB Urban Telemetry · 120M+ Multi-Year Trips · NOAA Weather</div>
         <h1 className={styles.heroTitle}>The City Is a Machine</h1>
         <p className={styles.heroSub}>
-          Millions of trips happen every day. Where does the money go?
-          Where does demand appear? And can we build a system capable
-          of answering those questions at scale?
+          120M+ trips across 263 zones. Weather, geography, fares, congestion, and human behavior.
+          I wanted to find out how a city moves, makes money, and reacts when things go wrong.
         </p>
         <div className={styles.heroMeta}>
           {summary && (
@@ -72,6 +74,36 @@ export default function OverviewPage() {
             </>
           )}
         </div>
+      </div>
+
+      {/* 3 Door Entry System */}
+      <div className={styles.doorsGrid}>
+        <Link href="/revenue" className={styles.doorCard}>
+          <div className={styles.doorHeader}>
+            <span className={styles.doorIcon}><FaDollarSign /></span>
+            <span className={styles.doorBadge}>01 — BUSINESS</span>
+          </div>
+          <div className={styles.doorTitle}>Where is the Money?</div>
+          <div className={styles.doorSub}>Explore revenue distributions, fare surge elasticity, airport corridors, and unit economics ($/km).</div>
+        </Link>
+
+        <Link href="/technical" className={styles.doorCard}>
+          <div className={styles.doorHeader}>
+            <span className={styles.doorIcon}><FaServer /></span>
+            <span className={styles.doorBadge}>02 — TECHNICAL</span>
+          </div>
+          <div className={styles.doorTitle}>How Did It Scale?</div>
+          <div className={styles.doorSub}>Medallion ETL pipeline architecture (Bronze→Silver→Gold), DuckDB vs Spark benchmark queries, and memory limits.</div>
+        </Link>
+
+        <Link href="/equity" className={styles.doorCard}>
+          <div className={styles.doorHeader}>
+            <span className={styles.doorIcon}><FaSearchLocation /></span>
+            <span className={styles.doorBadge}>03 — INVESTIGATE</span>
+          </div>
+          <div className={styles.doorTitle}>What Did We Discover?</div>
+          <div className={styles.doorSub}>Green Taxi outer-borough equity gaps, NOAA rain surge tipping elasticity, and post-COVID WFH rush hour shifts.</div>
+        </Link>
       </div>
 
       {loading ? (
@@ -175,7 +207,7 @@ export default function OverviewPage() {
               <YAxis tick={{ fontSize: 12, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} width={40} />
               <Tooltip
                 contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 13 }}
-                formatter={(v: number) => [`$${v}M`, 'Revenue']}
+                formatter={(v: any) => [`$${v}M`, 'Revenue']}
               />
               <Line type="monotone" dataKey="revenue_m" stroke="var(--color-blue)" strokeWidth={2.5} dot={{ r: 3, fill: 'var(--color-blue)' }} activeDot={{ r: 5 }} />
             </LineChart>
@@ -197,7 +229,7 @@ export default function OverviewPage() {
               <YAxis type="category" dataKey="borough" width={90} tick={{ fontSize: 12, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
               <Tooltip
                 contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 13 }}
-                formatter={(v: number) => [formatCurrency(v), 'Revenue']}
+                formatter={(v: any) => [formatCurrency(Number(v) || 0), 'Revenue']}
               />
               <Bar dataKey="total_revenue" radius={[0, 4, 4, 0]}
                    fill="var(--color-blue)"
@@ -274,7 +306,7 @@ export default function OverviewPage() {
                    tickFormatter={v => `${v}K`} />
             <Tooltip
               contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 13 }}
-              formatter={(v: number) => [`${v}K trips`, 'Volume']}
+              formatter={(v: any) => [`${v}K trips`, 'Volume']}
             />
             <Bar dataKey="trips_k" fill="var(--color-green)" radius={[4, 4, 0, 0]} isAnimationActive />
           </BarChart>

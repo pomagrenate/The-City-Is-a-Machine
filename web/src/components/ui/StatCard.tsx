@@ -1,4 +1,5 @@
 // src/components/ui/StatCard.tsx
+import React from 'react';
 import styles from './StatCard.module.css';
 
 interface Props {
@@ -6,7 +7,7 @@ interface Props {
   value: string;
   sub?: string;
   accent?: string; // CSS color
-  icon?: string;
+  icon?: React.ReactNode;
 }
 
 export default function StatCard({ label, value, sub, accent = 'var(--color-blue)', icon }: Props) {

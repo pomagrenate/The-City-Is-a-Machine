@@ -18,9 +18,9 @@ export default function WeatherPage() {
     }).catch(() => setLoading(false));
   }, []);
 
-  const clearData = data.find(d => d.weather_condition === 'Clear');
-  const rainData  = data.find(d => d.weather_condition.includes('Rain'));
-  const snowData  = data.find(d => d.weather_condition.includes('Snow'));
+  const clearData = data.find(d => d.weather_condition?.includes('Clear'));
+  const rainData  = data.find(d => d.weather_condition?.includes('Rain'));
+  const snowData  = data.find(d => d.weather_condition?.includes('Snow'));
 
   const clearTip = clearData?.avg_tip_pct || 16.5;
   const rainTip  = rainData?.avg_tip_pct  || 19.8;
@@ -78,7 +78,7 @@ export default function WeatherPage() {
               <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}%`} />
               <Tooltip
                 contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                formatter={(v: number) => [`${v.toFixed(1)}%`, 'Avg Tip Rate']}
+                formatter={(v: any) => [`${(Number(v) || 0).toFixed(1)}%`, 'Avg Tip Rate']}
               />
               <Bar dataKey="avg_tip_pct" name="Average Tip Rate %" fill="var(--color-blue)" radius={[4, 4, 0, 0]} maxBarSize={50} />
             </BarChart>

@@ -81,8 +81,8 @@ export default function HistoryPage() {
               <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${(v/1000000).toFixed(0)}M`} />
               <Tooltip
                 contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                formatter={(v: number, name: string) => [
-                  name === 'total_trips' ? formatNumber(v) : formatCurrency(v),
+                formatter={(v: any, name?: any) => [
+                  name === 'total_trips' ? formatNumber(Number(v) || 0) : formatCurrency(Number(v) || 0),
                   name === 'total_trips' ? 'Total Trips' : 'Total Revenue'
                 ]}
               />
@@ -110,7 +110,7 @@ export default function HistoryPage() {
               <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => formatNumber(v)} />
               <Tooltip
                 contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                formatter={(v: number) => [formatNumber(v), '8 AM Midtown Trips']}
+                formatter={(v: any) => [formatNumber(Number(v) || 0), '8 AM Midtown Trips']}
               />
               <Bar dataKey="midtown_8am_rush_trips" name="Midtown 8 AM Rush Hour Rides" fill="var(--color-purple)" radius={[4, 4, 0, 0]} maxBarSize={50} />
             </BarChart>

@@ -109,11 +109,11 @@ export default function RevenuePage() {
                      tick={{ fontSize: 11, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
               <Tooltip
                 contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                formatter={(v: number) => [
-                  sortBy === 'total_revenue' ? formatCurrency(v)
-                  : sortBy.includes('rate') || sortBy.includes('pct') ? `${v.toFixed(2)}%`
-                  : `$${v.toFixed(2)}`,
-                  sortBy.replace(/_/g, ' ')
+                formatter={(v: any) => [
+                  sortBy === 'total_revenue' ? formatCurrency(Number(v) || 0)
+                  : String(sortBy).includes('rate') || String(sortBy).includes('pct') ? `${(Number(v) || 0).toFixed(2)}%`
+                  : `$${(Number(v) || 0).toFixed(2)}`,
+                  String(sortBy).replace(/_/g, ' ')
                 ]}
               />
               <Bar dataKey={sortBy} radius={[0, 4, 4, 0]}

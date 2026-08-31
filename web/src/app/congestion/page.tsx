@@ -92,7 +92,7 @@ export default function CongestionPage() {
               <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${v} mph`} />
               <Tooltip
                 contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                formatter={(v: number) => [`${v.toFixed(1)} mph`, 'Avg Speed']}
+                formatter={(v: any) => [`${(Number(v) || 0).toFixed(1)} mph`, 'Avg Speed']}
               />
               <Legend />
               <Line type="monotone" dataKey="Manhattan" stroke={BOROUGH_COLORS['Manhattan']} strokeWidth={2.5} dot={false} />
@@ -117,11 +117,11 @@ export default function CongestionPage() {
           <ResponsiveContainer width="100%" height={260}>
             <BarChart
               data={taxes.length ? taxes : [
-                { pickup_month: 1, total_congestion_surcharge: 7600000, total_airport_fee: 1200000 },
-                { pickup_month: 2, total_congestion_surcharge: 7300000, total_airport_fee: 1150000 },
-                { pickup_month: 3, total_congestion_surcharge: 8500000, total_airport_fee: 1350000 },
-                { pickup_month: 4, total_congestion_surcharge: 8200000, total_airport_fee: 1300000 },
-                { pickup_month: 5, total_congestion_surcharge: 8800000, total_airport_fee: 1400000 },
+                { pickup_month: 1, total_trips: 3000000, total_congestion_surcharge: 7600000, total_airport_fee: 1200000, total_mta_tax: 1500000, total_tolls: 2000000, total_revenue: 12300000 },
+                { pickup_month: 2, total_trips: 2900000, total_congestion_surcharge: 7300000, total_airport_fee: 1150000, total_mta_tax: 1450000, total_tolls: 1900000, total_revenue: 11800000 },
+                { pickup_month: 3, total_trips: 3400000, total_congestion_surcharge: 8500000, total_airport_fee: 1350000, total_mta_tax: 1700000, total_tolls: 2200000, total_revenue: 13750000 },
+                { pickup_month: 4, total_trips: 3300000, total_congestion_surcharge: 8200000, total_airport_fee: 1300000, total_mta_tax: 1650000, total_tolls: 2100000, total_revenue: 13250000 },
+                { pickup_month: 5, total_trips: 3500000, total_congestion_surcharge: 8800000, total_airport_fee: 1400000, total_mta_tax: 1750000, total_tolls: 2300000, total_revenue: 14250000 },
               ]}
               margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
             >
@@ -129,7 +129,7 @@ export default function CongestionPage() {
               <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `$${(v/1000000).toFixed(1)}M`} />
               <Tooltip
                 contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                formatter={(v: number) => [formatCurrency(v), 'Tax Collected']}
+                formatter={(v: any) => [formatCurrency(Number(v) || 0), 'Tax Collected']}
               />
               <Bar dataKey="total_congestion_surcharge" name="Congestion Tax ($2.50)" fill="var(--color-amber)" radius={[4, 4, 0, 0]} />
               <Bar dataKey="total_airport_fee" name="Airport Fee ($1.25/$2.50)" fill="var(--color-blue)" radius={[4, 4, 0, 0]} />

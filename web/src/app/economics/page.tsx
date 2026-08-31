@@ -103,7 +103,7 @@ export default function EconomicsPage() {
                        tickFormatter={v => `$${v.toFixed(2)}`} width={50} />
                 <Tooltip
                   contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                  formatter={(v: number) => [`$${v.toFixed(2)}/km`, 'Revenue per km']}
+                  formatter={(v: any) => [`$${(Number(v) || 0).toFixed(2)}/km`, 'Revenue per km']}
                 />
                 <Bar dataKey="value" radius={[6, 6, 0, 0]} isAnimationActive maxBarSize={80}
                      fill="var(--color-blue)" />
