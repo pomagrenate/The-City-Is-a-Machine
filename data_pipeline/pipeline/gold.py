@@ -181,6 +181,49 @@ QUERIES = {
         ORDER BY trip_count DESC
         LIMIT 100
     """,
+
+    "speed_congestion": """
+        SELECT
+            PUBorough                                       AS borough,
+            pickup_hour,
+            COUNT(*)                                        AS trip_count,
+            ROUND(AVG(trip_distance / (NULLIF(trip_duration_min, 0) / 60.0)), 2) AS avg_speed_mph,
+            ROUND(AVG(trip_duration_min), 2)                AS avg_duration_min,
+            ROUND(AVG(trip_distance), 2)                    AS avg_distance_miles
+        FROM silver
+        WHERE PUBorough IS NOT NULL AND trip_duration_min > 0 AND trip_distance > 0
+        GROUP BY PUBorough, pickup_hour
+        ORDER BY PUBorough, pickup_hour
+    """,
+
+    "payment_tipping": """
+        SELECT
+            COALESCE(payment_type, 0)                       AS payment_type_id,
+            COUNT(*)                                        AS trip_count,
+            ROUND(SUM(total_amount), 2)                     AS total_revenue,
+            ROUND(AVG(fare_amount), 2)                      AS avg_fare,
+            ROUND(AVG(tip_amount), 2)                       AS avg_tip,
+            ROUND(AVG(tip_rate) * 100, 2)                   AS avg_tip_rate_pct,
+            ROUND(SUM(CASE WHEN tip_amount > 0 THEN 1.0 ELSE 0 END) * 100.0 / COUNT(*), 2)
+                                                            AS pct_trips_with_tip
+        FROM silver
+        GROUP BY payment_type
+        ORDER BY trip_count DESC
+    """,
+
+    "surcharges_taxes": """
+        SELECT
+            pickup_month,
+            COUNT(*)                                        AS total_trips,
+            ROUND(SUM(COALESCE(congestion_surcharge, 0)), 2) AS total_congestion_surcharge,
+            ROUND(SUM(COALESCE(airport_fee, 0)), 2)         AS total_airport_fee,
+            ROUND(SUM(COALESCE(mta_tax, 0)), 2)             AS total_mta_tax,
+            ROUND(SUM(COALESCE(tolls_amount, 0)), 2)        AS total_tolls,
+            ROUND(SUM(total_amount), 2)                     AS total_revenue
+        FROM silver
+        GROUP BY pickup_month
+        ORDER BY pickup_month
+    """,
 }
 
 

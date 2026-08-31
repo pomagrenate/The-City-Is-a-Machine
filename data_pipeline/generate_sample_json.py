@@ -319,6 +319,41 @@ def generate_sample_data():
   with open(PUBLIC_DATA_DIR / "airport_analysis.json", "w") as f:
     json.dump(airport_analysis, f, indent=2)
 
+  # 13. Speed Congestion
+  speed_congestion = []
+  for b in ['Manhattan', 'Brooklyn', 'Queens', 'Bronx']:
+    base_spd = 8.5 if b == 'Manhattan' else (14.2 if b == 'Brooklyn' else 16.5)
+    for h in range(24):
+      dip = 3.5 if 8 <= h <= 18 and b == 'Manhattan' else 1.0
+      speed_congestion.append({
+        'borough': b,
+        'pickup_hour': h,
+        'trip_count': 120000,
+        'avg_speed_mph': round(base_spd - dip + (h * 0.2 if h < 6 else 0), 1),
+        'avg_duration_min': round(18.5 + dip * 2, 1),
+        'avg_distance_miles': 3.2
+      })
+  with open(PUBLIC_DATA_DIR / "speed_congestion.json", "w") as f:
+    json.dump(speed_congestion, f, indent=2)
+
+  # 14. Payment Tipping
+  payment_tipping = [
+    {'payment_type_id': 1, 'payment_type_name': 'Credit Card', 'trip_count': 30648226, 'total_revenue': 724800000.0, 'avg_fare': 23.6, 'avg_tip': 4.15, 'avg_tip_rate_pct': 17.5, 'pct_trips_with_tip': 88.4},
+    {'payment_type_id': 2, 'payment_type_name': 'Cash', 'trip_count': 7100000, 'total_revenue': 142000000.0, 'avg_fare': 20.0, 'avg_tip': 0.0, 'avg_tip_rate_pct': 0.0, 'pct_trips_with_tip': 0.0},
+    {'payment_type_id': 3, 'payment_type_name': 'No Charge', 'trip_count': 320000, 'total_revenue': 3840000.0, 'avg_fare': 12.0, 'avg_tip': 0.0, 'avg_tip_rate_pct': 0.0, 'pct_trips_with_tip': 0.0},
+    {'payment_type_id': 4, 'payment_type_name': 'Dispute', 'trip_count': 240000, 'total_revenue': 2880000.0, 'avg_fare': 12.0, 'avg_tip': 0.0, 'avg_tip_rate_pct': 0.0, 'pct_trips_with_tip': 0.0},
+  ]
+  with open(PUBLIC_DATA_DIR / "payment_tipping.json", "w") as f:
+    json.dump(payment_tipping, f, indent=2)
+
+  # 15. Surcharges & Taxes
+  surcharges_taxes = [
+    {'pickup_month': m, 'total_trips': 3200000, 'total_congestion_surcharge': round(3200000 * 2.4, 2), 'total_airport_fee': round(3200000 * 0.4, 2), 'total_mta_tax': round(3200000 * 0.5, 2), 'total_tolls': round(3200000 * 0.8, 2), 'total_revenue': round(3200000 * 23.5, 2)}
+    for m in range(1, 13)
+  ]
+  with open(PUBLIC_DATA_DIR / "surcharges_taxes.json", "w") as f:
+    json.dump(surcharges_taxes, f, indent=2)
+
   print("[OK] Sample JSON files created successfully in web/public/data/")
 
 if __name__ == "__main__":

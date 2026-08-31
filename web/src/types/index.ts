@@ -176,4 +176,35 @@ export interface AirportAnalysis {
   peak_day: string;
 }
 
+export interface SpeedCongestion {
+  borough: string;
+  pickup_hour: number;
+  trip_count: number;
+  avg_speed_mph: number;
+  avg_duration_min: number;
+  avg_distance_miles: number;
+}
+
+export interface PaymentTipping {
+  payment_type_id: number;
+  payment_type_name?: string;
+  trip_count: number;
+  total_revenue: number;
+  avg_fare: number;
+  avg_tip: number;
+  avg_tip_rate_pct: number;
+  pct_trips_with_tip: number;
+}
+
+export interface SurchargesTaxes {
+  pickup_month: number;
+  total_trips: number;
+  total_congestion_surcharge: number;
+  total_airport_fee: number;
+  total_mta_tax: number;
+  total_tolls: number;
+  total_revenue: number;
+}
+
+
 

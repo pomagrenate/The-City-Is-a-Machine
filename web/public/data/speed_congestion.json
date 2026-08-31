@@ -1,0 +1,770 @@
+[
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 0,
+    "trip_count": 120000,
+    "avg_speed_mph": 7.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 1,
+    "trip_count": 120000,
+    "avg_speed_mph": 7.7,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 2,
+    "trip_count": 120000,
+    "avg_speed_mph": 7.9,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 3,
+    "trip_count": 120000,
+    "avg_speed_mph": 8.1,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 4,
+    "trip_count": 120000,
+    "avg_speed_mph": 8.3,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 5,
+    "trip_count": 120000,
+    "avg_speed_mph": 8.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 6,
+    "trip_count": 120000,
+    "avg_speed_mph": 7.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 7,
+    "trip_count": 120000,
+    "avg_speed_mph": 7.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 8,
+    "trip_count": 120000,
+    "avg_speed_mph": 5.0,
+    "avg_duration_min": 25.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 9,
+    "trip_count": 120000,
+    "avg_speed_mph": 5.0,
+    "avg_duration_min": 25.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 10,
+    "trip_count": 120000,
+    "avg_speed_mph": 5.0,
+    "avg_duration_min": 25.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 11,
+    "trip_count": 120000,
+    "avg_speed_mph": 5.0,
+    "avg_duration_min": 25.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 12,
+    "trip_count": 120000,
+    "avg_speed_mph": 5.0,
+    "avg_duration_min": 25.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 13,
+    "trip_count": 120000,
+    "avg_speed_mph": 5.0,
+    "avg_duration_min": 25.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 14,
+    "trip_count": 120000,
+    "avg_speed_mph": 5.0,
+    "avg_duration_min": 25.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 15,
+    "trip_count": 120000,
+    "avg_speed_mph": 5.0,
+    "avg_duration_min": 25.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 16,
+    "trip_count": 120000,
+    "avg_speed_mph": 5.0,
+    "avg_duration_min": 25.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 17,
+    "trip_count": 120000,
+    "avg_speed_mph": 5.0,
+    "avg_duration_min": 25.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 18,
+    "trip_count": 120000,
+    "avg_speed_mph": 5.0,
+    "avg_duration_min": 25.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 19,
+    "trip_count": 120000,
+    "avg_speed_mph": 7.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 20,
+    "trip_count": 120000,
+    "avg_speed_mph": 7.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 21,
+    "trip_count": 120000,
+    "avg_speed_mph": 7.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 22,
+    "trip_count": 120000,
+    "avg_speed_mph": 7.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Manhattan",
+    "pickup_hour": 23,
+    "trip_count": 120000,
+    "avg_speed_mph": 7.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 0,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 1,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.4,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 2,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.6,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 3,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.8,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 4,
+    "trip_count": 120000,
+    "avg_speed_mph": 14.0,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 5,
+    "trip_count": 120000,
+    "avg_speed_mph": 14.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 6,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 7,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 8,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 9,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 10,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 11,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 12,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 13,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 14,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 15,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 16,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 17,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 18,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 19,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 20,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 21,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 22,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Brooklyn",
+    "pickup_hour": 23,
+    "trip_count": 120000,
+    "avg_speed_mph": 13.2,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 0,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 1,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.7,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 2,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.9,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 3,
+    "trip_count": 120000,
+    "avg_speed_mph": 16.1,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 4,
+    "trip_count": 120000,
+    "avg_speed_mph": 16.3,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 5,
+    "trip_count": 120000,
+    "avg_speed_mph": 16.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 6,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 7,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 8,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 9,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 10,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 11,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 12,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 13,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 14,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 15,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 16,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 17,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 18,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 19,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 20,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 21,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 22,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Queens",
+    "pickup_hour": 23,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 0,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 1,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.7,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 2,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.9,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 3,
+    "trip_count": 120000,
+    "avg_speed_mph": 16.1,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 4,
+    "trip_count": 120000,
+    "avg_speed_mph": 16.3,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 5,
+    "trip_count": 120000,
+    "avg_speed_mph": 16.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 6,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 7,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 8,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 9,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 10,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 11,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 12,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 13,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 14,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 15,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 16,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 17,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 18,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 19,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 20,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 21,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 22,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  },
+  {
+    "borough": "Bronx",
+    "pickup_hour": 23,
+    "trip_count": 120000,
+    "avg_speed_mph": 15.5,
+    "avg_duration_min": 20.5,
+    "avg_distance_miles": 3.2
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "payment_type_id": 1,
+    "payment_type_name": "Credit Card",
+    "trip_count": 30648226,
+    "total_revenue": 724800000.0,
+    "avg_fare": 23.6,
+    "avg_tip": 4.15,
+    "avg_tip_rate_pct": 17.5,
+    "pct_trips_with_tip": 88.4
+  },
+  {
+    "payment_type_id": 2,
+    "payment_type_name": "Cash",
+    "trip_count": 7100000,
+    "total_revenue": 142000000.0,
+    "avg_fare": 20.0,
+    "avg_tip": 0.0,
+    "avg_tip_rate_pct": 0.0,
+    "pct_trips_with_tip": 0.0
+  },
+  {
+    "payment_type_id": 3,
+    "payment_type_name": "No Charge",
+    "trip_count": 320000,
+    "total_revenue": 3840000.0,
+    "avg_fare": 12.0,
+    "avg_tip": 0.0,
+    "avg_tip_rate_pct": 0.0,
+    "pct_trips_with_tip": 0.0
+  },
+  {
+    "payment_type_id": 4,
+    "payment_type_name": "Dispute",
+    "trip_count": 240000,
+    "total_revenue": 2880000.0,
+    "avg_fare": 12.0,
+    "avg_tip": 0.0,
+    "avg_tip_rate_pct": 0.0,
+    "pct_trips_with_tip": 0.0
+  }
+]

@@ -30,6 +30,9 @@ export const getData = {
   marketShare:        () => fetchJson<import('@/types').MarketShare[]>('market_share.json'),
   boroughMarketShare: () => fetchJson<import('@/types').BoroughMarketShare[]>('borough_market_share.json'),
   airportAnalysis:    () => fetchJson<import('@/types').AirportAnalysis[]>('airport_analysis.json'),
+  speedCongestion:    () => fetchJson<import('@/types').SpeedCongestion[]>('speed_congestion.json'),
+  paymentTipping:     () => fetchJson<import('@/types').PaymentTipping[]>('payment_tipping.json'),
+  surchargesTaxes:    () => fetchJson<import('@/types').SurchargesTaxes[]>('surcharges_taxes.json'),
 };
 
 export const MONTH_NAMES = [

@@ -11,6 +11,7 @@ const NAV = [
   { href: '/market-share', icon: '◰', label: 'Market Share'  },
   { href: '/routes',     icon: '⇄', label: 'Route Corridors' },
   { href: '/airports',   icon: '✈', label: 'Airport Hubs'    },
+  { href: '/congestion', icon: '⚡', label: 'Traffic Speed'   },
   { href: '/economics',  icon: '◇', label: 'Unit Economics'  },
   { href: '/simulator',  icon: '◆', label: 'Simulator'       },
   { href: '/technical',  icon: '◉', label: 'Technical'       },

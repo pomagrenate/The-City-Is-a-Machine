@@ -1,0 +1,110 @@
+[
+  {
+    "pickup_month": 1,
+    "total_trips": 3200000,
+    "total_congestion_surcharge": 7680000.0,
+    "total_airport_fee": 1280000.0,
+    "total_mta_tax": 1600000.0,
+    "total_tolls": 2560000.0,
+    "total_revenue": 75200000.0
+  },
+  {
+    "pickup_month": 2,
+    "total_trips": 3200000,
+    "total_congestion_surcharge": 7680000.0,
+    "total_airport_fee": 1280000.0,
+    "total_mta_tax": 1600000.0,
+    "total_tolls": 2560000.0,
+    "total_revenue": 75200000.0
+  },
+  {
+    "pickup_month": 3,
+    "total_trips": 3200000,
+    "total_congestion_surcharge": 7680000.0,
+    "total_airport_fee": 1280000.0,
+    "total_mta_tax": 1600000.0,
+    "total_tolls": 2560000.0,
+    "total_revenue": 75200000.0
+  },
+  {
+    "pickup_month": 4,
+    "total_trips": 3200000,
+    "total_congestion_surcharge": 7680000.0,
+    "total_airport_fee": 1280000.0,
+    "total_mta_tax": 1600000.0,
+    "total_tolls": 2560000.0,
+    "total_revenue": 75200000.0
+  },
+  {
+    "pickup_month": 5,
+    "total_trips": 3200000,
+    "total_congestion_surcharge": 7680000.0,
+    "total_airport_fee": 1280000.0,
+    "total_mta_tax": 1600000.0,
+    "total_tolls": 2560000.0,
+    "total_revenue": 75200000.0
+  },
+  {
+    "pickup_month": 6,
+    "total_trips": 3200000,
+    "total_congestion_surcharge": 7680000.0,
+    "total_airport_fee": 1280000.0,
+    "total_mta_tax": 1600000.0,
+    "total_tolls": 2560000.0,
+    "total_revenue": 75200000.0
+  },
+  {
+    "pickup_month": 7,
+    "total_trips": 3200000,
+    "total_congestion_surcharge": 7680000.0,
+    "total_airport_fee": 1280000.0,
+    "total_mta_tax": 1600000.0,
+    "total_tolls": 2560000.0,
+    "total_revenue": 75200000.0
+  },
+  {
+    "pickup_month": 8,
+    "total_trips": 3200000,
+    "total_congestion_surcharge": 7680000.0,
+    "total_airport_fee": 1280000.0,
+    "total_mta_tax": 1600000.0,
+    "total_tolls": 2560000.0,
+    "total_revenue": 75200000.0
+  },
+  {
+    "pickup_month": 9,
+    "total_trips": 3200000,
+    "total_congestion_surcharge": 7680000.0,
+    "total_airport_fee": 1280000.0,
+    "total_mta_tax": 1600000.0,
+    "total_tolls": 2560000.0,
+    "total_revenue": 75200000.0
+  },
+  {
+    "pickup_month": 10,
+    "total_trips": 3200000,
+    "total_congestion_surcharge": 7680000.0,
+    "total_airport_fee": 1280000.0,
+    "total_mta_tax": 1600000.0,
+    "total_tolls": 2560000.0,
+    "total_revenue": 75200000.0
+  },
+  {
+    "pickup_month": 11,
+    "total_trips": 3200000,
+    "total_congestion_surcharge": 7680000.0,
+    "total_airport_fee": 1280000.0,
+    "total_mta_tax": 1600000.0,
+    "total_tolls": 2560000.0,
+    "total_revenue": 75200000.0
+  },
+  {
+    "pickup_month": 12,
+    "total_trips": 3200000,
+    "total_congestion_surcharge": 7680000.0,
+    "total_airport_fee": 1280000.0,
+    "total_mta_tax": 1600000.0,
+    "total_tolls": 2560000.0,
+    "total_revenue": 75200000.0
+  }
+]
