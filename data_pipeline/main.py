@@ -154,9 +154,12 @@ def main():
         ]
         zone_lookup_path = next((p for p in zone_lookup_candidates if p.exists()), None)
         if zone_lookup_path is None:
-            print("  ✗ taxi_zone_lookup.csv not found!")
-            print("    Add it to your Kaggle dataset or alongside main.py")
-            sys.exit(1)
+            zone_lookup_path = output_dir / "taxi_zone_lookup.csv"
+            print("  ↓ Downloading taxi_zone_lookup.csv from official TLC S3...")
+            import urllib.request
+            url = "https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv"
+            urllib.request.urlretrieve(url, zone_lookup_path)
+            print(f"  ✓ Saved taxi_zone_lookup.csv to {zone_lookup_path}")
 
         silver_stats = run_silver(
             bronze_dir=bronze_dir,
