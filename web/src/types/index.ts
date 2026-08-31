@@ -138,3 +138,28 @@ export interface TopRoute {
   avg_distance_miles: number;
   avg_duration_min: number;
 }
+
+export interface MarketShare {
+  mode: 'Yellow Taxi' | 'Uber' | 'Lyft';
+  total_trips: number;
+  total_revenue: number;
+  trip_share_pct: number;
+  revenue_share_pct: number;
+  avg_fare: number;
+  avg_trip_distance_miles: number;
+  avg_duration_min: number;
+  avg_driver_pay?: number;
+  avg_tip_pct: number;
+}
+
+export interface BoroughMarketShare {
+  borough: string;
+  yellow_trips: number;
+  uber_trips: number;
+  lyft_trips: number;
+  total_trips: number;
+  yellow_share_pct: number;
+  uber_share_pct: number;
+  lyft_share_pct: number;
+}
+

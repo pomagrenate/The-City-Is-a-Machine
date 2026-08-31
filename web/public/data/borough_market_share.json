@@ -1,0 +1,52 @@
+[
+  {
+    "borough": "Manhattan",
+    "yellow_trips": 32100000,
+    "uber_trips": 45200000,
+    "lyft_trips": 18400000,
+    "total_trips": 95700000,
+    "yellow_share_pct": 33.5,
+    "uber_share_pct": 47.2,
+    "lyft_share_pct": 19.3
+  },
+  {
+    "borough": "Brooklyn",
+    "yellow_trips": 2100000,
+    "uber_trips": 48500000,
+    "lyft_trips": 19200000,
+    "total_trips": 69800000,
+    "yellow_share_pct": 3.0,
+    "uber_share_pct": 69.5,
+    "lyft_share_pct": 27.5
+  },
+  {
+    "borough": "Queens",
+    "yellow_trips": 3400000,
+    "uber_trips": 42100000,
+    "lyft_trips": 14800000,
+    "total_trips": 60300000,
+    "yellow_share_pct": 5.6,
+    "uber_share_pct": 69.8,
+    "lyft_share_pct": 24.6
+  },
+  {
+    "borough": "Bronx",
+    "yellow_trips": 600000,
+    "uber_trips": 15200000,
+    "lyft_trips": 3100000,
+    "total_trips": 18900000,
+    "yellow_share_pct": 3.2,
+    "uber_share_pct": 80.4,
+    "lyft_share_pct": 16.4
+  },
+  {
+    "borough": "Staten Island",
+    "yellow_trips": 110000,
+    "uber_trips": 3700000,
+    "lyft_trips": 500000,
+    "total_trips": 4310000,
+    "yellow_share_pct": 2.5,
+    "uber_share_pct": 85.8,
+    "lyft_share_pct": 11.6
+  }
+]

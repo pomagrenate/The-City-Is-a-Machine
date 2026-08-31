@@ -1,0 +1,35 @@
+[
+  {
+    "mode": "Yellow Taxi",
+    "total_trips": 38310226,
+    "total_revenue": 881135000.0,
+    "trip_share_pct": 15.4,
+    "revenue_share_pct": 16.8,
+    "avg_fare": 23.0,
+    "avg_trip_distance_miles": 3.4,
+    "avg_duration_min": 15.8,
+    "avg_tip_pct": 16.8
+  },
+  {
+    "mode": "Uber",
+    "total_trips": 154700000,
+    "total_revenue": 3248700000.0,
+    "trip_share_pct": 62.1,
+    "revenue_share_pct": 61.9,
+    "avg_fare": 21.0,
+    "avg_trip_distance_miles": 4.8,
+    "avg_duration_min": 21.2,
+    "avg_tip_pct": 8.4
+  },
+  {
+    "mode": "Lyft",
+    "total_trips": 56000000,
+    "total_revenue": 1120000000.0,
+    "trip_share_pct": 22.5,
+    "revenue_share_pct": 21.3,
+    "avg_fare": 20.0,
+    "avg_trip_distance_miles": 4.5,
+    "avg_duration_min": 20.1,
+    "avg_tip_pct": 9.1
+  }
+]

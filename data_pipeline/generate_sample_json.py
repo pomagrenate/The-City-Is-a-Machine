@@ -247,6 +247,56 @@ def generate_sample_data():
   with open(PUBLIC_DATA_DIR / "data_summary.json", "w") as f:
     json.dump(data_summary, f, indent=2)
 
+  # 9. Market Share
+  market_share = [
+    {
+      'mode': 'Yellow Taxi',
+      'total_trips': 38310226,
+      'total_revenue': 881135000.0,
+      'trip_share_pct': 15.4,
+      'revenue_share_pct': 16.8,
+      'avg_fare': 23.00,
+      'avg_trip_distance_miles': 3.4,
+      'avg_duration_min': 15.8,
+      'avg_tip_pct': 16.8
+    },
+    {
+      'mode': 'Uber',
+      'total_trips': 154700000,
+      'total_revenue': 3248700000.0,
+      'trip_share_pct': 62.1,
+      'revenue_share_pct': 61.9,
+      'avg_fare': 21.00,
+      'avg_trip_distance_miles': 4.8,
+      'avg_duration_min': 21.2,
+      'avg_tip_pct': 8.4
+    },
+    {
+      'mode': 'Lyft',
+      'total_trips': 56000000,
+      'total_revenue': 1120000000.0,
+      'trip_share_pct': 22.5,
+      'revenue_share_pct': 21.3,
+      'avg_fare': 20.00,
+      'avg_trip_distance_miles': 4.5,
+      'avg_duration_min': 20.1,
+      'avg_tip_pct': 9.1
+    }
+  ]
+  with open(PUBLIC_DATA_DIR / "market_share.json", "w") as f:
+    json.dump(market_share, f, indent=2)
+
+  # 10. Borough Market Share
+  borough_market_share = [
+    {'borough': 'Manhattan', 'yellow_trips': 32100000, 'uber_trips': 45200000, 'lyft_trips': 18400000, 'total_trips': 95700000, 'yellow_share_pct': 33.5, 'uber_share_pct': 47.2, 'lyft_share_pct': 19.3},
+    {'borough': 'Brooklyn',  'yellow_trips': 2100000,  'uber_trips': 48500000, 'lyft_trips': 19200000, 'total_trips': 69800000, 'yellow_share_pct': 3.0,  'uber_share_pct': 69.5, 'lyft_share_pct': 27.5},
+    {'borough': 'Queens',    'yellow_trips': 3400000,  'uber_trips': 42100000, 'lyft_trips': 14800000, 'total_trips': 60300000, 'yellow_share_pct': 5.6,  'uber_share_pct': 69.8, 'lyft_share_pct': 24.6},
+    {'borough': 'Bronx',     'yellow_trips': 600000,   'uber_trips': 15200000, 'lyft_trips': 3100000,  'total_trips': 18900000, 'yellow_share_pct': 3.2,  'uber_share_pct': 80.4, 'lyft_share_pct': 16.4},
+    {'borough': 'Staten Island', 'yellow_trips': 110000, 'uber_trips': 3700000,  'lyft_trips': 500000,   'total_trips': 4310000,  'yellow_share_pct': 2.5,  'uber_share_pct': 85.8, 'lyft_share_pct': 11.6},
+  ]
+  with open(PUBLIC_DATA_DIR / "borough_market_share.json", "w") as f:
+    json.dump(borough_market_share, f, indent=2)
+
   print("[OK] Sample JSON files created successfully in web/public/data/")
 
 if __name__ == "__main__":

@@ -17,16 +17,18 @@ async function fetchJson<T>(filename: string): Promise<T> {
 }
 
 export const getData = {
-  zoneRevenue:      () => fetchJson<ZoneRevenue[]>('zone_revenue.json'),
-  hourlyDemand:     () => fetchJson<HourlyDemand[]>('hourly_demand.json'),
-  boroughSummary:   () => fetchJson<BoroughSummary[]>('borough_summary.json'),
-  monthlyTrends:    () => fetchJson<MonthlyTrend[]>('monthly_trends.json'),
-  unitEconomics:    () => fetchJson<UnitEconomics[]>('unit_economics.json'),
-  dailyHeatmap:     () => fetchJson<DailyHeatmap[]>('daily_heatmap.json'),
-  simulatorBase:    () => fetchJson<SimulatorBase[]>('simulator_base.json'),
-  benchmarkResults: () => fetchJson<BenchmarkResults>('benchmark_results.json'),
-  dataSummary:      () => fetchJson<DataSummary>('data_summary.json'),
-  topRoutes:        () => fetchJson<TopRoute[]>('top_routes.json'),
+  zoneRevenue:        () => fetchJson<ZoneRevenue[]>('zone_revenue.json'),
+  hourlyDemand:       () => fetchJson<HourlyDemand[]>('hourly_demand.json'),
+  boroughSummary:     () => fetchJson<BoroughSummary[]>('borough_summary.json'),
+  monthlyTrends:      () => fetchJson<MonthlyTrend[]>('monthly_trends.json'),
+  unitEconomics:      () => fetchJson<UnitEconomics[]>('unit_economics.json'),
+  dailyHeatmap:       () => fetchJson<DailyHeatmap[]>('daily_heatmap.json'),
+  simulatorBase:      () => fetchJson<SimulatorBase[]>('simulator_base.json'),
+  benchmarkResults:   () => fetchJson<BenchmarkResults>('benchmark_results.json'),
+  dataSummary:        () => fetchJson<DataSummary>('data_summary.json'),
+  topRoutes:          () => fetchJson<TopRoute[]>('top_routes.json'),
+  marketShare:        () => fetchJson<import('@/types').MarketShare[]>('market_share.json'),
+  boroughMarketShare: () => fetchJson<import('@/types').BoroughMarketShare[]>('borough_market_share.json'),
 };
 
 export const MONTH_NAMES = [
