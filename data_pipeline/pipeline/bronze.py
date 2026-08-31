@@ -56,8 +56,25 @@ def run_bronze(data_dir: Path, bronze_dir: Path, year: int, months: list | None)
 
         rows_raw = len(df)
 
+        # Normalize Green Taxi / FHV column names
+        rename_map = {
+            "lpep_pickup_datetime": "tpep_pickup_datetime",
+            "lpep_dropoff_datetime": "tpep_dropoff_datetime",
+            "pickup_datetime": "tpep_pickup_datetime",
+            "dropoff_datetime": "tpep_dropoff_datetime",
+        }
+        df = df.rename(columns=rename_map)
+
+        # Mode tagging
+        if "green" in raw_path.name.lower():
+            df["mode"] = "green"
+        elif "fhvhv" in raw_path.name.lower():
+            df["mode"] = "fhvhv"
+        else:
+            df["mode"] = "yellow"
+
         # Keep only required columns that exist
-        available = [c for c in REQUIRED_COLUMNS if c in df.columns]
+        available = [c for c in REQUIRED_COLUMNS + ["mode"] if c in df.columns]
         missing = [c for c in REQUIRED_COLUMNS if c not in df.columns]
         df = df[available].copy()
 

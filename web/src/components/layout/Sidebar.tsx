@@ -9,6 +9,8 @@ const NAV = [
   { href: '/revenue',    icon: '◎', label: 'Revenue'         },
   { href: '/demand',     icon: '◌', label: 'Demand'          },
   { href: '/market-share', icon: '◰', label: 'Market Share'  },
+  { href: '/equity',     icon: '◫', label: 'Transit Equity'  },
+  { href: '/history',    icon: '⏳', label: '5-Year History'  },
   { href: '/routes',     icon: '⇄', label: 'Route Corridors' },
   { href: '/airports',   icon: '✈', label: 'Airport Hubs'    },
   { href: '/congestion', icon: '⚡', label: 'Traffic Speed'   },

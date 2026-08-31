@@ -206,5 +206,26 @@ export interface SurchargesTaxes {
   total_revenue: number;
 }
 
+export interface TransitEquity {
+  borough: string;
+  total_trips: number;
+  outer_borough_trip_share_pct: number;
+  avg_fare: number;
+  avg_distance_miles: number;
+  avg_revenue_per_km: number;
+  active_pickup_zones: number;
+}
+
+export interface MultiYearTrends {
+  year: number;
+  total_trips: number;
+  total_revenue: number;
+  avg_fare: number;
+  avg_tip_pct: number;
+  avg_distance_miles: number;
+  midtown_8am_rush_trips: number;
+}
+
+
 
 

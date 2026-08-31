@@ -224,6 +224,40 @@ QUERIES = {
         GROUP BY pickup_month
         ORDER BY pickup_month
     """,
+
+    "transit_equity": """
+        SELECT
+            PUBorough                                       AS borough,
+            COUNT(*)                                        AS total_trips,
+            ROUND(SUM(CASE WHEN PUBorough != 'Manhattan' THEN 1.0 ELSE 0 END) * 100.0 / COUNT(*), 2)
+                                                            AS outer_borough_trip_share_pct,
+            ROUND(AVG(fare_amount), 2)                      AS avg_fare,
+            ROUND(AVG(trip_distance), 2)                    AS avg_distance_miles,
+            ROUND(AVG(revenue_per_km), 3)                   AS avg_revenue_per_km,
+            COUNT(DISTINCT PULocationID)                    AS active_pickup_zones
+        FROM silver
+        WHERE PUBorough IS NOT NULL
+        GROUP BY PUBorough
+        ORDER BY total_trips DESC
+    """,
+
+    "multi_year_trends": """
+        SELECT
+            pickup_year                                     AS year,
+            COUNT(*)                                        AS total_trips,
+            ROUND(SUM(total_amount), 2)                     AS total_revenue,
+            ROUND(AVG(total_amount), 2)                     AS avg_fare,
+            ROUND(AVG(tip_rate) * 100, 2)                   AS avg_tip_pct,
+            ROUND(AVG(trip_distance), 2)                    AS avg_distance_miles,
+            SUM(CASE WHEN PULocationID IN (161, 230, 236, 237) AND pickup_hour = 8 THEN 1 ELSE 0 END)
+                                                            AS midtown_8am_rush_trips
+        FROM (
+            SELECT *, EXTRACT(YEAR FROM tpep_pickup_datetime) AS pickup_year FROM silver
+        )
+        WHERE pickup_year BETWEEN 2019 AND 2023
+        GROUP BY pickup_year
+        ORDER BY pickup_year
+    """,
 }
 
 

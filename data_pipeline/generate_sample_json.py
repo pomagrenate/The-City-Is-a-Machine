@@ -354,6 +354,28 @@ def generate_sample_data():
   with open(PUBLIC_DATA_DIR / "surcharges_taxes.json", "w") as f:
     json.dump(surcharges_taxes, f, indent=2)
 
+  # 16. Transit Equity
+  transit_equity = [
+    {'borough': 'Manhattan', 'total_trips': 32100000, 'outer_borough_trip_share_pct': 0.0, 'avg_fare': 19.5, 'avg_distance_miles': 2.8, 'avg_revenue_per_km': 4.25, 'active_pickup_zones': 68},
+    {'borough': 'Queens', 'total_trips': 3400000, 'outer_borough_trip_share_pct': 100.0, 'avg_fare': 38.2, 'avg_distance_miles': 8.9, 'avg_revenue_per_km': 2.65, 'active_pickup_zones': 56},
+    {'borough': 'Brooklyn', 'total_trips': 2100000, 'outer_borough_trip_share_pct': 100.0, 'avg_fare': 26.4, 'avg_distance_miles': 5.2, 'avg_revenue_per_km': 3.15, 'active_pickup_zones': 61},
+    {'borough': 'Bronx', 'total_trips': 600000, 'outer_borough_trip_share_pct': 100.0, 'avg_fare': 24.1, 'avg_distance_miles': 4.8, 'avg_revenue_per_km': 3.10, 'active_pickup_zones': 42},
+    {'borough': 'Staten Island', 'total_trips': 110000, 'outer_borough_trip_share_pct': 100.0, 'avg_fare': 31.0, 'avg_distance_miles': 7.5, 'avg_revenue_per_km': 2.55, 'active_pickup_zones': 18},
+  ]
+  with open(PUBLIC_DATA_DIR / "transit_equity.json", "w") as f:
+    json.dump(transit_equity, f, indent=2)
+
+  # 17. Multi-Year Trends (2019-2023)
+  multi_year_trends = [
+    {'year': 2019, 'total_trips': 84000000, 'total_revenue': 1386000000.0, 'avg_fare': 16.50, 'avg_tip_pct': 15.2, 'avg_distance_miles': 2.9, 'midtown_8am_rush_trips': 1840000},
+    {'year': 2020, 'total_trips': 24800000, 'total_revenue': 446400000.0, 'avg_fare': 18.00, 'avg_tip_pct': 14.8, 'avg_distance_miles': 3.1, 'midtown_8am_rush_trips': 420000},
+    {'year': 2021, 'total_trips': 30900000, 'total_revenue': 602550000.0, 'avg_fare': 19.50, 'avg_tip_pct': 16.0, 'avg_distance_miles': 3.2, 'midtown_8am_rush_trips': 610000},
+    {'year': 2022, 'total_trips': 35200000, 'total_revenue': 756800000.0, 'avg_fare': 21.50, 'avg_tip_pct': 16.5, 'avg_distance_miles': 3.3, 'midtown_8am_rush_trips': 780000},
+    {'year': 2023, 'total_trips': 38310226, 'total_revenue': 881135000.0, 'avg_fare': 23.00, 'avg_tip_pct': 16.8, 'avg_distance_miles': 3.4, 'midtown_8am_rush_trips': 840000},
+  ]
+  with open(PUBLIC_DATA_DIR / "multi_year_trends.json", "w") as f:
+    json.dump(multi_year_trends, f, indent=2)
+
   print("[OK] Sample JSON files created successfully in web/public/data/")
 
 if __name__ == "__main__":

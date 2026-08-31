@@ -33,6 +33,8 @@ export const getData = {
   speedCongestion:    () => fetchJson<import('@/types').SpeedCongestion[]>('speed_congestion.json'),
   paymentTipping:     () => fetchJson<import('@/types').PaymentTipping[]>('payment_tipping.json'),
   surchargesTaxes:    () => fetchJson<import('@/types').SurchargesTaxes[]>('surcharges_taxes.json'),
+  transitEquity:      () => fetchJson<import('@/types').TransitEquity[]>('transit_equity.json'),
+  multiYearTrends:    () => fetchJson<import('@/types').MultiYearTrends[]>('multi_year_trends.json'),
 };
 
 export const MONTH_NAMES = [
