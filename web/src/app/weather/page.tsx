@@ -18,7 +18,6 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
-  Cell,
 } from 'recharts';
 import {
   FaCloudRain,
@@ -28,8 +27,6 @@ import {
   FaWater,
   FaLightbulb,
   FaExclamationTriangle,
-  FaCheckCircle,
-  FaExchangeAlt,
 } from 'react-icons/fa';
 import styles from './weather.module.css';
 
@@ -50,35 +47,37 @@ export default function WeatherPage() {
       getData.transitHubBottleneck().catch(() => []),
       getData.transitDisruptionSpillover().catch(() => []),
     ]).then(([w, s, t, th, ds]) => {
-      setWeatherData(w);
-      setSurgeTrapData(s);
-      setTippingData(t);
-      setTransitHubData(th);
-      setDisruptionData(ds);
+      setWeatherData(w || []);
+      setSurgeTrapData(s || []);
+      setTippingData(t || []);
+      setTransitHubData(th || []);
+      setDisruptionData(ds || []);
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
 
-  const clearData = weatherData.find(d => d.weather_condition?.includes('Clear'));
-  const rainData  = weatherData.find(d => d.weather_condition?.includes('Heavy Rain') || d.weather_condition?.includes('Rain'));
-  const clearTip = clearData?.avg_tip_pct || 16.5;
-  const rainTip  = rainData?.avg_tip_pct  || 19.8;
-  const tipSurge = rainTip - clearTip;
+  const clearData = weatherData.find(d => d?.weather_condition?.includes('Clear'));
+  const rainData  = weatherData.find(d => d?.weather_condition?.includes('Heavy Rain') || d?.weather_condition?.includes('Rain'));
+  const clearTip = clearData?.avg_tip_pct ?? 16.5;
+  const rainTip  = rainData?.avg_tip_pct  ?? 19.8;
+  const tipSurge = Math.max(0, rainTip - clearTip);
 
   // Filter Heavy Rain vs Clear for comparisons
-  const heavyRainSurgeTrap = surgeTrapData.filter(d => d.weather_condition === 'Heavy Rain');
-  const clearSurgeTrap = surgeTrapData.filter(d => d.weather_condition === 'Clear');
+  const heavyRainSurgeTrap = surgeTrapData.filter(d => d?.weather_condition === 'Heavy Rain');
+  const clearSurgeTrap = surgeTrapData.filter(d => d?.weather_condition === 'Clear');
 
   // Chart data for Surge Trap: Effective $/hr comparing Inner Loop vs Airport / Outer
   const surgeComparisonChartData = heavyRainSurgeTrap.map(hr => {
     const cl = clearSurgeTrap.find(c => c.corridor_name === hr.corridor_name);
+    const rainEff = hr?.effective_hourly_revenue ?? 0;
+    const clearEff = cl?.effective_hourly_revenue ?? 0;
     return {
-      name: hr.corridor_name.replace(' (Short Hops)', '').replace(' (Residential)', '').replace(' (JFK/LGA/EWR)', ''),
-      grossFareRain: hr.avg_gross_fare,
-      effectiveHourlyRain: hr.effective_hourly_revenue,
-      effectiveHourlyClear: cl ? cl.effective_hourly_revenue : 0,
-      estDeadheadMin: hr.est_deadhead_min,
-      penaltyPct: cl ? Math.round(((cl.effective_hourly_revenue - hr.effective_hourly_revenue) / cl.effective_hourly_revenue) * 100) : 0,
+      name: (hr?.corridor_name || '').replace(' (Short Hops)', '').replace(' (Residential)', '').replace(' (JFK/LGA/EWR)', ''),
+      grossFareRain: hr?.avg_gross_fare ?? 0,
+      effectiveHourlyRain: rainEff,
+      effectiveHourlyClear: clearEff,
+      estDeadheadMin: hr?.est_deadhead_min ?? 0,
+      penaltyPct: clearEff > 0 ? Math.round(((clearEff - rainEff) / clearEff) * 100) : 0,
     };
   });
 
@@ -115,34 +114,34 @@ export default function WeatherPage() {
       <div className="page-header">
         <h1>Weather Resilience &amp; Urban Mobility Intelligence</h1>
         <p>
-          Khám phá các chuyên đề phân tích kinh tế đô thị: <strong>Bẫy Doanh Thu Ngoại Ô (Surge Trap)</strong>, <strong>Phân Hóa Tiền Tip (Smart Tipping)</strong>, <strong>Nút Thắt Cổ Chai Ga Tàu</strong> và <strong>Sự Cố Metro &amp; Sảnh Đón Ảo (Virtual Batching Hubs)</strong>.
+          Deep dive econometric studies: <strong>Outer-Borough Surge Trap</strong>, <strong>Dynamic Smart Tipping</strong>, <strong>Transit Hub Bottlenecks</strong>, and <strong>Subway Disruptions &amp; Virtual Batching Hubs</strong>.
         </p>
       </div>
 
       {/* Top Executive KPI Cards */}
       <div className="stat-grid">
         <StatCard
-          label="Mức Tăng Tip Ngày Mưa"
+          label="Rain Tipping Surge"
           value={`+${tipSurge.toFixed(1)}%`}
-          sub="Đạt đỉnh 19.8% - 21.5% trong bão tuyết"
+          sub="Peaks at 19.8% - 21.5% during severe snowstorms"
           accent="var(--color-blue)"
         />
         <StatCard
-          label="Mức Tăng Giá Cước"
-          value={`1.25×`}
-          sub={`$${(rainData?.avg_fare || 26.8).toFixed(2)} (Mưa) vs $${(clearData?.avg_fare || 21.5).toFixed(2)} (Nắng)`}
+          label="Average Fare Multiplier"
+          value="1.25x"
+          sub={`$${(rainData?.avg_fare ?? 26.8).toFixed(2)} (Rain) vs $${(clearData?.avg_fare ?? 21.5).toFixed(2)} (Clear)`}
           accent="var(--color-amber)"
         />
         <StatCard
-          label="Tốc Độ Giờ Kẹt Xe Midtown"
+          label="Midtown Gridlock Speed"
           value="3.2 mph"
-          sub="Chậm hơn đi bộ (4.0 mph) gây trễ điều phối"
+          sub="Slower than walking pace (4.0 mph) causing dispatch delays"
           accent="var(--color-red)"
         />
         <StatCard
-          label="Rút Ngắn Giải Tỏa Ga"
+          label="Hub Evacuation Acceleration"
           value="-64% Time"
-          sub="Nhờ cơ chế gom khách sảnh đón ảo (Batch Hub)"
+          sub="Via dynamic Virtual Batching Hubs consolidation"
           accent="var(--color-green)"
         />
       </div>
@@ -153,31 +152,31 @@ export default function WeatherPage() {
           className={`${styles.tabButton} ${activeTab === 'overview' ? styles.tabButtonActive : ''}`}
           onClick={() => setActiveTab('overview')}
         >
-          <FaCloudRain /> Tổng Quan Thời Tiết
+          <FaCloudRain /> Weather Overview
         </button>
         <button
           className={`${styles.tabButton} ${activeTab === 'surge-trap' ? styles.tabButtonActive : ''}`}
           onClick={() => setActiveTab('surge-trap')}
         >
-          <FaCarSide /> 1. Bẫy Sân Bay &amp; Ngoại Ô (Surge Trap)
+          <FaCarSide /> 1. Airport &amp; Outer Surge Trap
         </button>
         <button
           className={`${styles.tabButton} ${activeTab === 'tipping' ? styles.tabButtonActive : ''}`}
           onClick={() => setActiveTab('tipping')}
         >
-          <FaCoins /> 2. Phân Hóa Tiền Tip (Smart Tipping)
+          <FaCoins /> 2. Smart Tipping Elasticity
         </button>
         <button
           className={`${styles.tabButton} ${activeTab === 'transit-hub' ? styles.tabButtonActive : ''}`}
           onClick={() => setActiveTab('transit-hub')}
         >
-          <FaSubway /> 3. Nút Thắt Ga Tàu (Transit Bottleneck)
+          <FaSubway /> 3. Transit Hub Bottleneck
         </button>
         <button
           className={`${styles.tabButton} ${activeTab === 'disruption' ? styles.tabButtonActive : ''}`}
           onClick={() => setActiveTab('disruption')}
         >
-          <FaWater /> 4. Sự Cố Metro &amp; Sảnh Đón Ảo (Batch Hubs)
+          <FaWater /> 4. Metro Flood &amp; Virtual Hubs
         </button>
       </div>
 
@@ -187,8 +186,8 @@ export default function WeatherPage() {
           <div className="chart-card">
             <div className="chart-card__header">
               <div>
-                <div className="chart-card__title">Độ Co Giãn Của Tiền Tip &amp; Giá Cước Theo Điều Kiện Thời Tiết</div>
-                <div className="chart-card__subtitle">Dữ liệu kết hợp trạm quan trắc NOAA Central Park và 37 triệu chuyến xe NYC TLC</div>
+                <div className="chart-card__title">Tipping &amp; Fare Elasticity Across Weather Conditions</div>
+                <div className="chart-card__subtitle">Cross-analyzed with NOAA Central Park weather station and 37M NYC TLC trip records</div>
               </div>
             </div>
 
@@ -200,11 +199,11 @@ export default function WeatherPage() {
                   <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `$${v}`} />
                   <Tooltip
                     contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                    formatter={(v: any, name: any) => [name === 'avg_tip_pct' ? `${Number(v).toFixed(1)}%` : `$${Number(v).toFixed(2)}`, name === 'avg_tip_pct' ? 'Tỷ Lệ Tip' : 'Giá Cước TB']}
+                    formatter={(v: any, name: any) => [name === 'avg_tip_pct' ? `${Number(v || 0).toFixed(1)}%` : `$${Number(v || 0).toFixed(2)}`, name === 'avg_tip_pct' ? 'Avg Tip Rate' : 'Avg Fare']}
                   />
                   <Legend />
-                  <Bar yAxisId="left" dataKey="avg_tip_pct" name="Tỷ Lệ Tip TB (%)" fill="var(--color-blue)" radius={[4, 4, 0, 0]} maxBarSize={45} />
-                  <Bar yAxisId="right" dataKey="avg_fare" name="Giá Cước TB ($)" fill="var(--color-amber)" radius={[4, 4, 0, 0]} maxBarSize={45} />
+                  <Bar yAxisId="left" dataKey="avg_tip_pct" name="Avg Tip Rate (%)" fill="var(--color-blue)" radius={[4, 4, 0, 0]} maxBarSize={45} />
+                  <Bar yAxisId="right" dataKey="avg_fare" name="Avg Fare ($)" fill="var(--color-amber)" radius={[4, 4, 0, 0]} maxBarSize={45} />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -212,31 +211,31 @@ export default function WeatherPage() {
 
           <div className="chart-card">
             <div className="chart-card__header">
-              <div className="chart-card__title">Chi Tiết Tác Động Thời Tiết Toàn Thành Phố</div>
+              <div className="chart-card__title">Citywide Weather Impact Breakdown</div>
             </div>
             <div style={{ overflowX: 'auto' }}>
               <table className="data-table">
                 <thead>
                   <tr>
-                    <th>Điều Kiện Thời Tiết</th>
-                    <th>Tổng Cuốc Xe</th>
-                    <th>Tổng Doanh Thu</th>
-                    <th>Giá Cước TB</th>
-                    <th>Tỷ Lệ Tip TB</th>
-                    <th>Cự Ly TB</th>
-                    <th>Thời Lượng TB</th>
+                    <th>Weather Condition</th>
+                    <th>Total Trips</th>
+                    <th>Total Revenue</th>
+                    <th>Avg Fare</th>
+                    <th>Avg Tip %</th>
+                    <th>Avg Distance</th>
+                    <th>Avg Duration</th>
                   </tr>
                 </thead>
                 <tbody>
                   {weatherData.map(r => (
                     <tr key={r.weather_condition}>
                       <td style={{ fontWeight: 700 }}>{r.weather_condition}</td>
-                      <td>{formatNumber(r.total_trips)}</td>
-                      <td>{formatCurrency(r.total_revenue)}</td>
-                      <td>${r.avg_fare.toFixed(2)}</td>
-                      <td style={{ color: 'var(--color-blue)', fontWeight: 700 }}>{r.avg_tip_pct.toFixed(1)}%</td>
-                      <td>{r.avg_distance_miles.toFixed(1)} dặm</td>
-                      <td>{r.avg_duration_min.toFixed(1)} phút</td>
+                      <td>{formatNumber(r.total_trips ?? 0)}</td>
+                      <td>{formatCurrency(r.total_revenue ?? 0)}</td>
+                      <td>${(r.avg_fare ?? 0).toFixed(2)}</td>
+                      <td style={{ color: 'var(--color-blue)', fontWeight: 700 }}>{(r.avg_tip_pct ?? 0).toFixed(1)}%</td>
+                      <td>{(r.avg_distance_miles ?? 0).toFixed(1)} mi</td>
+                      <td>{(r.avg_duration_min ?? 0).toFixed(1)} min</td>
                     </tr>
                   ))}
                 </tbody>
@@ -251,18 +250,18 @@ export default function WeatherPage() {
         <>
           <div className={styles.strategyCardWarning}>
             <div className={styles.strategyTitleWarning}>
-              <FaExclamationTriangle /> Nghịch Lý "Bẫy Doanh Thu Ngoại Ô &amp; Sân Bay Ngày Mưa"
+              <FaExclamationTriangle /> The "Airport &amp; Outer-Borough Weather Surge Trap" Paradox
             </div>
             <div className={styles.strategyText}>
-              Khi trời mưa lớn, cước chuyến đi sân bay hoặc ra ngoại ô có vẻ rất cao (<strong>$54 - $82/cuốc</strong>), nhưng thời gian kẹt xe kéo dài (<strong>48 - 75 phút</strong>) kết hợp với <strong>thời gian chạy rỗng quay đầu 100% (Deadhead 35 - 55 phút)</strong> khiến <strong>doanh thu thực tế mỗi giờ ($/h) bị giảm tới 25% - 28%</strong>. Ngược lại, nhận chuỗi cuốc ngắn nội đô liên hoàn giúp tài xế đạt tới <strong>$56.04/giờ</strong>.
+              During heavy storms, long-distance airport and outer-borough trips display deceptively high gross fares (<strong>$54 - $82/trip</strong>). However, severe arterial gridlock (<strong>48 - 75 min trip duration</strong>) combined with <strong>uncompensated empty deadhead return trips (35 - 55 min)</strong> slashes <strong>effective driver hourly earnings ($/h) by 25% - 28%</strong>. In contrast, staying within dense urban cores running short-hop trips yields up to <strong>$56.04/hour</strong>.
             </div>
           </div>
 
           <div className="chart-card">
             <div className="chart-card__header">
               <div>
-                <div className="chart-card__title">So Sánh Doanh Thu Thực Tế Mỗi Giờ ($/h Net Effective) Giữa Các Hành Lang</div>
-                <div className="chart-card__subtitle">Tính toán sau khi trừ toàn bộ thời gian di chuyển trong mưa + thời gian chạy rỗng quay đầu (Deadhead)</div>
+                <div className="chart-card__title">Effective Hourly Revenue ($/h Net Effective) Across Corridors</div>
+                <div className="chart-card__subtitle">Calculated net of storm traffic duration and return deadhead travel time</div>
               </div>
             </div>
 
@@ -272,30 +271,30 @@ export default function WeatherPage() {
                 <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `$${v}/h`} />
                 <Tooltip
                   contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                  formatter={(v: any, name: any) => [`$${Number(v).toFixed(2)}/h`, name === 'effectiveHourlyRain' ? 'Doanh Thu Thực Tế (Mưa Lớn)' : 'Doanh Thu Thực Tế (Trời Quang)']}
+                  formatter={(v: any, name: any) => [`$${Number(v || 0).toFixed(2)}/h`, name === 'effectiveHourlyRain' ? 'Effective $/hr (Heavy Rain)' : 'Effective $/hr (Clear Skies)']}
                 />
                 <Legend />
-                <Bar dataKey="effectiveHourlyRain" name="Doanh Thu Thực Tế Ngày Mưa ($/h)" fill="var(--color-blue)" radius={[4, 4, 0, 0]} maxBarSize={45} />
-                <Bar dataKey="effectiveHourlyClear" name="Doanh Thu Thực Tế Ngày Nắng ($/h)" fill="#94a3b8" radius={[4, 4, 0, 0]} maxBarSize={45} />
+                <Bar dataKey="effectiveHourlyRain" name="Effective $/hr in Heavy Rain" fill="var(--color-blue)" radius={[4, 4, 0, 0]} maxBarSize={45} />
+                <Bar dataKey="effectiveHourlyClear" name="Effective $/hr in Clear Skies" fill="#94a3b8" radius={[4, 4, 0, 0]} maxBarSize={45} />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
           <div className="chart-card">
             <div className="chart-card__header">
-              <div className="chart-card__title">Bảng Chi Tiết Hành Lang Giao Thông &amp; Thời Gian Chạy Rỗng (Deadhead)</div>
+              <div className="chart-card__title">Corridor Economics &amp; Deadhead Return Penalty Breakdown</div>
             </div>
             <div style={{ overflowX: 'auto' }}>
               <table className="data-table">
                 <thead>
                   <tr>
-                    <th>Hành Lang Giao Thông</th>
-                    <th>Thời Tiết</th>
-                    <th>Cước TB ($)</th>
-                    <th>Thời Lượng Cuốc</th>
-                    <th>Thời Gian Chạy Rỗng</th>
-                    <th>Doanh Thu Thực Tế ($/h)</th>
-                    <th>Đánh Giá &amp; Khuyến Nghị</th>
+                    <th>Transit Corridor</th>
+                    <th>Weather Condition</th>
+                    <th>Avg Fare ($)</th>
+                    <th>Trip Duration</th>
+                    <th>Deadhead Return Time</th>
+                    <th>Effective Revenue ($/h)</th>
+                    <th>Operational Policy</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -310,13 +309,13 @@ export default function WeatherPage() {
                             {r.weather_condition}
                           </span>
                         </td>
-                        <td>${r.avg_gross_fare.toFixed(2)}</td>
-                        <td>{r.avg_duration_min.toFixed(1)} phút</td>
-                        <td style={{ color: r.est_deadhead_min > 20 ? 'var(--color-red)' : 'var(--color-green)', fontWeight: 600 }}>
-                          +{r.est_deadhead_min.toFixed(0)} phút rỗng
+                        <td>${(r.avg_gross_fare ?? 0).toFixed(2)}</td>
+                        <td>{(r.avg_duration_min ?? 0).toFixed(1)} min</td>
+                        <td style={{ color: (r.est_deadhead_min ?? 0) > 20 ? 'var(--color-red)' : 'var(--color-green)', fontWeight: 600 }}>
+                          +{(r.est_deadhead_min ?? 0).toFixed(0)} min empty
                         </td>
                         <td style={{ fontSize: '1rem', fontWeight: 700, color: isOptimal ? 'var(--color-green)' : (isTrap ? 'var(--color-red)' : 'var(--color-text-primary)') }}>
-                          ${r.effective_hourly_revenue.toFixed(2)}/h
+                          ${(r.effective_hourly_revenue ?? 0).toFixed(2)}/h
                         </td>
                         <td>
                           <span className={isOptimal ? styles.badgeSuccess : (isTrap ? styles.badgeDanger : styles.badgeInfo)}>
@@ -338,10 +337,10 @@ export default function WeatherPage() {
         <>
           <div className={styles.strategyCard}>
             <div className={styles.strategyTitle}>
-              <FaLightbulb /> Chiến Lược "Smart Tip UI" Theo Ngữ Cảnh Thời Tiết &amp; Phân Khúc
+              <FaLightbulb /> Contextual "Smart Tip UI" Strategy by Passenger Demographic Segment
             </div>
             <div className={styles.strategyText}>
-              Khách hàng tại <strong>Khu Tài Chính &amp; Văn Phòng (Midtown/Financial Hub)</strong> sẵn sàng tăng mức tip từ <strong>20.0% lên 24.5% (+4.5% spike)</strong> khi mưa lớn vào giờ cao điểm. Đề xuất thuật toán hiển thị gợi ý Tip mặc định linh hoạt trên App (<strong>22% - 25%</strong> cho khu tài chính trong mưa; <strong>15% - 18%</strong> cho khu dân cư ngoại ô) giúp tăng <strong>+18.4% thu nhập tip</strong> cho tài xế mà không tạo cảm giác ép buộc.
+              Passengers in <strong>Financial &amp; Executive districts (Midtown / Wall St)</strong> demonstrate high gratitude elasticity, increasing tip rates from <strong>20.0% to 24.5% (+4.5% spike)</strong> during evening storm peaks. Dynamic default tip recommendations on the passenger app (<strong>22% - 25%</strong> for executive hubs during storms; <strong>15% - 18%</strong> for outer residential zones) unlock <strong>+18.4% driver tip earnings</strong> without increasing price friction.
             </div>
           </div>
 
@@ -349,8 +348,8 @@ export default function WeatherPage() {
             <div className="chart-card">
               <div className="chart-card__header">
                 <div>
-                  <div className="chart-card__title">Độ Nhạy Cảm &amp; Hào Phóng Tip Theo Phân Khúc Khách Hàng</div>
-                  <div className="chart-card__subtitle">So sánh Tỷ lệ Tip (%) khi Trời Nắng vs Mưa Lớn</div>
+                  <div className="chart-card__title">Tipping Generosity &amp; Price Sensitivity by Segment</div>
+                  <div className="chart-card__subtitle">Comparing Tip Rate (%) in Clear Skies vs Heavy Storms</div>
                 </div>
               </div>
 
@@ -360,52 +359,52 @@ export default function WeatherPage() {
                   <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}%`} domain={[10, 28]} />
                   <Tooltip
                     contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                    formatter={(v: any, name: any) => [`${Number(v).toFixed(1)}%`, name === 'rainTip' ? 'Mưa Lớn' : 'Trời Quang']}
+                    formatter={(v: any, name: any) => [`${Number(v || 0).toFixed(1)}%`, name === 'rainTip' ? 'Heavy Rain' : 'Clear Skies']}
                   />
                   <Legend />
-                  <Bar dataKey="rainTip" name="Tỷ Lệ Tip Mưa Lớn (%)" fill="var(--color-blue)" radius={[4, 4, 0, 0]} maxBarSize={40} />
-                  <Bar dataKey="clearTip" name="Tỷ Lệ Tip Trời Nắng (%)" fill="#cbd5e1" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                  <Bar dataKey="rainTip" name="Heavy Rain Tip Rate (%)" fill="var(--color-blue)" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                  <Bar dataKey="clearTip" name="Clear Skies Tip Rate (%)" fill="#cbd5e1" radius={[4, 4, 0, 0]} maxBarSize={40} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
 
             <div className="chart-card">
               <div className="chart-card__header">
-                <div className="chart-card__title">Gợi Ý Mức Tip Thông Minh (Smart Tip Config)</div>
-                <div className="chart-card__subtitle">Cấu hình tham số đề xuất cho Product / App Engineering</div>
+                <div className="chart-card__title">Contextual Smart Tip UI Configurations</div>
+                <div className="chart-card__subtitle">Recommended product preset thresholds for app checkout engineering</div>
               </div>
               <div style={{ overflowX: 'auto' }}>
                 <table className="data-table">
                   <thead>
                     <tr>
-                      <th>Phân Khúc Khách Hàng</th>
-                      <th>Đặc Tính Nhạy Cảm</th>
-                      <th>Mức Tip Thực Tế</th>
-                      <th>Gợi Ý App UI</th>
+                      <th>Passenger Segment</th>
+                      <th>Sensitivity Profile</th>
+                      <th>Actual Storm Tip</th>
+                      <th>Recommended App Presets</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td style={{ fontWeight: 600 }}>Financial &amp; Executive</td>
-                      <td><span className={styles.badgeSuccess}>Siêu hào phóng (+4.5%)</span></td>
+                      <td><span className={styles.badgeSuccess}>High Generosity (+4.5%)</span></td>
                       <td>24.5% ($7.62)</td>
                       <td style={{ fontWeight: 700, color: 'var(--color-blue)' }}>20% / 25% / 30%</td>
                     </tr>
                     <tr>
                       <td style={{ fontWeight: 600 }}>Nightlife &amp; Dining</td>
-                      <td><span className={styles.badgeSuccess}>Tăng mạnh đêm (+3.6%)</span></td>
+                      <td><span className={styles.badgeSuccess}>Late-Night Spike (+3.6%)</span></td>
                       <td>22.6% ($5.65)</td>
                       <td style={{ fontWeight: 700, color: 'var(--color-blue)' }}>18% / 22% / 25%</td>
                     </tr>
                     <tr>
                       <td style={{ fontWeight: 600 }}>Airport Travelers</td>
-                      <td><span className={styles.badgeInfo}>Hào phóng hành lý (+3.0%)</span></td>
+                      <td><span className={styles.badgeInfo}>Luggage Generosity (+3.0%)</span></td>
                       <td>22.0% ($16.28)</td>
                       <td style={{ fontWeight: 700, color: 'var(--color-blue)' }}>18% / 20% / 25%</td>
                     </tr>
                     <tr>
                       <td style={{ fontWeight: 600 }}>Residential &amp; Outer</td>
-                      <td><span className={styles.badgeWarning}>Nhạy cảm giá (+2.0%)</span></td>
+                      <td><span className={styles.badgeWarning}>Price Sensitive (+2.0%)</span></td>
                       <td>16.0% ($4.72)</td>
                       <td style={{ fontWeight: 700, color: 'var(--color-text-secondary)' }}>12% / 15% / 18%</td>
                     </tr>
@@ -422,12 +421,12 @@ export default function WeatherPage() {
         <>
           <div className={styles.strategyCardWarning}>
             <div className={styles.strategyTitleWarning}>
-              <FaSubway /> Hiện Tượng "Nút Thắt Cổ Chai Ga Tàu &amp; Độ Trễ Điều Phối (Lag Time)"
+              <FaSubway /> The "Transit Hub Bottleneck &amp; Supply Lag Time" Phenomenon
             </div>
             <div className={styles.strategyText}>
-              Khi trời mưa đột ngột vào giờ tan tầm (17h00 - 19h00), nhu cầu đón xe tại các ga lớn (Penn Station, Grand Central, Port Authority) <strong>tăng vọt 2.2× - 2.4× (+140%)</strong>. Tuy nhiên, tốc độ kẹt xe tại Midtown giảm xuống chỉ còn <strong>3.0 - 3.4 mph</strong>, khiến xe taxi ở cự ly chỉ 1.5 km mất tới <strong>26 - 32 phút mới tiếp cận được ga</strong>. 
+              When severe downpours hit during the evening rush hour (5:00 PM - 7:00 PM), demand at major multimodal hubs (Penn Station, Grand Central, Port Authority) <strong>surges 2.2x - 2.4x (+140%)</strong>. However, surrounding traffic speeds plummet to <strong>3.0 - 3.4 mph</strong>, requiring vehicles located merely 1 mile away over <strong>26 - 32 minutes to reach passenger pickup points</strong>.
               <br /><br />
-              👉 <strong>Giải Pháp Đề Xuất</strong>: Cơ chế <strong>Proactive Dispatch Trigger</strong> kích hoạt điều phối đón đầu trước 15 - 20 phút ngay khi radar thời tiết phát hiện mưa chuẩn bị chạm khu vực.
+              <strong>Recommended Solution</strong>: A <strong>Proactive Dispatch Trigger</strong> pre-stages vacant vehicles 15 - 20 minutes ahead as soon as weather Doppler radar detects imminent localized precipitation.
             </div>
           </div>
 
@@ -436,26 +435,26 @@ export default function WeatherPage() {
               <div key={i} className={styles.hubCard}>
                 <div className={styles.hubHeader}>
                   <div className={styles.hubName}>{hub.hub_name}</div>
-                  <span className={styles.badgeDanger}>Mưa Lớn</span>
+                  <span className={styles.badgeDanger}>Heavy Rain</span>
                 </div>
                 <div className={styles.metricRow}>
-                  <span className={styles.metricLabel}>Hệ Số Vọt Nhu Cầu:</span>
-                  <span className={styles.metricValue} style={{ color: 'var(--color-red)' }}>{hub.demand_spike_multiplier}× (+{Math.round((hub.demand_spike_multiplier - 1) * 100)}%)</span>
+                  <span className={styles.metricLabel}>Demand Spike Multiplier:</span>
+                  <span className={styles.metricValue} style={{ color: 'var(--color-red)' }}>{(hub.demand_spike_multiplier ?? 1.0).toFixed(2)}x (+{Math.round(((hub.demand_spike_multiplier ?? 1.0) - 1) * 100)}%)</span>
                 </div>
                 <div className={styles.metricRow}>
-                  <span className={styles.metricLabel}>Độ Trễ Tiếp Cận Ga:</span>
-                  <span className={styles.metricValue} style={{ color: 'var(--color-amber)' }}>{hub.nearby_supply_lag_min} phút</span>
+                  <span className={styles.metricLabel}>Nearby Supply Lag:</span>
+                  <span className={styles.metricValue} style={{ color: 'var(--color-amber)' }}>{(hub.nearby_supply_lag_min ?? 0).toFixed(1)} min</span>
                 </div>
                 <div className={styles.metricRow}>
-                  <span className={styles.metricLabel}>Tốc Độ Kẹt Xe Vùng:</span>
-                  <span className={styles.metricValue}>{hub.avg_speed_mph} mph</span>
+                  <span className={styles.metricLabel}>Local Gridlock Speed:</span>
+                  <span className={styles.metricValue}>{(hub.avg_speed_mph ?? 0).toFixed(1)} mph</span>
                 </div>
                 <div className={styles.metricRow}>
-                  <span className={styles.metricLabel}>Ước Tính Cháy Xe:</span>
-                  <span className={styles.metricValue} style={{ color: 'var(--color-purple)' }}>{hub.unmet_demand_estimate_pct}% nhu cầu</span>
+                  <span className={styles.metricLabel}>Unmet Deficit Estimate:</span>
+                  <span className={styles.metricValue} style={{ color: 'var(--color-purple)' }}>{hub.unmet_demand_estimate_pct ?? 0}% demand</span>
                 </div>
                 <div style={{ marginTop: 12, fontSize: '0.8125rem', color: '#1e40af', background: '#eff6ff', padding: '8px 10px', borderRadius: 6, lineHeight: 1.4 }}>
-                  <strong>Hành Động:</strong> {hub.dispatch_action}
+                  <strong>Operational Action:</strong> {hub.dispatch_action}
                 </div>
               </div>
             ))}
@@ -464,8 +463,8 @@ export default function WeatherPage() {
           <div className="chart-card">
             <div className="chart-card__header">
               <div>
-                <div className="chart-card__title">Độ Trễ Điều Phối Xe (Supply Lag Time) &amp; Hệ Số Nhu Cầu Theo Từng Ga</div>
-                <div className="chart-card__subtitle">Minh chứng cho nút thắt cổ chai hạ tầng giao thông khiến xe lân cận không kịp tiếp cận</div>
+                <div className="chart-card__title">Supply Lag Time &amp; Demand Multipliers Across Multimodal Transit Hubs</div>
+                <div className="chart-card__subtitle">Quantifying spatial infrastructure friction during localized weather spikes</div>
               </div>
             </div>
 
@@ -475,71 +474,71 @@ export default function WeatherPage() {
                 margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
               >
                 <XAxis dataKey="hub_name" tick={{ fontSize: 11, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
-                <YAxis yAxisId="left" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}p`} />
+                <YAxis yAxisId="left" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}m`} />
                 <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}x`} />
                 <Tooltip
                   contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                  formatter={(v: any, name: any) => [name === 'nearby_supply_lag_min' ? `${Number(v).toFixed(1)} phút` : `${Number(v).toFixed(2)}x`, name === 'nearby_supply_lag_min' ? 'Độ Trễ Tiếp Cận' : 'Hệ Số Vọt Nhu Cầu']}
+                  formatter={(v: any, name: any) => [name === 'nearby_supply_lag_min' ? `${Number(v || 0).toFixed(1)} min` : `${Number(v || 0).toFixed(2)}x`, name === 'nearby_supply_lag_min' ? 'Nearby Supply Lag' : 'Demand Multiplier']}
                 />
                 <Legend />
-                <Bar yAxisId="left" dataKey="nearby_supply_lag_min" name="Độ Trễ Tiếp Cận Ga (Phút)" fill="var(--color-red)" radius={[4, 4, 0, 0]} maxBarSize={45} />
-                <Bar yAxisId="right" dataKey="demand_spike_multiplier" name="Hệ Số Vọt Nhu Cầu (×)" fill="var(--color-blue)" radius={[4, 4, 0, 0]} maxBarSize={45} />
+                <Bar yAxisId="left" dataKey="nearby_supply_lag_min" name="Supply Lag Time (Min)" fill="var(--color-red)" radius={[4, 4, 0, 0]} maxBarSize={45} />
+                <Bar yAxisId="right" dataKey="demand_spike_multiplier" name="Demand Surge Multiplier (x)" fill="var(--color-blue)" radius={[4, 4, 0, 0]} maxBarSize={45} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </>
       )}
 
-      {/* ── TAB 5: TRANSIT DISRUPTION & VIRTUAL HUBS (NEW IDEA 1) ── */}
+      {/* ── TAB 5: TRANSIT DISRUPTION & VIRTUAL HUBS ─────────────────── */}
       {activeTab === 'disruption' && (
         <>
           <div className={styles.strategyCard}>
             <div className={styles.strategyTitle}>
-              <FaWater /> Chuyên Đề: Giải Tỏa Hành Khách Khi Metro Ngập Úng (Virtual Batching Hubs)
+              <FaWater /> Rapid Crowd Evacuation via Dynamic Virtual Batching Hubs
             </div>
             <div className={styles.strategyText}>
-              Mưa bão gây ngập đường ray các tuyến tàu điện ngầm lớn (A/C/E/1/2/3/7/N/Q/R), đẩy đột ngột <strong>16,000 - 28,500 hành khách</strong> lên mặt đất. Đón khách lẻ tẻ khiến đường trước cửa ga tê liệt và thời gian giải tỏa lên tới <strong>45 phút</strong>. Áp dụng <strong>Điểm Đón Khẩn Cấp Linh Hoạt (Dynamic Virtual Pick-up Hubs)</strong> gom khách vào các sảnh khô ráo và điều phối xe theo lô giúp <strong>rút ngắn 64% thời gian giải tỏa xuống chỉ còn 14 - 16.5 phút</strong>.
+              Severe flooding across major subway lines (A/C/E/1/2/3/7/N/Q/R) dumps <strong>16,000 - 28,500 stranded commuters</strong> onto street level simultaneously. Individual curb hailing creates severe bottlenecks with evacuation wait times reaching <strong>45 minutes</strong>. Deploying <strong>Dynamic Virtual Batching Hubs</strong> consolidates queues into sheltered plazas, <strong>slashing evacuation times by 64% down to 14 - 16.5 minutes</strong>.
             </div>
           </div>
 
           <div className="chart-card">
             <div className="chart-card__header">
               <div>
-                <div className="chart-card__title">So Sánh Thời Gian Giải Tỏa Đám Đông (Phút): Đón Lẻ Tẻ vs Gom Đón Theo Lô (Virtual Hub)</div>
-                <div className="chart-card__subtitle">Minh họa hiệu quả vận hành vượt trội của cơ chế Virtual Batching Hubs</div>
+                <div className="chart-card__title">Evacuation Clearance Time (Minutes): Individual Curb vs Virtual Batching Hubs</div>
+                <div className="chart-card__subtitle">Demonstrating operational throughput gains of forward-staged batch dispatch</div>
               </div>
             </div>
 
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={disruptionData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                 <XAxis dataKey="hub_name" tick={{ fontSize: 11, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}p`} />
+                <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}m`} />
                 <Tooltip
                   contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                  formatter={(v: any, name: any) => [`${Number(v).toFixed(1)} phút`, name === 'evacuation_time_min_batching' ? 'Gom Đón Theo Lô (Virtual Hub)' : 'Đón Lẻ Tẻ Truyền Thống']}
+                  formatter={(v: any, name: any) => [`${Number(v || 0).toFixed(1)} min`, name === 'evacuation_time_min_batching' ? 'Virtual Batch Hubs' : 'Legacy Curb Dispatch']}
                 />
                 <Legend />
-                <Bar dataKey="evacuation_time_min_standard" name="Đón Lẻ Tẻ Truyền Thống (Phút)" fill="var(--color-red)" radius={[4, 4, 0, 0]} maxBarSize={45} />
-                <Bar dataKey="evacuation_time_min_batching" name="Sảnh Đón Ảo Virtual Batch Hub (Phút)" fill="var(--color-green)" radius={[4, 4, 0, 0]} maxBarSize={45} />
+                <Bar dataKey="evacuation_time_min_standard" name="Legacy Individual Curb (Min)" fill="var(--color-red)" radius={[4, 4, 0, 0]} maxBarSize={45} />
+                <Bar dataKey="evacuation_time_min_batching" name="Virtual Batching Hubs (Min)" fill="var(--color-green)" radius={[4, 4, 0, 0]} maxBarSize={45} />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
           <div className="chart-card">
             <div className="chart-card__header">
-              <div className="chart-card__title">Bảng Chi Tiết Sự Cố Ngập Metro &amp; Điểm Đón Khẩn Cấp Ảo Đề Xuất</div>
+              <div className="chart-card__title">Subway Disruption Incidents &amp; Recommended Virtual Staging Hubs</div>
             </div>
             <div style={{ overflowX: 'auto' }}>
               <table className="data-table">
                 <thead>
                   <tr>
-                    <th>Ga / Điểm Trung Chuyển</th>
-                    <th>Sự Cố Gián Đoạn Tuyến</th>
-                    <th>Lượng Khách Tràn Lên Mặt Đất</th>
-                    <th>Hệ Số Tràn (Spillover)</th>
-                    <th>Thời Gian Giải Tỏa Cũ vs Mới</th>
-                    <th>Hiệu Suất Tăng</th>
-                    <th>Sảnh Đón Ảo Được Đề Xuất</th>
+                    <th>Transit Hub</th>
+                    <th>Disruption Event</th>
+                    <th>Spillover Passenger Volume</th>
+                    <th>Spillover Multiplier</th>
+                    <th>Evacuation Time (Legacy vs Batch)</th>
+                    <th>Throughput Gain</th>
+                    <th>Recommended Virtual Hubs</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -547,18 +546,18 @@ export default function WeatherPage() {
                     <tr key={i}>
                       <td style={{ fontWeight: 700 }}>{r.hub_name}</td>
                       <td style={{ fontSize: '0.8125rem', color: 'var(--color-red)', fontWeight: 600 }}>{r.disruption_event}</td>
-                      <td style={{ fontWeight: 600 }}>{formatNumber(r.passenger_spillover_volume)} khách</td>
-                      <td style={{ color: 'var(--color-blue)', fontWeight: 700 }}>{r.spillover_ratio}×</td>
+                      <td style={{ fontWeight: 600 }}>{formatNumber(r.passenger_spillover_volume ?? 0)} riders</td>
+                      <td style={{ color: 'var(--color-blue)', fontWeight: 700 }}>{(r.spillover_ratio ?? 1.0).toFixed(1)}x</td>
                       <td>
-                        <span style={{ textDecoration: 'line-through', color: 'var(--color-text-muted)' }}>{r.evacuation_time_min_standard}p</span>
+                        <span style={{ textDecoration: 'line-through', color: 'var(--color-text-muted)' }}>{r.evacuation_time_min_standard ?? 0}m</span>
                         {' '}&rarr;{' '}
-                        <strong style={{ color: 'var(--color-green)' }}>{r.evacuation_time_min_batching}p</strong>
+                        <strong style={{ color: 'var(--color-green)' }}>{r.evacuation_time_min_batching ?? 0}m</strong>
                       </td>
                       <td>
-                        <span className={styles.badgeSuccess}>+{r.efficiency_gain_pct.toFixed(1)}%</span>
+                        <span className={styles.badgeSuccess}>+{(r.efficiency_gain_pct ?? 0).toFixed(1)}%</span>
                       </td>
                       <td style={{ fontSize: '0.8125rem' }}>
-                        {r.recommended_virtual_hubs?.join(' | ')}
+                        {r.recommended_virtual_hubs?.join(' | ') || 'N/A'}
                       </td>
                     </tr>
                   ))}
@@ -571,5 +570,6 @@ export default function WeatherPage() {
     </div>
   );
 }
+
 
 

@@ -179,20 +179,20 @@ export default function MarketSharePage() {
                       {m.mode}
                     </span>
                   </td>
-                  <td style={{ fontWeight: 600 }}>{formatNumber(m.total_trips)}</td>
-                  <td style={{ fontWeight: 600 }}>{formatCurrency(m.total_revenue)}</td>
+                  <td style={{ fontWeight: 600 }}>{formatNumber(m.total_trips ?? 0)}</td>
+                  <td style={{ fontWeight: 600 }}>{formatCurrency(m.total_revenue ?? 0)}</td>
                   <td>
                     <span className="badge" style={{
                       background: `${MODE_COLORS[m.mode]}20`,
                       color: MODE_COLORS[m.mode] === '#111827' ? '#111827' : MODE_COLORS[m.mode]
                     }}>
-                      {m.trip_share_pct.toFixed(1)}%
+                      {(m.trip_share_pct ?? 0).toFixed(1)}%
                     </span>
                   </td>
-                  <td>${m.avg_fare.toFixed(2)}</td>
-                  <td>{m.avg_trip_distance_miles.toFixed(1)} mi</td>
-                  <td>{m.avg_duration_min.toFixed(1)} min</td>
-                  <td>{m.avg_tip_pct.toFixed(1)}%</td>
+                  <td>${(m.avg_fare ?? 0).toFixed(2)}</td>
+                  <td>{(m.avg_trip_distance_miles ?? 0).toFixed(1)} mi</td>
+                  <td>{(m.avg_duration_min ?? 0).toFixed(1)} min</td>
+                  <td>{(m.avg_tip_pct ?? 0).toFixed(1)}%</td>
                 </tr>
               ))}
             </tbody>

@@ -173,11 +173,11 @@ export default function RoutesPage() {
                       {r.do_borough}
                     </span>
                   </td>
-                  <td style={{ fontWeight: 700 }}>{formatNumber(r.trip_count)}</td>
-                  <td style={{ fontWeight: 600 }}>{formatCurrency(r.total_revenue)}</td>
-                  <td>${r.avg_revenue.toFixed(2)}</td>
-                  <td>{r.avg_distance_miles.toFixed(1)} mi</td>
-                  <td>{r.avg_duration_min.toFixed(1)} min</td>
+                  <td style={{ fontWeight: 700 }}>{formatNumber(r.trip_count ?? 0)}</td>
+                  <td style={{ fontWeight: 600 }}>{formatCurrency(r.total_revenue ?? 0)}</td>
+                  <td>${(r.avg_revenue ?? 0).toFixed(2)}</td>
+                  <td>{(r.avg_distance_miles ?? 0).toFixed(1)} mi</td>
+                  <td>{(r.avg_duration_min ?? 0).toFixed(1)} min</td>
                 </tr>
               ))}
             </tbody>

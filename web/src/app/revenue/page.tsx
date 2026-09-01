@@ -50,7 +50,7 @@ export default function RevenuePage() {
 
       <div className="stat-grid">
         <StatCard label="Total Revenue" value={formatCurrency(totalRevenue)} sub="All zones 2023" accent="var(--color-blue)" />
-        <StatCard label="Top Zone" value={topStats?.zone ?? '—'} sub={`$${topStats?.avg_revenue_per_trip?.toFixed(2)} avg/trip`} accent="var(--color-green)" />
+        <StatCard label="Top Zone" value={topStats?.zone ?? '—'} sub={`$${(topStats?.avg_revenue_per_trip ?? 0).toFixed(2)} avg/trip`} accent="var(--color-green)" />
         <StatCard label="Best Rev/km" value={`$${zones[0]?.avg_revenue_per_km?.toFixed(2) ?? '—'}`} sub="Highest efficiency zone" accent="var(--color-amber)" />
         <StatCard label="Avg Tip Rate" value={`${avgTip.toFixed(1)}%`} sub="All zones average" accent="var(--color-purple)" />
       </div>
@@ -156,13 +156,13 @@ export default function RevenuePage() {
                       color: BOROUGH_COLORS[z.borough] ?? 'var(--color-text-secondary)'
                     }}>{z.borough}</span>
                   </td>
-                  <td>{formatNumber(z.total_trips)}</td>
-                  <td style={{ fontWeight: 600 }}>{formatCurrency(z.total_revenue)}</td>
-                  <td>${z.avg_revenue_per_trip.toFixed(2)}</td>
-                  <td>${z.avg_revenue_per_km.toFixed(2)}</td>
-                  <td>${z.avg_revenue_per_min.toFixed(2)}</td>
-                  <td>{z.avg_trip_duration_min.toFixed(1)} min</td>
-                  <td>{z.avg_tip_rate_pct.toFixed(1)}%</td>
+                  <td>{formatNumber(z.total_trips ?? 0)}</td>
+                  <td style={{ fontWeight: 600 }}>{formatCurrency(z.total_revenue ?? 0)}</td>
+                  <td>${(z.avg_revenue_per_trip ?? 0).toFixed(2)}</td>
+                  <td>${(z.avg_revenue_per_km ?? 0).toFixed(2)}</td>
+                  <td>${(z.avg_revenue_per_min ?? 0).toFixed(2)}</td>
+                  <td>{(z.avg_trip_duration_min ?? 0).toFixed(1)} min</td>
+                  <td>{(z.avg_tip_rate_pct ?? 0).toFixed(1)}%</td>
                 </tr>
               ))}
             </tbody>

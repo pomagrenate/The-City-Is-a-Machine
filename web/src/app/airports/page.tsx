@@ -190,15 +190,15 @@ export default function AirportsPage() {
                     <FaPlane style={{ color: 'var(--color-blue)', fontSize: 12 }} />
                     {a.airport}
                   </td>
-                  <td>{formatNumber(a.total_trips)}</td>
-                  <td style={{ fontWeight: 700 }}>{formatCurrency(a.total_revenue)}</td>
-                  <td>${a.avg_fare.toFixed(2)}</td>
-                  <td>${a.avg_tip.toFixed(2)}</td>
+                  <td>{formatNumber(a.total_trips ?? 0)}</td>
+                  <td style={{ fontWeight: 700 }}>{formatCurrency(a.total_revenue ?? 0)}</td>
+                  <td>${(a.avg_fare ?? 0).toFixed(2)}</td>
+                  <td>${(a.avg_tip ?? 0).toFixed(2)}</td>
                   <td>
-                    <span className="badge badge--green">{(a.avg_tip_rate_pct || 0).toFixed(1)}%</span>
+                    <span className="badge badge--green">{((a.avg_tip_rate_pct ?? 0)).toFixed(1)}%</span>
                   </td>
-                  <td>{(a.avg_distance_miles || 0).toFixed(1)} mi</td>
-                  <td>{(a.avg_duration_min || 0).toFixed(1)} min</td>
+                  <td>{((a.avg_distance_miles ?? 0)).toFixed(1)} mi</td>
+                  <td>{((a.avg_duration_min ?? 0)).toFixed(1)} min</td>
                 </tr>
               ))}
             </tbody>

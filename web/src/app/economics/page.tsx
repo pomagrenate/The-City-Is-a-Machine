@@ -166,8 +166,8 @@ export default function EconomicsPage() {
                   }}
                 />
               </div>
-              <div className={styles.shareValue}>{d.revenue_share_pct.toFixed(1)}%</div>
-              <div className={styles.shareAmount}>{formatCurrency(d.total_revenue)}</div>
+              <div className={styles.shareValue}>{(d.revenue_share_pct ?? 0).toFixed(1)}%</div>
+              <div className={styles.shareAmount}>{formatCurrency(d.total_revenue ?? 0)}</div>
             </div>
           ))}
         </div>

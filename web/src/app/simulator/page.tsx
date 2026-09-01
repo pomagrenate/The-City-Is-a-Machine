@@ -1378,14 +1378,25 @@ export default function SimulatorPage() {
     isDraggingRef.current = false;
   };
 
-  const handleWheel = (e: React.WheelEvent<HTMLCanvasElement>) => {
-    e.preventDefault();
-    const zoomFactor = 1 - e.deltaY * 0.0012;
-    setCamera(c => ({
-      ...c,
-      scale: Math.max(0.08, Math.min(4.5, c.scale * zoomFactor)),
-    }));
-  };
+  // ── Non-Passive Wheel Event Listener for Smooth Map Zooming ───────────────
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const onWheelHandler = (e: WheelEvent) => {
+      e.preventDefault();
+      const zoomFactor = 1 - e.deltaY * 0.0012;
+      setCamera(c => ({
+        ...c,
+        scale: Math.max(0.08, Math.min(4.5, c.scale * zoomFactor)),
+      }));
+    };
+
+    canvas.addEventListener('wheel', onWheelHandler, { passive: false });
+    return () => {
+      canvas.removeEventListener('wheel', onWheelHandler);
+    };
+  }, []);
 
   // Click on Canvas to inspect Zone OR Click-to-Block Arteries
   const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -1408,7 +1419,7 @@ export default function SimulatorPage() {
 
     Object.values(NYC_REAL_GPS_ZONES).forEach(node => {
       const pos = projectGpsToCanvas(node.lat, node.lon, w, h);
-      const dist = Math.hypot(pos.x - clickX, pos.y - clickY);
+      const dist = Math.hypot(clickX - pos.x, clickY - pos.y);
       if (dist < minDist) {
         minDist = dist;
         closestZoneId = node.id;
@@ -1420,27 +1431,33 @@ export default function SimulatorPage() {
       return;
     }
 
-    // 2. Check if clicked near any Edge Waypoint
-    let closestEdgeId: string | null = null;
-    let minEdgeDist = 18 * dpr;
+    // 2. Check if clicked near any Bridge/Crossing Polyline to Toggle Blockage
+    let clickedEdgeId: string | null = null;
+    let minEdgeDist = 20 * dpr;
 
     NYC_REAL_GPS_EDGES.forEach(edge => {
-      const midIdx = Math.floor(edge.waypoints.length / 2);
-      const midWp = edge.waypoints[midIdx];
-      const midPos = projectGpsToCanvas(midWp.lat, midWp.lon, w, h);
+      for (let i = 0; i < edge.waypoints.length - 1; i++) {
+        const p1 = projectGpsToCanvas(edge.waypoints[i].lat, edge.waypoints[i].lon, w, h);
+        const p2 = projectGpsToCanvas(edge.waypoints[i + 1].lat, edge.waypoints[i + 1].lon, w, h);
 
-      const dist = Math.hypot(midPos.x - clickX, midPos.y - clickY);
-      if (dist < minEdgeDist) {
-        minEdgeDist = dist;
-        closestEdgeId = edge.id;
+        const l2 = Math.hypot(p2.x - p1.x, p2.y - p1.y);
+        if (l2 === 0) continue;
+        const t = Math.max(0, Math.min(1, ((clickX - p1.x) * (p2.x - p1.x) + (clickY - p1.y) * (p2.y - p1.y)) / (l2 * l2)));
+        const projX = p1.x + t * (p2.x - p1.x);
+        const projY = p1.y + t * (p2.y - p1.y);
+        const d = Math.hypot(clickX - projX, clickY - projY);
+
+        if (d < minEdgeDist) {
+          minEdgeDist = d;
+          clickedEdgeId = edge.id;
+        }
       }
     });
 
-    if (closestEdgeId) {
-      const targetEdge = closestEdgeId;
+    if (clickedEdgeId) {
       setClosedCrossings(prev => ({
         ...prev,
-        [targetEdge]: !prev[targetEdge],
+        [clickedEdgeId!]: !prev[clickedEdgeId!],
       }));
     }
   };
@@ -1497,7 +1514,7 @@ export default function SimulatorPage() {
     const zonePoissonDemand = activeZone ? Math.round(activeZone.baseLambda * diurnalMultiplier * (weatherSeverity === 'heavy_storm' ? 2.1 : (weatherSeverity === 'moderate' ? 1.4 : 1.0)) * (activeShock === 'msg_concert' && inspectedZoneId === 'midtown_s' ? 3.0 : 1.0)) : 0;
     const zoneActiveVehicles = activeZone ? (agentsRef.current.filter(a => a.currentTo === activeZone.id && a.status !== 'offline').length || 8) : 0;
     const zoneDeficit = Math.max(0, zonePoissonDemand - zoneActiveVehicles * 12);
-    const zoneLostRevenueRate = activeZone ? Math.round(zoneDeficit * activeZone.avgFare * 0.65) : 0;
+    const zoneLostRevenueRate = activeZone ? Math.round(zoneDeficit * (activeZone.avgFare ?? 24.0) * 0.65) : 0;
 
     return {
       conversionRate,
@@ -1539,7 +1556,6 @@ export default function SimulatorPage() {
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onWheel={handleWheel}
         onClick={handleCanvasClick}
         title="Drag to pan • Scroll to zoom • Click zone for real TLC GIS telemetry • Click bridge to block/unblock"
       />
