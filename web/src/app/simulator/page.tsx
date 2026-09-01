@@ -36,84 +36,142 @@ import {
 } from 'react-icons/fa';
 import styles from './simulator.module.css';
 
-// ── 1. REAL WGS-84 GPS COORDINATES REGISTRY (55 TLC ZONES) ───────────────────
+// ── 1. MULTI-SCALE GEOSPATIAL REGISTRY (NATIONWIDE HUBS + 55 NYC TLC ZONES) ──
 export interface GpsZoneDef {
   id: string;
-  tlcLocationId: number;
+  tlcLocationId?: number;
   name: string;
   shortName: string;
   lat: number;
   lon: number;
-  borough: 'Manhattan' | 'Brooklyn' | 'Queens' | 'Bronx' | 'Staten Island';
+  borough?: 'Manhattan' | 'Brooklyn' | 'Queens' | 'Bronx' | 'Staten Island' | 'Regional' | 'National';
+  tier: 'national' | 'regional' | 'urban';
   baseLambda: number;
   avgFare: number;
 }
 
+// Nationwide US Major Metropolitan & Transit Hubs (Real GPS Lat/Lon)
+export const US_NATIONAL_HUBS: Record<string, GpsZoneDef> = {
+  // East Coast & Northeast
+  bos: { id: 'bos', name: 'Boston Metropolitan Hub (Logan / I-90)', shortName: 'Boston (BOS)', lat: 42.3601, lon: -71.0589, tier: 'national', borough: 'National', baseLambda: 420, avgFare: 145.0 },
+  phl: { id: 'phl', name: 'Philadelphia Hub (30th St / I-95)', shortName: 'Philadelphia (PHL)', lat: 39.9526, lon: -75.1652, tier: 'national', borough: 'National', baseLambda: 380, avgFare: 110.0 },
+  was: { id: 'was', name: 'Washington D.C. Capital Hub (Union Sta / I-95)', shortName: 'Washington D.C.', lat: 38.9072, lon: -77.0369, tier: 'national', borough: 'National', baseLambda: 490, avgFare: 160.0 },
+  mia: { id: 'mia', name: 'Miami Gateway Hub (MIA / I-95 South)', shortName: 'Miami (MIA)', lat: 25.7617, lon: -80.1918, tier: 'national', borough: 'National', baseLambda: 520, avgFare: 290.0 },
+  atl: { id: 'atl', name: 'Atlanta Transit Megahub (ATL / I-85)', shortName: 'Atlanta (ATL)', lat: 33.7490, lon: -84.3880, tier: 'national', borough: 'National', baseLambda: 610, avgFare: 240.0 },
+
+  // Midwest & Great Lakes
+  chi: { id: 'chi', name: 'Chicago Continental Hub (O\'Hare / I-80/I-90)', shortName: 'Chicago (ORD)', lat: 41.8781, lon: -87.6298, tier: 'national', borough: 'National', baseLambda: 680, avgFare: 320.0 },
+  det: { id: 'det', name: 'Detroit Auto & Freight Hub (DTW / I-94)', shortName: 'Detroit (DTW)', lat: 42.3314, lon: -83.0458, tier: 'national', borough: 'National', baseLambda: 310, avgFare: 280.0 },
+
+  // Central & Texas
+  dfw: { id: 'dfw', name: 'Dallas - Fort Worth Megahub (DFW / I-35)', shortName: 'Dallas (DFW)', lat: 32.7767, lon: -96.7970, tier: 'national', borough: 'National', baseLambda: 580, avgFare: 350.0 },
+  hou: { id: 'hou', name: 'Houston Energy & Port Corridor (IAH / I-10)', shortName: 'Houston (IAH)', lat: 29.7604, lon: -95.3698, tier: 'national', borough: 'National', baseLambda: 540, avgFare: 370.0 },
+  den: { id: 'den', name: 'Denver Rocky Mountain Hub (DEN / I-70/I-25)', shortName: 'Denver (DEN)', lat: 39.7392, lon: -104.9903, tier: 'national', borough: 'National', baseLambda: 460, avgFare: 420.0 },
+
+  // West Coast
+  lax: { id: 'lax', name: 'Los Angeles Pacific Megahub (LAX / I-5/I-10)', shortName: 'Los Angeles (LAX)', lat: 34.0522, lon: -118.2437, tier: 'national', borough: 'National', baseLambda: 890, avgFare: 580.0 },
+  sfo: { id: 'sfo', name: 'San Francisco Bay Area Hub (SFO / I-80 West)', shortName: 'San Francisco (SFO)', lat: 37.7749, lon: -122.4194, tier: 'national', borough: 'National', baseLambda: 740, avgFare: 590.0 },
+  sea: { id: 'sea', name: 'Seattle Pacific Northwest Hub (SEA / I-5 North)', shortName: 'Seattle (SEA)', lat: 47.6062, lon: -122.3321, tier: 'national', borough: 'National', baseLambda: 480, avgFare: 540.0 },
+  phx: { id: 'phx', name: 'Phoenix Valley Hub (PHX / I-10)', shortName: 'Phoenix (PHX)', lat: 33.4484, lon: -112.0740, tier: 'national', borough: 'National', baseLambda: 390, avgFare: 460.0 },
+};
+
+// Regional Tri-State Outer Hubs
+export const REGIONAL_TRISTATE_HUBS: Record<string, GpsZoneDef> = {
+  jersey_city: { id: 'jersey_city', name: 'Jersey City / Exchange Place', shortName: 'Jersey City', lat: 40.7178, lon: -74.0431, tier: 'regional', borough: 'Regional', baseLambda: 180, avgFare: 38.0 },
+  hoboken: { id: 'hoboken', name: 'Hoboken Terminal (PATH / NJ Transit)', shortName: 'Hoboken', lat: 40.7357, lon: -74.0298, tier: 'regional', borough: 'Regional', baseLambda: 160, avgFare: 34.0 },
+  white_plains: { id: 'white_plains', name: 'Westchester / White Plains Metro-North', shortName: 'White Plains', lat: 41.0340, lon: -73.7629, tier: 'regional', borough: 'Regional', baseLambda: 110, avgFare: 65.0 },
+  stamford: { id: 'stamford', name: 'Stamford Gateway (I-95 CT Corridor)', shortName: 'Stamford CT', lat: 41.0534, lon: -73.5387, tier: 'regional', borough: 'Regional', baseLambda: 95, avgFare: 85.0 },
+  hempstead: { id: 'hempstead', name: 'Long Island / Hempstead Hub', shortName: 'Long Island (HEM)', lat: 40.7062, lon: -73.6187, tier: 'regional', borough: 'Regional', baseLambda: 130, avgFare: 55.0 },
+};
+
+// All 55 Authentic NYC TLC Zones
 export const NYC_REAL_GPS_ZONES: Record<string, GpsZoneDef> = {
   // ── MANHATTAN (19 Zones) ──
-  inwood: { id: 'inwood', tlcLocationId: 127, name: 'Inwood / Fort Tryon Park', shortName: 'Inwood #127', lat: 40.8677, lon: -73.9212, borough: 'Manhattan', baseLambda: 35, avgFare: 22.0 },
-  wash_hts: { id: 'wash_hts', tlcLocationId: 244, name: 'Washington Heights North/South', shortName: 'Wash Hts #244', lat: 40.8415, lon: -73.9395, borough: 'Manhattan', baseLambda: 55, avgFare: 21.5 },
-  harlem_n: { id: 'harlem_n', tlcLocationId: 116, name: 'Central Harlem North (125th St)', shortName: 'Harlem N #116', lat: 40.8175, lon: -73.9430, borough: 'Manhattan', baseLambda: 85, avgFare: 18.5 },
-  morningside: { id: 'morningside', tlcLocationId: 166, name: 'Morningside Heights / Columbia', shortName: 'Columbia #166', lat: 40.8090, lon: -73.9630, borough: 'Manhattan', baseLambda: 60, avgFare: 17.5 },
-  east_harlem: { id: 'east_harlem', tlcLocationId: 74, name: 'East Harlem / El Barrio', shortName: 'E. Harlem #74', lat: 40.7955, lon: -73.9380, borough: 'Manhattan', baseLambda: 70, avgFare: 17.0 },
-  ues_north: { id: 'ues_north', tlcLocationId: 236, name: 'Upper East Side North / Yorkville', shortName: 'UES North #236', lat: 40.7760, lon: -73.9525, borough: 'Manhattan', baseLambda: 165, avgFare: 16.5 },
-  ues_south: { id: 'ues_south', tlcLocationId: 237, name: 'Upper East Side South / Lenox Hill', shortName: 'UES South #237', lat: 40.7645, lon: -73.9625, borough: 'Manhattan', baseLambda: 195, avgFare: 16.8 },
-  uws_north: { id: 'uws_north', tlcLocationId: 238, name: 'Upper West Side North (86th St)', shortName: 'UWS North #238', lat: 40.7900, lon: -73.9720, borough: 'Manhattan', baseLambda: 130, avgFare: 17.2 },
-  uws_south: { id: 'uws_south', tlcLocationId: 239, name: 'Upper West Side South / Lincoln Ctr', shortName: 'UWS South #239', lat: 40.7730, lon: -73.9810, borough: 'Manhattan', baseLambda: 160, avgFare: 17.4 },
-  midtown_w: { id: 'midtown_w', tlcLocationId: 230, name: 'Times Square / Theatre District', shortName: 'Times Sq #230', lat: 40.7580, lon: -73.9855, borough: 'Manhattan', baseLambda: 380, avgFare: 29.0 },
-  midtown_c: { id: 'midtown_c', tlcLocationId: 161, name: 'Midtown Center / Grand Central', shortName: 'Midtown C #161', lat: 40.7527, lon: -73.9772, borough: 'Manhattan', baseLambda: 420, avgFare: 24.5 },
-  midtown_s: { id: 'midtown_s', tlcLocationId: 162, name: 'Penn Station / Madison Sq West', shortName: 'Penn Sta #162', lat: 40.7505, lon: -73.9934, borough: 'Manhattan', baseLambda: 390, avgFare: 19.8 },
-  murray_hill: { id: 'murray_hill', tlcLocationId: 170, name: 'Murray Hill / Kips Bay', shortName: 'Murray Hill #170', lat: 40.7480, lon: -73.9760, borough: 'Manhattan', baseLambda: 175, avgFare: 18.2 },
-  chelsea: { id: 'chelsea', tlcLocationId: 48, name: 'Chelsea / High Line / Meatpacking', shortName: 'Chelsea #48', lat: 40.7465, lon: -74.0015, borough: 'Manhattan', baseLambda: 240, avgFare: 21.0 },
-  gramercy: { id: 'gramercy', tlcLocationId: 107, name: 'Gramercy / Flatiron / Union Sq', shortName: 'Gramercy #107', lat: 40.7380, lon: -73.9860, borough: 'Manhattan', baseLambda: 260, avgFare: 20.5 },
-  east_village: { id: 'east_village', tlcLocationId: 79, name: 'East Village / Alphabet City', shortName: 'E. Village #79', lat: 40.7280, lon: -73.9820, borough: 'Manhattan', baseLambda: 230, avgFare: 18.5 },
-  west_village: { id: 'west_village', tlcLocationId: 246, name: 'Greenwich Village / West Village', shortName: 'W. Village #246', lat: 40.7340, lon: -74.0040, borough: 'Manhattan', baseLambda: 245, avgFare: 20.8 },
-  soho_tribeca: { id: 'soho_tribeca', tlcLocationId: 249, name: 'SoHo / Tribeca / Hudson Sq', shortName: 'SoHo/Tribeca #249', lat: 40.7210, lon: -74.0050, borough: 'Manhattan', baseLambda: 270, avgFare: 25.0 },
-  lower_east: { id: 'lower_east', tlcLocationId: 148, name: 'Lower East Side / Chinatown', shortName: 'LES #148', lat: 40.7160, lon: -73.9880, borough: 'Manhattan', baseLambda: 185, avgFare: 19.5 },
-  fidi: { id: 'fidi', tlcLocationId: 87, name: 'Financial District / Wall St / Battery', shortName: 'FiDi #87', lat: 40.7075, lon: -74.0090, borough: 'Manhattan', baseLambda: 290, avgFare: 26.0 },
+  inwood: { id: 'inwood', tlcLocationId: 127, name: 'Inwood / Fort Tryon Park', shortName: 'Inwood #127', lat: 40.8677, lon: -73.9212, borough: 'Manhattan', tier: 'urban', baseLambda: 35, avgFare: 22.0 },
+  wash_hts: { id: 'wash_hts', tlcLocationId: 244, name: 'Washington Heights North/South', shortName: 'Wash Hts #244', lat: 40.8415, lon: -73.9395, borough: 'Manhattan', tier: 'urban', baseLambda: 55, avgFare: 21.5 },
+  harlem_n: { id: 'harlem_n', tlcLocationId: 116, name: 'Central Harlem North (125th St)', shortName: 'Harlem N #116', lat: 40.8175, lon: -73.9430, borough: 'Manhattan', tier: 'urban', baseLambda: 85, avgFare: 18.5 },
+  morningside: { id: 'morningside', tlcLocationId: 166, name: 'Morningside Heights / Columbia', shortName: 'Columbia #166', lat: 40.8090, lon: -73.9630, borough: 'Manhattan', tier: 'urban', baseLambda: 60, avgFare: 17.5 },
+  east_harlem: { id: 'east_harlem', tlcLocationId: 74, name: 'East Harlem / El Barrio', shortName: 'E. Harlem #74', lat: 40.7955, lon: -73.9380, borough: 'Manhattan', tier: 'urban', baseLambda: 70, avgFare: 17.0 },
+  ues_north: { id: 'ues_north', tlcLocationId: 236, name: 'Upper East Side North / Yorkville', shortName: 'UES North #236', lat: 40.7760, lon: -73.9525, borough: 'Manhattan', tier: 'urban', baseLambda: 165, avgFare: 16.5 },
+  ues_south: { id: 'ues_south', tlcLocationId: 237, name: 'Upper East Side South / Lenox Hill', shortName: 'UES South #237', lat: 40.7645, lon: -73.9625, borough: 'Manhattan', tier: 'urban', baseLambda: 195, avgFare: 16.8 },
+  uws_north: { id: 'uws_north', tlcLocationId: 238, name: 'Upper West Side North (86th St)', shortName: 'UWS North #238', lat: 40.7900, lon: -73.9720, borough: 'Manhattan', tier: 'urban', baseLambda: 130, avgFare: 17.2 },
+  uws_south: { id: 'uws_south', tlcLocationId: 239, name: 'Upper West Side South / Lincoln Ctr', shortName: 'UWS South #239', lat: 40.7730, lon: -73.9810, borough: 'Manhattan', tier: 'urban', baseLambda: 160, avgFare: 17.4 },
+  midtown_w: { id: 'midtown_w', tlcLocationId: 230, name: 'Times Square / Theatre District', shortName: 'Times Sq #230', lat: 40.7580, lon: -73.9855, borough: 'Manhattan', tier: 'urban', baseLambda: 380, avgFare: 29.0 },
+  midtown_c: { id: 'midtown_c', tlcLocationId: 161, name: 'Midtown Center / Grand Central', shortName: 'Midtown C #161', lat: 40.7527, lon: -73.9772, borough: 'Manhattan', tier: 'urban', baseLambda: 420, avgFare: 24.5 },
+  midtown_s: { id: 'midtown_s', tlcLocationId: 162, name: 'Penn Station / Madison Sq West', shortName: 'Penn Sta #162', lat: 40.7505, lon: -73.9934, borough: 'Manhattan', tier: 'urban', baseLambda: 390, avgFare: 19.8 },
+  murray_hill: { id: 'murray_hill', tlcLocationId: 170, name: 'Murray Hill / Kips Bay', shortName: 'Murray Hill #170', lat: 40.7480, lon: -73.9760, borough: 'Manhattan', tier: 'urban', baseLambda: 175, avgFare: 18.2 },
+  chelsea: { id: 'chelsea', tlcLocationId: 48, name: 'Chelsea / High Line / Meatpacking', shortName: 'Chelsea #48', lat: 40.7465, lon: -74.0015, borough: 'Manhattan', tier: 'urban', baseLambda: 240, avgFare: 21.0 },
+  gramercy: { id: 'gramercy', tlcLocationId: 107, name: 'Gramercy / Flatiron / Union Sq', shortName: 'Gramercy #107', lat: 40.7380, lon: -73.9860, borough: 'Manhattan', tier: 'urban', baseLambda: 260, avgFare: 20.5 },
+  east_village: { id: 'east_village', tlcLocationId: 79, name: 'East Village / Alphabet City', shortName: 'E. Village #79', lat: 40.7280, lon: -73.9820, borough: 'Manhattan', tier: 'urban', baseLambda: 230, avgFare: 18.5 },
+  west_village: { id: 'west_village', tlcLocationId: 246, name: 'Greenwich Village / West Village', shortName: 'W. Village #246', lat: 40.7340, lon: -74.0040, borough: 'Manhattan', tier: 'urban', baseLambda: 245, avgFare: 20.8 },
+  soho_tribeca: { id: 'soho_tribeca', tlcLocationId: 249, name: 'SoHo / Tribeca / Hudson Sq', shortName: 'SoHo/Tribeca #249', lat: 40.7210, lon: -74.0050, borough: 'Manhattan', tier: 'urban', baseLambda: 270, avgFare: 25.0 },
+  lower_east: { id: 'lower_east', tlcLocationId: 148, name: 'Lower East Side / Chinatown', shortName: 'LES #148', lat: 40.7160, lon: -73.9880, borough: 'Manhattan', tier: 'urban', baseLambda: 185, avgFare: 19.5 },
+  fidi: { id: 'fidi', tlcLocationId: 87, name: 'Financial District / Wall St / Battery', shortName: 'FiDi #87', lat: 40.7075, lon: -74.0090, borough: 'Manhattan', tier: 'urban', baseLambda: 290, avgFare: 26.0 },
 
   // ── BROOKLYN (13 Zones) ──
-  greenpoint: { id: 'greenpoint', tlcLocationId: 112, name: 'Greenpoint', shortName: 'Greenpoint #112', lat: 40.7280, lon: -73.9520, borough: 'Brooklyn', baseLambda: 110, avgFare: 21.0 },
-  williamsburg_n: { id: 'williamsburg_n', tlcLocationId: 255, name: 'Williamsburg North (Bedford Ave)', shortName: 'W-Burg N #255', lat: 40.7180, lon: -73.9580, borough: 'Brooklyn', baseLambda: 190, avgFare: 21.8 },
-  williamsburg_s: { id: 'williamsburg_s', tlcLocationId: 256, name: 'Williamsburg South (Broadway)', shortName: 'W-Burg S #256', lat: 40.7080, lon: -73.9570, borough: 'Brooklyn', baseLambda: 155, avgFare: 20.4 },
-  dumbo: { id: 'dumbo', tlcLocationId: 89, name: 'DUMBO / Vinegar Hill', shortName: 'DUMBO #89', lat: 40.7033, lon: -73.9881, borough: 'Brooklyn', baseLambda: 125, avgFare: 23.5 },
-  bk_heights: { id: 'bk_heights', tlcLocationId: 25, name: 'Brooklyn Heights / Cobble Hill', shortName: 'BK Heights #25', lat: 40.6960, lon: -73.9940, borough: 'Brooklyn', baseLambda: 135, avgFare: 22.0 },
-  downtown_bk: { id: 'downtown_bk', tlcLocationId: 65, name: 'Downtown Brooklyn / MetroTech', shortName: 'Downtown BK #65', lat: 40.6930, lon: -73.9860, borough: 'Brooklyn', baseLambda: 210, avgFare: 21.5 },
-  atlantic_hub: { id: 'atlantic_hub', tlcLocationId: 66, name: 'Atlantic Terminal / Barclays Ctr', shortName: 'Barclays Hub #66', lat: 40.6840, lon: -73.9760, borough: 'Brooklyn', baseLambda: 245, avgFare: 22.5 },
-  bushwick_w: { id: 'bushwick_w', tlcLocationId: 36, name: 'Bushwick West / Morgan Ave', shortName: 'Bushwick W #36', lat: 40.7040, lon: -73.9330, borough: 'Brooklyn', baseLambda: 115, avgFare: 20.0 },
-  bushwick_e: { id: 'bushwick_e', tlcLocationId: 37, name: 'Bushwick East / Myrtle Ave', shortName: 'Bushwick E #37', lat: 40.6920, lon: -73.9140, borough: 'Brooklyn', baseLambda: 90, avgFare: 19.5 },
-  bed_stuy: { id: 'bed_stuy', tlcLocationId: 17, name: 'Bedford-Stuyvesant (Fulton St)', shortName: 'Bed-Stuy #17', lat: 40.6870, lon: -73.9440, borough: 'Brooklyn', baseLambda: 130, avgFare: 19.2 },
-  crown_heights: { id: 'crown_heights', tlcLocationId: 61, name: 'Crown Heights North / Eastern Pkwy', shortName: 'Crown Hts #61', lat: 40.6700, lon: -73.9430, borough: 'Brooklyn', baseLambda: 120, avgFare: 19.0 },
-  park_slope: { id: 'park_slope', tlcLocationId: 181, name: 'Park Slope / Prospect Park West', shortName: 'Park Slope #181', lat: 40.6710, lon: -73.9770, borough: 'Brooklyn', baseLambda: 145, avgFare: 22.8 },
-  bay_ridge: { id: 'bay_ridge', tlcLocationId: 14, name: 'Bay Ridge / Fort Hamilton', shortName: 'Bay Ridge #14', lat: 40.6260, lon: -74.0310, borough: 'Brooklyn', baseLambda: 65, avgFare: 30.5 },
+  greenpoint: { id: 'greenpoint', tlcLocationId: 112, name: 'Greenpoint', shortName: 'Greenpoint #112', lat: 40.7280, lon: -73.9520, borough: 'Brooklyn', tier: 'urban', baseLambda: 110, avgFare: 21.0 },
+  williamsburg_n: { id: 'williamsburg_n', tlcLocationId: 255, name: 'Williamsburg North (Bedford Ave)', shortName: 'W-Burg N #255', lat: 40.7180, lon: -73.9580, borough: 'Brooklyn', tier: 'urban', baseLambda: 190, avgFare: 21.8 },
+  williamsburg_s: { id: 'williamsburg_s', tlcLocationId: 256, name: 'Williamsburg South (Broadway)', shortName: 'W-Burg S #256', lat: 40.7080, lon: -73.9570, borough: 'Brooklyn', tier: 'urban', baseLambda: 155, avgFare: 20.4 },
+  dumbo: { id: 'dumbo', tlcLocationId: 89, name: 'DUMBO / Vinegar Hill', shortName: 'DUMBO #89', lat: 40.7033, lon: -73.9881, borough: 'Brooklyn', tier: 'urban', baseLambda: 125, avgFare: 23.5 },
+  bk_heights: { id: 'bk_heights', tlcLocationId: 25, name: 'Brooklyn Heights / Cobble Hill', shortName: 'BK Heights #25', lat: 40.6960, lon: -73.9940, borough: 'Brooklyn', tier: 'urban', baseLambda: 135, avgFare: 22.0 },
+  downtown_bk: { id: 'downtown_bk', tlcLocationId: 65, name: 'Downtown Brooklyn / MetroTech', shortName: 'Downtown BK #65', lat: 40.6930, lon: -73.9860, borough: 'Brooklyn', tier: 'urban', baseLambda: 210, avgFare: 21.5 },
+  atlantic_hub: { id: 'atlantic_hub', tlcLocationId: 66, name: 'Atlantic Terminal / Barclays Ctr', shortName: 'Barclays Hub #66', lat: 40.6840, lon: -73.9760, borough: 'Brooklyn', tier: 'urban', baseLambda: 245, avgFare: 22.5 },
+  bushwick_w: { id: 'bushwick_w', tlcLocationId: 36, name: 'Bushwick West / Morgan Ave', shortName: 'Bushwick W #36', lat: 40.7040, lon: -73.9330, borough: 'Brooklyn', tier: 'urban', baseLambda: 115, avgFare: 20.0 },
+  bushwick_e: { id: 'bushwick_e', tlcLocationId: 37, name: 'Bushwick East / Myrtle Ave', shortName: 'Bushwick E #37', lat: 40.6920, lon: -73.9140, borough: 'Brooklyn', tier: 'urban', baseLambda: 90, avgFare: 19.5 },
+  bed_stuy: { id: 'bed_stuy', tlcLocationId: 17, name: 'Bedford-Stuyvesant (Fulton St)', shortName: 'Bed-Stuy #17', lat: 40.6870, lon: -73.9440, borough: 'Brooklyn', tier: 'urban', baseLambda: 130, avgFare: 19.2 },
+  crown_heights: { id: 'crown_heights', tlcLocationId: 61, name: 'Crown Heights North / Eastern Pkwy', shortName: 'Crown Hts #61', lat: 40.6700, lon: -73.9430, borough: 'Brooklyn', tier: 'urban', baseLambda: 120, avgFare: 19.0 },
+  park_slope: { id: 'park_slope', tlcLocationId: 181, name: 'Park Slope / Prospect Park West', shortName: 'Park Slope #181', lat: 40.6710, lon: -73.9770, borough: 'Brooklyn', tier: 'urban', baseLambda: 145, avgFare: 22.8 },
+  bay_ridge: { id: 'bay_ridge', tlcLocationId: 14, name: 'Bay Ridge / Fort Hamilton', shortName: 'Bay Ridge #14', lat: 40.6260, lon: -74.0310, borough: 'Brooklyn', tier: 'urban', baseLambda: 65, avgFare: 30.5 },
 
   // ── QUEENS (12 Zones) ──
-  astoria_n: { id: 'astoria_n', tlcLocationId: 7, name: 'Astoria North / Ditmars Blvd', shortName: 'Astoria N #7', lat: 40.7770, lon: -73.9080, borough: 'Queens', baseLambda: 120, avgFare: 21.0 },
-  astoria_s: { id: 'astoria_s', tlcLocationId: 8, name: 'Astoria South / Broadway', shortName: 'Astoria S #8', lat: 40.7610, lon: -73.9240, borough: 'Queens', baseLambda: 140, avgFare: 21.5 },
-  lic_hunters: { id: 'lic_hunters', tlcLocationId: 146, name: 'Long Island City / Hunters Point', shortName: 'Queens LIC #146', lat: 40.7440, lon: -73.9530, borough: 'Queens', baseLambda: 190, avgFare: 22.8 },
-  sunnyside: { id: 'sunnyside', tlcLocationId: 226, name: 'Sunnyside / Woodside', shortName: 'Sunnyside #226', lat: 40.7430, lon: -73.9230, borough: 'Queens', baseLambda: 110, avgFare: 21.0 },
-  lga_airport: { id: 'lga_airport', tlcLocationId: 138, name: 'LaGuardia Airport (LGA Terminals)', shortName: 'LGA Airport #138', lat: 40.7769, lon: -73.8740, borough: 'Queens', baseLambda: 280, avgFare: 44.0 },
-  corona: { id: 'corona', tlcLocationId: 56, name: 'Corona / Jackson Heights', shortName: 'Jackson Hts #56', lat: 40.7480, lon: -73.8620, borough: 'Queens', baseLambda: 125, avgFare: 22.0 },
-  flushing: { id: 'flushing', tlcLocationId: 93, name: 'Flushing Main St / Citi Field', shortName: 'Flushing #93', lat: 40.7580, lon: -73.8320, borough: 'Queens', baseLambda: 155, avgFare: 26.5 },
-  middle_village: { id: 'middle_village', tlcLocationId: 157, name: 'Middle Village / Maspeth', shortName: 'Maspeth #157', lat: 40.7180, lon: -73.8860, borough: 'Queens', baseLambda: 75, avgFare: 22.0 },
-  forest_hills: { id: 'forest_hills', tlcLocationId: 101, name: 'Forest Hills / Austin St', shortName: 'Forest Hills #101', lat: 40.7180, lon: -73.8440, borough: 'Queens', baseLambda: 115, avgFare: 23.5 },
-  kew_gardens: { id: 'kew_gardens', tlcLocationId: 134, name: 'Kew Gardens / Queens Blvd', shortName: 'Kew Gardens #134', lat: 40.7080, lon: -73.8310, borough: 'Queens', baseLambda: 95, avgFare: 24.0 },
-  jamaica_center: { id: 'jamaica_center', tlcLocationId: 130, name: 'Jamaica Center / AirTrain LIRR Hub', shortName: 'Jamaica Hub #130', lat: 40.7020, lon: -73.7980, borough: 'Queens', baseLambda: 170, avgFare: 28.5 },
-  jfk_airport: { id: 'jfk_airport', tlcLocationId: 132, name: 'JFK International Airport (Terminals 1-8)', shortName: 'JFK Airport #132', lat: 40.6413, lon: -73.7781, borough: 'Queens', baseLambda: 380, avgFare: 74.0 },
+  astoria_n: { id: 'astoria_n', tlcLocationId: 7, name: 'Astoria North / Ditmars Blvd', shortName: 'Astoria N #7', lat: 40.7770, lon: -73.9080, borough: 'Queens', tier: 'urban', baseLambda: 120, avgFare: 21.0 },
+  astoria_s: { id: 'astoria_s', tlcLocationId: 8, name: 'Astoria South / Broadway', shortName: 'Astoria S #8', lat: 40.7610, lon: -73.9240, borough: 'Queens', tier: 'urban', baseLambda: 140, avgFare: 21.5 },
+  lic_hunters: { id: 'lic_hunters', tlcLocationId: 146, name: 'Long Island City / Hunters Point', shortName: 'Queens LIC #146', lat: 40.7440, lon: -73.9530, borough: 'Queens', tier: 'urban', baseLambda: 190, avgFare: 22.8 },
+  sunnyside: { id: 'sunnyside', tlcLocationId: 226, name: 'Sunnyside / Woodside', shortName: 'Sunnyside #226', lat: 40.7430, lon: -73.9230, borough: 'Queens', tier: 'urban', baseLambda: 110, avgFare: 21.0 },
+  lga_airport: { id: 'lga_airport', tlcLocationId: 138, name: 'LaGuardia Airport (LGA Terminals)', shortName: 'LGA Airport #138', lat: 40.7769, lon: -73.8740, borough: 'Queens', tier: 'urban', baseLambda: 280, avgFare: 44.0 },
+  corona: { id: 'corona', tlcLocationId: 56, name: 'Corona / Jackson Heights', shortName: 'Jackson Hts #56', lat: 40.7480, lon: -73.8620, borough: 'Queens', tier: 'urban', baseLambda: 125, avgFare: 22.0 },
+  flushing: { id: 'flushing', tlcLocationId: 93, name: 'Flushing Main St / Citi Field', shortName: 'Flushing #93', lat: 40.7580, lon: -73.8320, borough: 'Queens', tier: 'urban', baseLambda: 155, avgFare: 26.5 },
+  middle_village: { id: 'middle_village', tlcLocationId: 157, name: 'Middle Village / Maspeth', shortName: 'Maspeth #157', lat: 40.7180, lon: -73.8860, borough: 'Queens', tier: 'urban', baseLambda: 75, avgFare: 22.0 },
+  forest_hills: { id: 'forest_hills', tlcLocationId: 101, name: 'Forest Hills / Austin St', shortName: 'Forest Hills #101', lat: 40.7180, lon: -73.8440, borough: 'Queens', tier: 'urban', baseLambda: 115, avgFare: 23.5 },
+  kew_gardens: { id: 'kew_gardens', tlcLocationId: 134, name: 'Kew Gardens / Queens Blvd', shortName: 'Kew Gardens #134', lat: 40.7080, lon: -73.8310, borough: 'Queens', tier: 'urban', baseLambda: 95, avgFare: 24.0 },
+  jamaica_center: { id: 'jamaica_center', tlcLocationId: 130, name: 'Jamaica Center / AirTrain LIRR Hub', shortName: 'Jamaica Hub #130', lat: 40.7020, lon: -73.7980, borough: 'Queens', tier: 'urban', baseLambda: 170, avgFare: 28.5 },
+  jfk_airport: { id: 'jfk_airport', tlcLocationId: 132, name: 'JFK International Airport (Terminals 1-8)', shortName: 'JFK Airport #132', lat: 40.6413, lon: -73.7781, borough: 'Queens', tier: 'urban', baseLambda: 380, avgFare: 74.0 },
 
   // ── BRONX (6 Zones) ──
-  riverdale: { id: 'riverdale', tlcLocationId: 200, name: 'Riverdale / Spuyten Duyvil', shortName: 'Riverdale #200', lat: 40.8980, lon: -73.9050, borough: 'Bronx', baseLambda: 30, avgFare: 24.5 },
-  kingsbridge: { id: 'kingsbridge', tlcLocationId: 137, name: 'Kingsbridge / Marble Hill', shortName: 'Kingsbridge #137', lat: 40.8750, lon: -73.9020, borough: 'Bronx', baseLambda: 45, avgFare: 21.0 },
-  yankee_stadium: { id: 'yankee_stadium', tlcLocationId: 233, name: 'Yankee Stadium / Grand Concourse', shortName: 'Yankee Hub #233', lat: 40.8296, lon: -73.9262, borough: 'Bronx', baseLambda: 95, avgFare: 22.0 },
-  mott_haven: { id: 'mott_haven', tlcLocationId: 168, name: 'Mott Haven / Port Morris Hub', shortName: 'Mott Haven #168', lat: 40.8090, lon: -73.9210, borough: 'Bronx', baseLambda: 60, avgFare: 19.5 },
-  hunts_point: { id: 'hunts_point', tlcLocationId: 119, name: 'Hunts Point Wholesale Market', shortName: 'Hunts Point #119', lat: 40.8120, lon: -73.8820, borough: 'Bronx', baseLambda: 50, avgFare: 20.0 },
-  fordham: { id: 'fordham', tlcLocationId: 94, name: 'Fordham / Belmont Arthur Ave', shortName: 'Fordham #94', lat: 40.8610, lon: -73.8890, borough: 'Bronx', baseLambda: 70, avgFare: 21.0 },
+  riverdale: { id: 'riverdale', tlcLocationId: 200, name: 'Riverdale / Spuyten Duyvil', shortName: 'Riverdale #200', lat: 40.8980, lon: -73.9050, borough: 'Bronx', tier: 'urban', baseLambda: 30, avgFare: 24.5 },
+  kingsbridge: { id: 'kingsbridge', tlcLocationId: 137, name: 'Kingsbridge / Marble Hill', shortName: 'Kingsbridge #137', lat: 40.8750, lon: -73.9020, borough: 'Bronx', tier: 'urban', baseLambda: 45, avgFare: 21.0 },
+  yankee_stadium: { id: 'yankee_stadium', tlcLocationId: 233, name: 'Yankee Stadium / Grand Concourse', shortName: 'Yankee Hub #233', lat: 40.8296, lon: -73.9262, borough: 'Bronx', tier: 'urban', baseLambda: 95, avgFare: 22.0 },
+  mott_haven: { id: 'mott_haven', tlcLocationId: 168, name: 'Mott Haven / Port Morris Hub', shortName: 'Mott Haven #168', lat: 40.8090, lon: -73.9210, borough: 'Bronx', tier: 'urban', baseLambda: 60, avgFare: 19.5 },
+  hunts_point: { id: 'hunts_point', tlcLocationId: 119, name: 'Hunts Point Wholesale Market', shortName: 'Hunts Point #119', lat: 40.8120, lon: -73.8820, borough: 'Bronx', tier: 'urban', baseLambda: 50, avgFare: 20.0 },
+  fordham: { id: 'fordham', tlcLocationId: 94, name: 'Fordham / Belmont Arthur Ave', shortName: 'Fordham #94', lat: 40.8610, lon: -73.8890, borough: 'Bronx', tier: 'urban', baseLambda: 70, avgFare: 21.0 },
 
   // ── STATEN ISLAND & GATEWAY (3 Zones) ──
-  st_george: { id: 'st_george', tlcLocationId: 214, name: 'St. George Ferry Terminal (SI)', shortName: 'St. George #214', lat: 40.6430, lon: -74.0760, borough: 'Staten Island', baseLambda: 50, avgFare: 36.0 },
-  west_brighton: { id: 'west_brighton', tlcLocationId: 251, name: 'West New Brighton / Castleton Ave', shortName: 'W. Brighton #251', lat: 40.6350, lon: -74.1140, borough: 'Staten Island', baseLambda: 35, avgFare: 34.0 },
-  ewr_gateway: { id: 'ewr_gateway', tlcLocationId: 1, name: 'Newark Airport / NJ Gateway (I-78)', shortName: 'NJ/EWR Gateway #1', lat: 40.6895, lon: -74.1745, borough: 'Manhattan', baseLambda: 85, avgFare: 58.0 },
+  st_george: { id: 'st_george', tlcLocationId: 214, name: 'St. George Ferry Terminal (SI)', shortName: 'St. George #214', lat: 40.6430, lon: -74.0760, borough: 'Staten Island', tier: 'urban', baseLambda: 50, avgFare: 36.0 },
+  west_brighton: { id: 'west_brighton', tlcLocationId: 251, name: 'West New Brighton / Castleton Ave', shortName: 'W. Brighton #251', lat: 40.6350, lon: -74.1140, borough: 'Staten Island', tier: 'urban', baseLambda: 35, avgFare: 34.0 },
+  ewr_gateway: { id: 'ewr_gateway', tlcLocationId: 1, name: 'Newark Airport / NJ Gateway (I-78)', shortName: 'NJ/EWR Gateway #1', lat: 40.6895, lon: -74.1745, borough: 'Manhattan', tier: 'urban', baseLambda: 85, avgFare: 58.0 },
 };
+
+// Combined Registry (Nationwide + Regional + TLC Urban)
+export const ALL_GEO_ZONES: Record<string, GpsZoneDef> = {
+  ...NYC_REAL_GPS_ZONES,
+  ...REGIONAL_TRISTATE_HUBS,
+  ...US_NATIONAL_HUBS,
+};
+
+// ── 2. US CONTINENTAL INTERSTATE HIGHWAYS & CORRIDORS ─────────────────────────
+export const US_INTERSTATE_HIGHWAYS = [
+  // I-95 North-South Atlantic Corridor (Boston -> NYC -> Philly -> DC -> Miami)
+  { id: 'i95_corridor', name: 'Interstate 95 (Atlantic Seaboard)', waypoints: [{ lat: 42.3601, lon: -71.0589 }, { lat: 41.0534, lon: -73.5387 }, { lat: 40.7580, lon: -73.9855 }, { lat: 39.9526, lon: -75.1652 }, { lat: 38.9072, lon: -77.0369 }, { lat: 33.7490, lon: -84.3880 }, { lat: 25.7617, lon: -80.1918 }] },
+  // I-80 Transcontinental Corridor (NYC -> Chicago -> Denver -> SFO)
+  { id: 'i80_corridor', name: 'Interstate 80 (Transcontinental)', waypoints: [{ lat: 40.7580, lon: -73.9855 }, { lat: 41.0340, lon: -73.7629 }, { lat: 41.8781, lon: -87.6298 }, { lat: 39.7392, lon: -104.9903 }, { lat: 37.7749, lon: -122.4194 }] },
+  // I-90 Northern Corridor (Boston -> Chicago -> Seattle)
+  { id: 'i90_corridor', name: 'Interstate 90 (Northern Coast-to-Coast)', waypoints: [{ lat: 42.3601, lon: -71.0589 }, { lat: 42.3314, lon: -83.0458 }, { lat: 41.8781, lon: -87.6298 }, { lat: 47.6062, lon: -122.3321 }] },
+  // I-10 Southern Transcontinental (Miami/Atlanta -> Houston -> Dallas -> Phoenix -> LAX)
+  { id: 'i10_corridor', name: 'Interstate 10 (Sunbelt Express)', waypoints: [{ lat: 25.7617, lon: -80.1918 }, { lat: 29.7604, lon: -95.3698 }, { lat: 32.7767, lon: -96.7970 }, { lat: 33.4484, lon: -112.0740 }, { lat: 34.0522, lon: -118.2437 }] },
+  // I-5 West Coast Spine (Seattle -> SFO -> LAX)
+  { id: 'i5_corridor', name: 'Interstate 5 (Pacific Corridor)', waypoints: [{ lat: 47.6062, lon: -122.3321 }, { lat: 37.7749, lon: -122.4194 }, { lat: 34.0522, lon: -118.2437 }] },
+];
+
 
 // ── 2. REAL GIS NYC BOROUGH SHORELINE CONTOURS (WGS-84 LAT/LON POLYGONS) ──────
 export const NYC_GIS_COASTLINES = {
@@ -522,13 +580,11 @@ export const NYC_REAL_GPS_EDGES: CurvedEdgeGraphDef[] = [
   },
 ];
 
-// ── 4. MATHEMATICAL WEB MERCATOR PROJECTION ENGINE ────────────────────────────
-// NYC Bounding Box (Lat/Lon)
-const NYC_BOUNDS = {
-  minLon: -74.220,
-  maxLon: -73.740,
-  minLat: 40.540,
-  maxLat: 40.900,
+// ── 4. MATHEMATICAL MULTI-SCALE WEB MERCATOR PROJECTION ENGINE ───────────────
+// Reference Anchor: Manhattan Midtown (40.7580 N, -73.9855 W)
+const NYC_REF_CENTER = {
+  lat: 40.7306,
+  lon: -73.9352,
 };
 
 function projectGpsToCanvas(
@@ -537,20 +593,19 @@ function projectGpsToCanvas(
   canvasWidth: number,
   canvasHeight: number
 ) {
-  const padX = canvasWidth * 0.05;
-  const padY = canvasHeight * 0.06;
-  const innerW = canvasWidth - padX * 2;
-  const innerH = canvasHeight - padY * 2;
+  const centerX = canvasWidth * 0.50;
+  const centerY = canvasHeight * 0.52;
 
-  // Aspect ratio correction for NYC latitude (cos(40.71 deg) ≈ 0.758)
-  const latAspect = Math.cos((40.71 * Math.PI) / 180);
+  // Scale factor: 1 degree latitude ≈ canvasHeight * 2.85 at 1.0x scale
+  const scale = canvasHeight * 2.85;
+  const latAspect = Math.cos((NYC_REF_CENTER.lat * Math.PI) / 180);
 
-  const normX = (lon - NYC_BOUNDS.minLon) / (NYC_BOUNDS.maxLon - NYC_BOUNDS.minLon);
-  const normY = 1.0 - (lat - NYC_BOUNDS.minLat) / (NYC_BOUNDS.maxLat - NYC_BOUNDS.minLat);
+  const dx = (lon - NYC_REF_CENTER.lon) * latAspect * scale;
+  const dy = -(lat - NYC_REF_CENTER.lat) * scale;
 
   return {
-    x: padX + normX * innerW,
-    y: padY + normY * innerH,
+    x: centerX + dx,
+    y: centerY + dy,
   };
 }
 
@@ -854,7 +909,7 @@ export default function SimulatorPage() {
     return `${hh}:${mm} • ${label}`;
   }, [timeOfDay]);
 
-  // ── Fullscreen Live Animation Loop with Real GIS Projections ───────────────
+  // ── Fullscreen Live Animation Loop with Real Multi-Scale GIS Projections ───
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -903,6 +958,59 @@ export default function SimulatorPage() {
       drawCoastlinePolygon(NYC_GIS_COASTLINES.brooklynQueens, '#f8fafc');
       drawCoastlinePolygon(NYC_GIS_COASTLINES.bronx, '#f8fafc');
       drawCoastlinePolygon(NYC_GIS_COASTLINES.statenIsland, '#f8fafc');
+
+      // ── NATIONWIDE INTERSTATE HIGHWAYS LAYER (WHEN ZOOMED OUT) ────────────
+      if (camera.scale < 0.85) {
+        US_INTERSTATE_HIGHWAYS.forEach(hwy => {
+          if (hwy.waypoints.length < 2) return;
+          ctx.beginPath();
+          const startPt = projectGpsToCanvas(hwy.waypoints[0].lat, hwy.waypoints[0].lon, w, h);
+          ctx.moveTo(startPt.x, startPt.y);
+          for (let i = 1; i < hwy.waypoints.length; i++) {
+            const pt = projectGpsToCanvas(hwy.waypoints[i].lat, hwy.waypoints[i].lon, w, h);
+            ctx.lineTo(pt.x, pt.y);
+          }
+          ctx.strokeStyle = 'rgba(59, 130, 246, 0.45)';
+          ctx.lineWidth = Math.max(1.0, 2.2 / camera.scale) * dpr;
+          ctx.stroke();
+        });
+
+        // Render National Hub Pins
+        Object.values(US_NATIONAL_HUBS).forEach(hub => {
+          const pos = projectGpsToCanvas(hub.lat, hub.lon, w, h);
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, Math.max(3.5, 6.0 / camera.scale) * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = '#2563eb';
+          ctx.fill();
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 1.2 * dpr;
+          ctx.stroke();
+
+          ctx.font = `bold ${Math.max(9, 12 / camera.scale) * dpr}px Inter, sans-serif`;
+          ctx.fillStyle = '#1e3a8a';
+          ctx.textAlign = 'center';
+          ctx.fillText(hub.shortName, pos.x, pos.y - (8 / camera.scale) * dpr);
+        });
+      }
+
+      // ── REGIONAL TRI-STATE HUBS (HOBOKEN, JERSEY CITY, WHITE PLAINS, STAMFORD) ──
+      if (camera.scale >= 0.45 && camera.scale <= 1.8) {
+        Object.values(REGIONAL_TRISTATE_HUBS).forEach(hub => {
+          const pos = projectGpsToCanvas(hub.lat, hub.lon, w, h);
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, 5.0 * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = '#10b981';
+          ctx.fill();
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 1.2 * dpr;
+          ctx.stroke();
+
+          ctx.font = `600 ${9.0 * dpr}px Inter, sans-serif`;
+          ctx.fillStyle = '#065f46';
+          ctx.textAlign = 'center';
+          ctx.fillText(hub.shortName, pos.x, pos.y - 8 * dpr);
+        });
+      }
 
       // 3. Draw Curvilinear Bridge & Highway Polyline Paths
       NYC_REAL_GPS_EDGES.forEach(edge => {
@@ -1006,39 +1114,42 @@ export default function SimulatorPage() {
         });
       }
 
-      // 5. Draw 55 Granular TLC Zone GPS Pins
-      Object.values(NYC_REAL_GPS_ZONES).forEach(node => {
-        const pos = projectGpsToCanvas(node.lat, node.lon, w, h);
-        const isInspected = node.id === inspectedZoneId;
-        const isFiltered = selectedBoroughFilter === 'ALL' || node.borough === selectedBoroughFilter;
+      // 5. Draw 55 Granular TLC Zone GPS Pins (Filtered by Zoom LOD)
+      if (camera.scale >= 0.55) {
+        Object.values(NYC_REAL_GPS_ZONES).forEach(node => {
+          const pos = projectGpsToCanvas(node.lat, node.lon, w, h);
+          const isInspected = node.id === inspectedZoneId;
+          const isFiltered = selectedBoroughFilter === 'ALL' || node.borough === selectedBoroughFilter;
 
-        ctx.globalAlpha = isFiltered ? 1.0 : 0.20;
+          ctx.globalAlpha = isFiltered ? 1.0 : 0.20;
 
-        ctx.beginPath();
-        ctx.arc(pos.x, pos.y, (isInspected ? 10.5 : 6.5) * dpr, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, (isInspected ? 10.5 : 6.5) * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.fill();
 
-        ctx.strokeStyle = isInspected
-          ? '#2563eb'
-          : (node.borough === 'Manhattan' ? '#3b82f6' : (node.borough === 'Brooklyn' ? '#10b981' : (node.borough === 'Queens' ? '#f59e0b' : '#8b5cf6')));
-        ctx.lineWidth = (isInspected ? 2.8 : 1.8) * dpr;
-        ctx.stroke();
+          ctx.strokeStyle = isInspected
+            ? '#2563eb'
+            : (node.borough === 'Manhattan' ? '#3b82f6' : (node.borough === 'Brooklyn' ? '#10b981' : (node.borough === 'Queens' ? '#f59e0b' : '#8b5cf6')));
+          ctx.lineWidth = (isInspected ? 2.8 : 1.8) * dpr;
+          ctx.stroke();
 
-        ctx.beginPath();
-        ctx.arc(pos.x, pos.y, (isInspected ? 3.5 : 2.5) * dpr, 0, Math.PI * 2);
-        ctx.fillStyle = isInspected ? '#2563eb' : '#64748b';
-        ctx.fill();
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, (isInspected ? 3.5 : 2.5) * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = isInspected ? '#2563eb' : '#64748b';
+          ctx.fill();
 
-        if (camera.scale > 0.85 || isInspected || node.baseLambda > 220) {
-          ctx.font = isInspected ? `bold ${10.5 * dpr}px Inter, sans-serif` : `600 ${8.5 * dpr}px Inter, sans-serif`;
-          ctx.fillStyle = isInspected ? '#1d4ed8' : '#1e293b';
-          ctx.textAlign = 'center';
-          ctx.fillText(node.shortName, pos.x, pos.y - (isInspected ? 14 : 10) * dpr);
-        }
+          if (camera.scale > 0.85 || isInspected || node.baseLambda > 220) {
+            ctx.font = isInspected ? `bold ${10.5 * dpr}px Inter, sans-serif` : `600 ${8.5 * dpr}px Inter, sans-serif`;
+            ctx.fillStyle = isInspected ? '#1d4ed8' : '#1e293b';
+            ctx.textAlign = 'center';
+            ctx.fillText(node.shortName, pos.x, pos.y - (isInspected ? 14 : 10) * dpr);
+          }
 
-        ctx.globalAlpha = 1.0;
-      });
+          ctx.globalAlpha = 1.0;
+        });
+      }
+
 
       // 6. Update and Draw Moving Multi-Hop Agents along Curved Polyline Coordinates
       if (viewMode === 'particles') {
@@ -1235,7 +1346,7 @@ export default function SimulatorPage() {
     const zoomFactor = 1 - e.deltaY * 0.0012;
     setCamera(c => ({
       ...c,
-      scale: Math.max(0.5, Math.min(3.5, c.scale * zoomFactor)),
+      scale: Math.max(0.08, Math.min(4.5, c.scale * zoomFactor)),
     }));
   };
 
@@ -1391,7 +1502,11 @@ export default function SimulatorPage() {
             <FaArrowLeft /> Analytics
           </Link>
           <div className={styles.appBrand}>
-            <FaCompass color="var(--color-blue)" /> NYC GIS Digital Twin (WGS-84 EPSG:3857)
+            <FaCompass color="var(--color-blue)" /> {
+              camera.scale < 0.35 ? '🇺🇸 US Continental Network' :
+              camera.scale < 0.85 ? '🚆 Regional Tri-State' :
+              '🚕 NYC TLC Urban Grid (WGS-84)'
+            }
           </div>
         </div>
 
@@ -1881,27 +1996,55 @@ export default function SimulatorPage() {
 
       {/* ── FLOATING ZOOM & PAN CONTROLS (BOTTOM RIGHT) ── */}
       <div className={styles.floatingZoomGroup}>
-        <button
-          className={styles.zoomBtn}
-          onClick={() => setCamera(c => ({ ...c, scale: Math.min(3.5, c.scale * 1.25) }))}
-          title="Zoom In (+)"
-        >
-          <FaPlus size={12} />
-        </button>
-        <button
-          className={styles.zoomBtn}
-          onClick={() => setCamera(c => ({ ...c, scale: Math.max(0.5, c.scale / 1.25) }))}
-          title="Zoom Out (-)"
-        >
-          <FaMinus size={12} />
-        </button>
-        <button
-          className={styles.zoomBtn}
-          onClick={() => setCamera({ x: 0, y: 0, scale: 1.0 })}
-          title="Reset Camera View"
-        >
-          <FaCrosshairs size={12} />
-        </button>
+        <div style={{ display: 'flex', gap: 4, paddingBottom: 4, borderBottom: '1px solid var(--color-border)' }}>
+          <button
+            className={styles.zoomBtn}
+            style={{ width: 'auto', padding: '0 8px', fontSize: '0.72rem', fontWeight: 700 }}
+            onClick={() => setCamera({ x: 180, y: 20, scale: 0.14 })}
+            title="Zoom out to entire USA Continental Network"
+          >
+            🇺🇸 USA
+          </button>
+          <button
+            className={styles.zoomBtn}
+            style={{ width: 'auto', padding: '0 8px', fontSize: '0.72rem', fontWeight: 700 }}
+            onClick={() => setCamera({ x: 0, y: 0, scale: 0.65 })}
+            title="Zoom to Tri-State Regional View"
+          >
+            🚆 Region
+          </button>
+          <button
+            className={styles.zoomBtn}
+            style={{ width: 'auto', padding: '0 8px', fontSize: '0.72rem', fontWeight: 700 }}
+            onClick={() => setCamera({ x: 0, y: 0, scale: 1.0 })}
+            title="Focus on NYC TLC Urban Grid"
+          >
+            🚕 NYC
+          </button>
+        </div>
+        <div style={{ display: 'flex', gap: 4, paddingTop: 4 }}>
+          <button
+            className={styles.zoomBtn}
+            onClick={() => setCamera(c => ({ ...c, scale: Math.min(4.5, c.scale * 1.35) }))}
+            title="Zoom In (+)"
+          >
+            <FaPlus size={12} />
+          </button>
+          <button
+            className={styles.zoomBtn}
+            onClick={() => setCamera(c => ({ ...c, scale: Math.max(0.08, c.scale / 1.35) }))}
+            title="Zoom Out (-)"
+          >
+            <FaMinus size={12} />
+          </button>
+          <button
+            className={styles.zoomBtn}
+            onClick={() => setCamera({ x: 0, y: 0, scale: 1.0 })}
+            title="Reset Camera View"
+          >
+            <FaCrosshairs size={12} />
+          </button>
+        </div>
       </div>
 
       {/* ── FLOATING BOTTOM LEGEND (BOTTOM LEFT) ── */}
@@ -1917,9 +2060,3 @@ export default function SimulatorPage() {
     </div>
   );
 }
-
-
-
-
-
-

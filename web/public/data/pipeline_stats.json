@@ -1,0 +1,495 @@
+{
+  "bronze": {
+    "total_files": 24,
+    "files_ok": 24,
+    "total_rows_raw": 122908670,
+    "total_rows_bronze": 122908670,
+    "overall_retention_pct": 100.0,
+    "elapsed_sec": 171.34,
+    "files": [
+      {
+        "file": "yellow_tripdata_2019-01.parquet",
+        "status": "OK",
+        "rows_raw": 7696617,
+        "rows_bronze": 7696617,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2019-02.parquet",
+        "status": "OK",
+        "rows_raw": 7049370,
+        "rows_bronze": 7049370,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2019-03.parquet",
+        "status": "OK",
+        "rows_raw": 7866620,
+        "rows_bronze": 7866620,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2019-04.parquet",
+        "status": "OK",
+        "rows_raw": 7475949,
+        "rows_bronze": 7475949,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2019-05.parquet",
+        "status": "OK",
+        "rows_raw": 7598445,
+        "rows_bronze": 7598445,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2019-06.parquet",
+        "status": "OK",
+        "rows_raw": 6971560,
+        "rows_bronze": 6971560,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2019-07.parquet",
+        "status": "OK",
+        "rows_raw": 6310419,
+        "rows_bronze": 6310419,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2019-08.parquet",
+        "status": "OK",
+        "rows_raw": 6073357,
+        "rows_bronze": 6073357,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2019-09.parquet",
+        "status": "OK",
+        "rows_raw": 6567788,
+        "rows_bronze": 6567788,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2019-10.parquet",
+        "status": "OK",
+        "rows_raw": 7213891,
+        "rows_bronze": 7213891,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2019-11.parquet",
+        "status": "OK",
+        "rows_raw": 6878111,
+        "rows_bronze": 6878111,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2019-12.parquet",
+        "status": "OK",
+        "rows_raw": 6896317,
+        "rows_bronze": 6896317,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2023-01.parquet",
+        "status": "OK",
+        "rows_raw": 3066766,
+        "rows_bronze": 3066766,
+        "retention_pct": 100.0,
+        "missing_columns": []
+      },
+      {
+        "file": "yellow_tripdata_2023-02.parquet",
+        "status": "OK",
+        "rows_raw": 2913955,
+        "rows_bronze": 2913955,
+        "retention_pct": 100.0,
+        "missing_columns": [
+          "airport_fee"
+        ]
+      },
+      {
+        "file": "yellow_tripdata_2023-03.parquet",
+        "status": "OK",
+        "rows_raw": 3403766,
+        "rows_bronze": 3403766,
+        "retention_pct": 100.0,
+        "missing_columns": [
+          "airport_fee"
+        ]
+      },
+      {
+        "file": "yellow_tripdata_2023-04.parquet",
+        "status": "OK",
+        "rows_raw": 3288250,
+        "rows_bronze": 3288250,
+        "retention_pct": 100.0,
+        "missing_columns": [
+          "airport_fee"
+        ]
+      },
+      {
+        "file": "yellow_tripdata_2023-05.parquet",
+        "status": "OK",
+        "rows_raw": 3513649,
+        "rows_bronze": 3513649,
+        "retention_pct": 100.0,
+        "missing_columns": [
+          "airport_fee"
+        ]
+      },
+      {
+        "file": "yellow_tripdata_2023-06.parquet",
+        "status": "OK",
+        "rows_raw": 3307234,
+        "rows_bronze": 3307234,
+        "retention_pct": 100.0,
+        "missing_columns": [
+          "airport_fee"
+        ]
+      },
+      {
+        "file": "yellow_tripdata_2023-07.parquet",
+        "status": "OK",
+        "rows_raw": 2907108,
+        "rows_bronze": 2907108,
+        "retention_pct": 100.0,
+        "missing_columns": [
+          "airport_fee"
+        ]
+      },
+      {
+        "file": "yellow_tripdata_2023-08.parquet",
+        "status": "OK",
+        "rows_raw": 2824209,
+        "rows_bronze": 2824209,
+        "retention_pct": 100.0,
+        "missing_columns": [
+          "airport_fee"
+        ]
+      },
+      {
+        "file": "yellow_tripdata_2023-09.parquet",
+        "status": "OK",
+        "rows_raw": 2846722,
+        "rows_bronze": 2846722,
+        "retention_pct": 100.0,
+        "missing_columns": [
+          "airport_fee"
+        ]
+      },
+      {
+        "file": "yellow_tripdata_2023-10.parquet",
+        "status": "OK",
+        "rows_raw": 3522285,
+        "rows_bronze": 3522285,
+        "retention_pct": 100.0,
+        "missing_columns": [
+          "airport_fee"
+        ]
+      },
+      {
+        "file": "yellow_tripdata_2023-11.parquet",
+        "status": "OK",
+        "rows_raw": 3339715,
+        "rows_bronze": 3339715,
+        "retention_pct": 100.0,
+        "missing_columns": [
+          "airport_fee"
+        ]
+      },
+      {
+        "file": "yellow_tripdata_2023-12.parquet",
+        "status": "OK",
+        "rows_raw": 3376567,
+        "rows_bronze": 3376567,
+        "retention_pct": 100.0,
+        "missing_columns": [
+          "airport_fee"
+        ]
+      }
+    ]
+  },
+  "silver": {
+    "total_files": 24,
+    "total_rows_in": 122908670,
+    "total_rows_out": 118773217,
+    "overall_retention_pct": 96.64,
+    "elapsed_sec": 474.57,
+    "files": [
+      {
+        "file": "yellow_tripdata_2019-01.parquet",
+        "rows_in": 7696617,
+        "rows_out": 7424054
+      },
+      {
+        "file": "yellow_tripdata_2019-02.parquet",
+        "rows_in": 7049370,
+        "rows_out": 6873736
+      },
+      {
+        "file": "yellow_tripdata_2019-03.parquet",
+        "rows_in": 7866620,
+        "rows_out": 7694437
+      },
+      {
+        "file": "yellow_tripdata_2019-04.parquet",
+        "rows_in": 7475949,
+        "rows_out": 7291934
+      },
+      {
+        "file": "yellow_tripdata_2019-05.parquet",
+        "rows_in": 7598445,
+        "rows_out": 7408558
+      },
+      {
+        "file": "yellow_tripdata_2019-06.parquet",
+        "rows_in": 6971560,
+        "rows_out": 6783813
+      },
+      {
+        "file": "yellow_tripdata_2019-07.parquet",
+        "rows_in": 6310419,
+        "rows_out": 6131610
+      },
+      {
+        "file": "yellow_tripdata_2019-08.parquet",
+        "rows_in": 6073357,
+        "rows_out": 5891179
+      },
+      {
+        "file": "yellow_tripdata_2019-09.parquet",
+        "rows_in": 6567788,
+        "rows_out": 6380473
+      },
+      {
+        "file": "yellow_tripdata_2019-10.parquet",
+        "rows_in": 7213891,
+        "rows_out": 7022232
+      },
+      {
+        "file": "yellow_tripdata_2019-11.parquet",
+        "rows_in": 6878111,
+        "rows_out": 6686586
+      },
+      {
+        "file": "yellow_tripdata_2019-12.parquet",
+        "rows_in": 6896317,
+        "rows_out": 6700165
+      },
+      {
+        "file": "yellow_tripdata_2023-01.parquet",
+        "rows_in": 3066766,
+        "rows_out": 2935122
+      },
+      {
+        "file": "yellow_tripdata_2023-02.parquet",
+        "rows_in": 2913955,
+        "rows_out": 2792347
+      },
+      {
+        "file": "yellow_tripdata_2023-03.parquet",
+        "rows_in": 3403766,
+        "rows_out": 3268548
+      },
+      {
+        "file": "yellow_tripdata_2023-04.parquet",
+        "rows_in": 3288250,
+        "rows_out": 3159703
+      },
+      {
+        "file": "yellow_tripdata_2023-05.parquet",
+        "rows_in": 3513649,
+        "rows_out": 3372575
+      },
+      {
+        "file": "yellow_tripdata_2023-06.parquet",
+        "rows_in": 3307234,
+        "rows_out": 3168242
+      },
+      {
+        "file": "yellow_tripdata_2023-07.parquet",
+        "rows_in": 2907108,
+        "rows_out": 2771289
+      },
+      {
+        "file": "yellow_tripdata_2023-08.parquet",
+        "rows_in": 2824209,
+        "rows_out": 2684753
+      },
+      {
+        "file": "yellow_tripdata_2023-09.parquet",
+        "rows_in": 2846722,
+        "rows_out": 2667334
+      },
+      {
+        "file": "yellow_tripdata_2023-10.parquet",
+        "rows_in": 3522285,
+        "rows_out": 3304876
+      },
+      {
+        "file": "yellow_tripdata_2023-11.parquet",
+        "rows_in": 3339715,
+        "rows_out": 3145997
+      },
+      {
+        "file": "yellow_tripdata_2023-12.parquet",
+        "rows_in": 3376567,
+        "rows_out": 3213654
+      }
+    ]
+  },
+  "gold": {
+    "total_rows": 118773217,
+    "tables": [
+      {
+        "table": "zone_revenue",
+        "rows": 262,
+        "size_kb": 79.9,
+        "status": "OK"
+      },
+      {
+        "table": "hourly_demand",
+        "rows": 40524,
+        "size_kb": 8280.8,
+        "status": "OK"
+      },
+      {
+        "table": "borough_summary",
+        "rows": 6,
+        "size_kb": 1.4,
+        "status": "OK"
+      },
+      {
+        "table": "monthly_trends",
+        "rows": 12,
+        "size_kb": 2.7,
+        "status": "OK"
+      },
+      {
+        "table": "unit_economics",
+        "rows": 3,
+        "size_kb": 0.7,
+        "status": "OK"
+      },
+      {
+        "table": "airport_analysis",
+        "rows": 4736,
+        "size_kb": 1307.5,
+        "status": "OK"
+      },
+      {
+        "table": "daily_heatmap",
+        "rows": 168,
+        "size_kb": 28.3,
+        "status": "OK"
+      },
+      {
+        "table": "simulator_base",
+        "rows": 40524,
+        "size_kb": 9984.9,
+        "status": "OK"
+      },
+      {
+        "table": "top_routes",
+        "rows": 100,
+        "size_kb": 26.5,
+        "status": "OK"
+      },
+      {
+        "table": "speed_congestion",
+        "rows": 144,
+        "size_kb": 18.3,
+        "status": "OK"
+      },
+      {
+        "table": "payment_tipping",
+        "rows": 6,
+        "size_kb": 0.9,
+        "status": "OK"
+      },
+      {
+        "table": "surcharges_taxes",
+        "rows": 12,
+        "size_kb": 2.2,
+        "status": "OK"
+      },
+      {
+        "table": "transit_equity",
+        "rows": 6,
+        "size_kb": 1.0,
+        "status": "OK"
+      },
+      {
+        "table": "multi_year_trends",
+        "rows": 4,
+        "size_kb": 0.6,
+        "status": "OK"
+      },
+      {
+        "table": "executive_simulation",
+        "rows": 6,
+        "size_kb": 1.1,
+        "status": "OK"
+      },
+      {
+        "table": "neighborhood_growth",
+        "rows": 50,
+        "size_kb": 8.2,
+        "status": "OK"
+      },
+      {
+        "table": "weather_impact",
+        "rows": 5,
+        "size_kb": 0.8,
+        "status": "OK"
+      },
+      {
+        "table": "weather_surge_trap",
+        "rows": 20,
+        "size_kb": 5.3,
+        "status": "OK"
+      },
+      {
+        "table": "tipping_weather_segments",
+        "rows": 80,
+        "size_kb": 17.5,
+        "status": "OK"
+      },
+      {
+        "table": "transit_hub_bottleneck",
+        "rows": 36,
+        "size_kb": 6.5,
+        "status": "OK"
+      },
+      {
+        "table": "transit_disruption_spillover",
+        "status": "ERROR",
+        "error": "Binder Error: column \"weather_condition\" must appear in the GROUP BY clause or must be part of an aggregate function.\nEither add it to the GROUP BY list, or use \"ANY_VALUE(weather_condition)\" if the exact value of \"weather_condition\" is not important.\n\nLINE 14:             ROUND(COUNT(*) * CASE WHEN w.weather_condition = 'Heavy Rain' THEN 2.85 ELSE 1.0 END...\n                                                ^"
+      },
+      {
+        "table": "boundary_zone_starvation",
+        "rows": 20,
+        "size_kb": 3.9,
+        "status": "OK"
+      }
+    ],
+    "elapsed_sec": 98.71
+  },
+  "total_elapsed_sec": 898.87,
+  "year": 2023,
+  "data_dir": "/kaggle/working/raw_data"
+}
