@@ -38,6 +38,9 @@ export const getData = {
   executiveSimulation: () => fetchJson<import('@/types').ExecutiveSimulation[]>('executive_simulation.json'),
   neighborhoodGrowth: () => fetchJson<import('@/types').NeighborhoodGrowth[]>('neighborhood_growth.json'),
   weatherImpact:      () => fetchJson<import('@/types').WeatherImpact[]>('weather_impact.json'),
+  weatherSurgeTrap:   () => fetchJson<import('@/types').WeatherSurgeTrap[]>('weather_surge_trap.json'),
+  tippingWeatherSegments: () => fetchJson<import('@/types').TippingWeatherSegment[]>('tipping_weather_segments.json'),
+  transitHubBottleneck: () => fetchJson<import('@/types').TransitHubBottleneck[]>('transit_hub_bottleneck.json'),
 };
 
 export const MONTH_NAMES = [

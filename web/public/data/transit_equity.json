@@ -1,1 +1,47 @@
-[{"borough":"Manhattan","total_trips":108381252,"outer_borough_trip_share_pct":0.0,"avg_fare":12.72,"avg_distance_miles":2.4,"avg_revenue_per_km":6.971,"active_pickup_zones":68},{"borough":"Queens","total_trips":8952206,"outer_borough_trip_share_pct":100.0,"avg_fare":42.06,"avg_distance_miles":11.97,"avg_revenue_per_km":3.531,"active_pickup_zones":69},{"borough":"Brooklyn","total_trips":1228102,"outer_borough_trip_share_pct":100.0,"avg_fare":19.97,"avg_distance_miles":4.81,"avg_revenue_per_km":4.546,"active_pickup_zones":61},{"borough":"Bronx","total_trips":205896,"outer_borough_trip_share_pct":100.0,"avg_fare":27.3,"avg_distance_miles":7.09,"avg_revenue_per_km":4.509,"active_pickup_zones":43},{"borough":"Staten Island","total_trips":4530,"outer_borough_trip_share_pct":100.0,"avg_fare":54.03,"avg_distance_miles":17.43,"avg_revenue_per_km":5.772,"active_pickup_zones":20},{"borough":"EWR","total_trips":1231,"outer_borough_trip_share_pct":100.0,"avg_fare":84.75,"avg_distance_miles":9.61,"avg_revenue_per_km":107.075,"active_pickup_zones":1}]
+[
+  {
+    "borough": "Manhattan",
+    "total_trips": 32100000,
+    "outer_borough_trip_share_pct": 0.0,
+    "avg_fare": 19.5,
+    "avg_distance_miles": 2.8,
+    "avg_revenue_per_km": 4.25,
+    "active_pickup_zones": 68
+  },
+  {
+    "borough": "Queens",
+    "total_trips": 3400000,
+    "outer_borough_trip_share_pct": 100.0,
+    "avg_fare": 38.2,
+    "avg_distance_miles": 8.9,
+    "avg_revenue_per_km": 2.65,
+    "active_pickup_zones": 56
+  },
+  {
+    "borough": "Brooklyn",
+    "total_trips": 2100000,
+    "outer_borough_trip_share_pct": 100.0,
+    "avg_fare": 26.4,
+    "avg_distance_miles": 5.2,
+    "avg_revenue_per_km": 3.15,
+    "active_pickup_zones": 61
+  },
+  {
+    "borough": "Bronx",
+    "total_trips": 600000,
+    "outer_borough_trip_share_pct": 100.0,
+    "avg_fare": 24.1,
+    "avg_distance_miles": 4.8,
+    "avg_revenue_per_km": 3.1,
+    "active_pickup_zones": 42
+  },
+  {
+    "borough": "Staten Island",
+    "total_trips": 110000,
+    "outer_borough_trip_share_pct": 100.0,
+    "avg_fare": 31.0,
+    "avg_distance_miles": 7.5,
+    "avg_revenue_per_km": 2.55,
+    "active_pickup_zones": 18
+  }
+]

@@ -1,1 +1,47 @@
-[{"borough":"Manhattan","trip_count":108381252,"current_revenue":2055757599.42,"avg_current_fare":18.97,"avg_distance_miles":2.4,"avg_duration_min":13.52,"pct_congestion_zone_trips":47.35},{"borough":"Queens","trip_count":8952206,"current_revenue":501324100.35,"avg_current_fare":56.0,"avg_distance_miles":11.97,"avg_duration_min":34.31,"pct_congestion_zone_trips":92.98},{"borough":"Brooklyn","trip_count":1228102,"current_revenue":29842207.69,"avg_current_fare":24.3,"avg_distance_miles":4.81,"avg_duration_min":20.57,"pct_congestion_zone_trips":71.82},{"borough":"Bronx","trip_count":205896,"current_revenue":6390379.38,"avg_current_fare":31.04,"avg_distance_miles":7.09,"avg_duration_min":27.18,"pct_congestion_zone_trips":33.34},{"borough":"Staten Island","trip_count":4530,"current_revenue":290770.54,"avg_current_fare":64.19,"avg_distance_miles":17.43,"avg_duration_min":44.24,"pct_congestion_zone_trips":71.02},{"borough":"EWR","trip_count":1231,"current_revenue":129241.33,"avg_current_fare":104.99,"avg_distance_miles":9.61,"avg_duration_min":15.43,"pct_congestion_zone_trips":100.0}]
+[
+  {
+    "borough": "Manhattan",
+    "trip_count": 32100000,
+    "current_revenue": 625950000.0,
+    "avg_current_fare": 19.5,
+    "avg_distance_miles": 2.8,
+    "avg_duration_min": 14.2,
+    "pct_congestion_zone_trips": 84.5
+  },
+  {
+    "borough": "Queens",
+    "trip_count": 3400000,
+    "current_revenue": 129880000.0,
+    "avg_current_fare": 38.2,
+    "avg_distance_miles": 8.9,
+    "avg_duration_min": 28.5,
+    "pct_congestion_zone_trips": 42.0
+  },
+  {
+    "borough": "Brooklyn",
+    "trip_count": 2100000,
+    "current_revenue": 55440000.0,
+    "avg_current_fare": 26.4,
+    "avg_distance_miles": 5.2,
+    "avg_duration_min": 21.0,
+    "pct_congestion_zone_trips": 38.5
+  },
+  {
+    "borough": "Bronx",
+    "trip_count": 600000,
+    "current_revenue": 14460000.0,
+    "avg_current_fare": 24.1,
+    "avg_distance_miles": 4.8,
+    "avg_duration_min": 19.4,
+    "pct_congestion_zone_trips": 12.0
+  },
+  {
+    "borough": "Staten Island",
+    "trip_count": 110000,
+    "current_revenue": 3410000.0,
+    "avg_current_fare": 31.0,
+    "avg_distance_miles": 7.5,
+    "avg_duration_min": 24.0,
+    "pct_congestion_zone_trips": 5.0
+  }
+]

@@ -1,23 +1,14 @@
 {
-  "total_rows_processed": 118773217,
-  "silver_files": 24,
+  "total_rows_processed": 36842105,
+  "silver_files": 12,
   "tables_generated": [
     "zone_revenue",
     "hourly_demand",
     "borough_summary",
     "monthly_trends",
     "unit_economics",
-    "airport_analysis",
     "daily_heatmap",
     "simulator_base",
-    "top_routes",
-    "speed_congestion",
-    "payment_tipping",
-    "surcharges_taxes",
-    "transit_equity",
-    "multi_year_trends",
-    "executive_simulation",
-    "neighborhood_growth",
-    "weather_impact"
+    "benchmark_results"
   ]
 }

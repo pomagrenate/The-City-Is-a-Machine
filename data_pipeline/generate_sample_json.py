@@ -407,6 +407,324 @@ def generate_sample_data():
   with open(PUBLIC_DATA_DIR / "weather_impact.json", "w") as f:
     json.dump(weather_impact, f, indent=2)
 
+  # 21. Weather Surge Trap (Idea 1)
+  weather_surge_trap = [
+    {
+      'corridor_name': 'Manhattan Inner Loop (Short Hops)',
+      'weather_condition': 'Clear',
+      'trip_count': 18500000,
+      'avg_gross_fare': 15.2,
+      'avg_duration_min': 11.5,
+      'avg_distance_miles': 1.8,
+      'est_deadhead_min': 2.0,
+      'effective_hourly_revenue': 67.55,
+      'avg_revenue_per_km': 5.25,
+      'avg_tip_pct': 17.2,
+      'recommendation': 'Tối ưu nhận cuốc liên hoàn ngắn'
+    },
+    {
+      'corridor_name': 'Manhattan Inner Loop (Short Hops)',
+      'weather_condition': 'Heavy Rain',
+      'trip_count': 2450000,
+      'avg_gross_fare': 19.8,
+      'avg_duration_min': 18.2,
+      'avg_distance_miles': 1.8,
+      'est_deadhead_min': 3.0,
+      'effective_hourly_revenue': 56.04,
+      'avg_revenue_per_km': 6.83,
+      'avg_tip_pct': 20.4,
+      'recommendation': 'Chiến lược vàng: Doanh thu thực tế cao nhất khi mưa bão'
+    },
+    {
+      'corridor_name': 'LaGuardia Airport Run (LGA)',
+      'weather_condition': 'Clear',
+      'trip_count': 2100000,
+      'avg_gross_fare': 42.5,
+      'avg_duration_min': 28.5,
+      'avg_distance_miles': 9.4,
+      'est_deadhead_min': 20.0,
+      'effective_hourly_revenue': 52.58,
+      'avg_revenue_per_km': 2.81,
+      'avg_tip_pct': 18.2,
+      'recommendation': 'Hành lang sinh lời ổn định'
+    },
+    {
+      'corridor_name': 'LaGuardia Airport Run (LGA)',
+      'weather_condition': 'Heavy Rain',
+      'trip_count': 320000,
+      'avg_gross_fare': 54.0,
+      'avg_duration_min': 48.0,
+      'avg_distance_miles': 9.4,
+      'est_deadhead_min': 35.0,
+      'effective_hourly_revenue': 39.04,
+      'avg_revenue_per_km': 3.57,
+      'avg_tip_pct': 21.0,
+      'recommendation': 'Giảm 25.7% $/h do kẹt xe cầu Grand Central Pkwy'
+    },
+    {
+      'corridor_name': 'JFK Airport Flat-Rate',
+      'weather_condition': 'Clear',
+      'trip_count': 1650000,
+      'avg_gross_fare': 70.0,
+      'avg_duration_min': 45.0,
+      'avg_distance_miles': 16.8,
+      'est_deadhead_min': 35.0,
+      'effective_hourly_revenue': 52.50,
+      'avg_revenue_per_km': 2.59,
+      'avg_tip_pct': 19.5,
+      'recommendation': 'Cần ghép chuyến khứ hồi tại sân bay'
+    },
+    {
+      'corridor_name': 'JFK Airport Flat-Rate',
+      'weather_condition': 'Heavy Rain',
+      'trip_count': 250000,
+      'avg_gross_fare': 82.0,
+      'avg_duration_min': 75.0,
+      'avg_distance_miles': 16.8,
+      'est_deadhead_min': 55.0,
+      'effective_hourly_revenue': 37.85,
+      'avg_revenue_per_km': 3.03,
+      'avg_tip_pct': 22.5,
+      'recommendation': 'BẪY DOANH THU: Cước cao nhưng $/h rớt 28% vì Van Wyck kẹt cứng'
+    },
+    {
+      'corridor_name': 'Manhattan to Outer-Borough (Residential)',
+      'weather_condition': 'Clear',
+      'trip_count': 3400000,
+      'avg_gross_fare': 32.0,
+      'avg_duration_min': 26.0,
+      'avg_distance_miles': 6.8,
+      'est_deadhead_min': 28.0,
+      'effective_hourly_revenue': 35.56,
+      'avg_revenue_per_km': 2.92,
+      'avg_tip_pct': 15.4,
+      'recommendation': 'Rủi ro chạy rỗng vì ngoại ô dùng 95% Uber/Lyft'
+    },
+    {
+      'corridor_name': 'Manhattan to Outer-Borough (Residential)',
+      'weather_condition': 'Heavy Rain',
+      'trip_count': 480000,
+      'avg_gross_fare': 39.5,
+      'avg_duration_min': 46.0,
+      'avg_distance_miles': 6.8,
+      'est_deadhead_min': 45.0,
+      'effective_hourly_revenue': 26.04,
+      'avg_revenue_per_km': 3.61,
+      'avg_tip_pct': 17.8,
+      'recommendation': 'BẪY NGUY HIỂM: Deadhead 100% về trung tâm mất 45p kẹt xe'
+    }
+  ]
+  with open(PUBLIC_DATA_DIR / "weather_surge_trap.json", "w") as f:
+    json.dump(weather_surge_trap, f, indent=2)
+
+  # 22. Tipping Weather Segments (Idea 2)
+  tipping_weather_segments = [
+    {
+      'customer_segment': 'Financial & Executive Hub',
+      'time_window': 'Morning Rush (7-10h)',
+      'weather_condition': 'Clear',
+      'trip_count': 3100000,
+      'avg_fare': 22.5,
+      'avg_tip_amount': 4.50,
+      'avg_tip_pct': 20.0,
+      'pct_trips_with_tip': 91.2,
+      'sensitivity_label': 'Hào phóng & Độ co giãn cao',
+      'suggested_smart_tip_pct': 20.0
+    },
+    {
+      'customer_segment': 'Financial & Executive Hub',
+      'time_window': 'Morning Rush (7-10h)',
+      'weather_condition': 'Heavy Rain',
+      'trip_count': 620000,
+      'avg_fare': 28.0,
+      'avg_tip_amount': 6.86,
+      'avg_tip_pct': 24.5,
+      'pct_trips_with_tip': 95.8,
+      'sensitivity_label': 'Siêu nhạy cảm dịch vụ (Tip Spike +4.5%)',
+      'suggested_smart_tip_pct': 25.0
+    },
+    {
+      'customer_segment': 'Financial & Executive Hub',
+      'time_window': 'Evening Rush (17-20h)',
+      'weather_condition': 'Heavy Rain',
+      'trip_count': 780000,
+      'avg_fare': 31.5,
+      'avg_tip_amount': 7.62,
+      'avg_tip_pct': 24.2,
+      'pct_trips_with_tip': 94.5,
+      'sensitivity_label': 'Sẵn sàng chi trả cao để về nhà nhanh',
+      'suggested_smart_tip_pct': 25.0
+    },
+    {
+      'customer_segment': 'Nightlife & Dining District',
+      'time_window': 'Nightlife Hours (21-02h)',
+      'weather_condition': 'Clear',
+      'trip_count': 2850000,
+      'avg_fare': 19.5,
+      'avg_tip_amount': 3.70,
+      'avg_tip_pct': 19.0,
+      'pct_trips_with_tip': 88.0,
+      'sensitivity_label': 'Hào phóng ổn định',
+      'suggested_smart_tip_pct': 20.0
+    },
+    {
+      'customer_segment': 'Nightlife & Dining District',
+      'time_window': 'Nightlife Hours (21-02h)',
+      'weather_condition': 'Heavy Rain',
+      'trip_count': 490000,
+      'avg_fare': 25.0,
+      'avg_tip_amount': 5.65,
+      'avg_tip_pct': 22.6,
+      'pct_trips_with_tip': 93.2,
+      'sensitivity_label': 'Tăng mạnh vào đêm mưa cuối tuần',
+      'suggested_smart_tip_pct': 22.0
+    },
+    {
+      'customer_segment': 'Airport & Interstate Travelers',
+      'time_window': 'Midday & Off-Peak',
+      'weather_condition': 'Clear',
+      'trip_count': 1950000,
+      'avg_fare': 58.0,
+      'avg_tip_amount': 11.02,
+      'avg_tip_pct': 19.0,
+      'pct_trips_with_tip': 89.4,
+      'sensitivity_label': 'Tip cước lớn cố định',
+      'suggested_smart_tip_pct': 18.0
+    },
+    {
+      'customer_segment': 'Airport & Interstate Travelers',
+      'time_window': 'Midday & Off-Peak',
+      'weather_condition': 'Heavy Rain',
+      'trip_count': 310000,
+      'avg_fare': 74.0,
+      'avg_tip_amount': 16.28,
+      'avg_tip_pct': 22.0,
+      'pct_trips_with_tip': 93.0,
+      'sensitivity_label': 'Độ hào phóng cao khi hỗ trợ hành lý trong mưa',
+      'suggested_smart_tip_pct': 22.0
+    },
+    {
+      'customer_segment': 'Residential & Outer Boroughs',
+      'time_window': 'Midday & Off-Peak',
+      'weather_condition': 'Clear',
+      'trip_count': 1420000,
+      'avg_fare': 24.0,
+      'avg_tip_amount': 3.36,
+      'avg_tip_pct': 14.0,
+      'pct_trips_with_tip': 74.2,
+      'sensitivity_label': 'Nhạy cảm giá (Price Sensitive)',
+      'suggested_smart_tip_pct': 15.0
+    },
+    {
+      'customer_segment': 'Residential & Outer Boroughs',
+      'time_window': 'Midday & Off-Peak',
+      'weather_condition': 'Heavy Rain',
+      'trip_count': 220000,
+      'avg_fare': 29.5,
+      'avg_tip_amount': 4.72,
+      'avg_tip_pct': 16.0,
+      'pct_trips_with_tip': 80.5,
+      'sensitivity_label': 'Tăng nhẹ nhưng vẫn thấp hơn nội đô',
+      'suggested_smart_tip_pct': 18.0
+    }
+  ]
+  with open(PUBLIC_DATA_DIR / "tipping_weather_segments.json", "w") as f:
+    json.dump(tipping_weather_segments, f, indent=2)
+
+  # 23. Transit Hub Bottleneck (Idea 3)
+  transit_hub_bottleneck = [
+    {
+      'hub_name': 'Penn Station / Moynihan Hub',
+      'weather_condition': 'Clear',
+      'trip_count_rush_hour': 18500,
+      'demand_spike_multiplier': 1.0,
+      'avg_speed_mph': 5.8,
+      'avg_duration_min': 14.5,
+      'nearby_supply_lag_min': 8.5,
+      'unmet_demand_estimate_pct': 12.0,
+      'dispatch_action': 'Cân bằng tự nhiên'
+    },
+    {
+      'hub_name': 'Penn Station / Moynihan Hub',
+      'weather_condition': 'Heavy Rain',
+      'trip_count_rush_hour': 42500,
+      'demand_spike_multiplier': 2.30,
+      'avg_speed_mph': 3.4,
+      'avg_duration_min': 28.2,
+      'nearby_supply_lag_min': 26.5,
+      'unmet_demand_estimate_pct': 44.5,
+      'dispatch_action': 'KÍCH HOẠT RADAR DISPATCH: Điều hướng xe từ 1.5km trước 20 phút'
+    },
+    {
+      'hub_name': 'Grand Central Terminal',
+      'weather_condition': 'Clear',
+      'trip_count_rush_hour': 16200,
+      'demand_spike_multiplier': 1.0,
+      'avg_speed_mph': 5.5,
+      'avg_duration_min': 15.0,
+      'nearby_supply_lag_min': 9.0,
+      'unmet_demand_estimate_pct': 10.5,
+      'dispatch_action': 'Cân bằng tự nhiên'
+    },
+    {
+      'hub_name': 'Grand Central Terminal',
+      'weather_condition': 'Heavy Rain',
+      'trip_count_rush_hour': 38900,
+      'demand_spike_multiplier': 2.40,
+      'avg_speed_mph': 3.2,
+      'avg_duration_min': 31.0,
+      'nearby_supply_lag_min': 29.0,
+      'unmet_demand_estimate_pct': 48.0,
+      'dispatch_action': 'KÍCH HOẠT RADAR DISPATCH: Tắc nghẽn 42nd St, cần đón đầu từ Park Ave'
+    },
+    {
+      'hub_name': 'Port Authority Bus Terminal',
+      'weather_condition': 'Clear',
+      'trip_count_rush_hour': 12400,
+      'demand_spike_multiplier': 1.0,
+      'avg_speed_mph': 4.8,
+      'avg_duration_min': 16.2,
+      'nearby_supply_lag_min': 11.0,
+      'unmet_demand_estimate_pct': 14.0,
+      'dispatch_action': 'Cân bằng tự nhiên'
+    },
+    {
+      'hub_name': 'Port Authority Bus Terminal',
+      'weather_condition': 'Heavy Rain',
+      'trip_count_rush_hour': 27800,
+      'demand_spike_multiplier': 2.24,
+      'avg_speed_mph': 3.0,
+      'avg_duration_min': 34.5,
+      'nearby_supply_lag_min': 32.0,
+      'unmet_demand_estimate_pct': 52.0,
+      'dispatch_action': 'KÍCH HOẠT RADAR DISPATCH: 8th Ave tê liệt, điều hướng xe từ 9th Ave'
+    },
+    {
+      'hub_name': 'Atlantic Terminal (Brooklyn)',
+      'weather_condition': 'Clear',
+      'trip_count_rush_hour': 4200,
+      'demand_spike_multiplier': 1.0,
+      'avg_speed_mph': 11.2,
+      'avg_duration_min': 12.0,
+      'nearby_supply_lag_min': 6.0,
+      'unmet_demand_estimate_pct': 8.0,
+      'dispatch_action': 'Cân bằng tự nhiên'
+    },
+    {
+      'hub_name': 'Atlantic Terminal (Brooklyn)',
+      'weather_condition': 'Heavy Rain',
+      'trip_count_rush_hour': 9800,
+      'demand_spike_multiplier': 2.33,
+      'avg_speed_mph': 7.5,
+      'avg_duration_min': 19.5,
+      'nearby_supply_lag_min': 16.0,
+      'unmet_demand_estimate_pct': 36.0,
+      'dispatch_action': 'KÍCH HOẠT RADAR DISPATCH: Tăng cường xe từ Downtown Brooklyn'
+    }
+  ]
+  with open(PUBLIC_DATA_DIR / "transit_hub_bottleneck.json", "w") as f:
+    json.dump(transit_hub_bottleneck, f, indent=2)
+
   print("[OK] Sample JSON files created successfully in web/public/data/")
 
 if __name__ == "__main__":

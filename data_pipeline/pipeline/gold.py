@@ -306,6 +306,99 @@ QUERIES = {
         GROUP BY COALESCE(w.weather_condition, 'Clear')
         ORDER BY total_trips DESC
     """,
+
+    "weather_surge_trap": """
+        SELECT
+            CASE
+                WHEN s.is_airport_trip = 1 THEN 'Airport Run (JFK/LGA/EWR)'
+                WHEN s.PUBorough = 'Manhattan' AND s.DOBorough != 'Manhattan' THEN 'Manhattan to Outer-Borough'
+                WHEN s.PUBorough = 'Manhattan' AND s.DOBorough = 'Manhattan' THEN 'Manhattan Inner Loop'
+                ELSE 'Outer-Borough Local'
+            END AS corridor_name,
+            COALESCE(w.weather_condition, 'Clear') AS weather_condition,
+            COUNT(*) AS trip_count,
+            ROUND(AVG(s.total_amount), 2) AS avg_gross_fare,
+            ROUND(AVG(s.trip_duration_min), 1) AS avg_duration_min,
+            ROUND(AVG(s.trip_distance), 2) AS avg_distance_miles,
+            ROUND(CASE
+                WHEN s.is_airport_trip = 1 THEN 35.0
+                WHEN s.PUBorough = 'Manhattan' AND s.DOBorough != 'Manhattan' THEN 40.0
+                ELSE 0.0
+            END, 1) AS est_deadhead_min,
+            ROUND(
+                AVG(s.total_amount) / 
+                NULLIF((AVG(s.trip_duration_min) + CASE
+                    WHEN s.is_airport_trip = 1 THEN 35.0
+                    WHEN s.PUBorough = 'Manhattan' AND s.DOBorough != 'Manhattan' THEN 40.0
+                    ELSE 0.0
+                END) / 60.0, 0),
+                2
+            ) AS effective_hourly_revenue,
+            ROUND(AVG(s.revenue_per_km), 3) AS avg_revenue_per_km,
+            ROUND(AVG(s.tip_rate) * 100, 2) AS avg_tip_pct
+        FROM silver s
+        LEFT JOIN weather_table w
+            ON CAST(s.tpep_pickup_datetime AS DATE) = CAST(w.date AS DATE)
+        WHERE s.PUBorough IS NOT NULL AND s.DOBorough IS NOT NULL
+        GROUP BY 1, 2, CASE
+            WHEN s.is_airport_trip = 1 THEN 35.0
+            WHEN s.PUBorough = 'Manhattan' AND s.DOBorough != 'Manhattan' THEN 40.0
+            ELSE 0.0
+        END
+        ORDER BY corridor_name, trip_count DESC
+    """,
+
+    "tipping_weather_segments": """
+        SELECT
+            CASE
+                WHEN s.PULocationID IN (161, 230, 236, 237, 186, 170, 162, 163, 164) THEN 'Financial & Executive Hub'
+                WHEN s.PULocationID IN (79, 148, 249, 125, 234, 113, 114) THEN 'Nightlife & Dining District'
+                WHEN s.is_airport_trip = 1 THEN 'Airport & Interstate Travelers'
+                ELSE 'Residential & Outer Boroughs'
+            END AS customer_segment,
+            CASE
+                WHEN s.pickup_hour BETWEEN 7 AND 9 THEN 'Morning Rush (7-10h)'
+                WHEN s.pickup_hour BETWEEN 17 AND 19 THEN 'Evening Rush (17-20h)'
+                WHEN s.pickup_hour >= 21 OR s.pickup_hour <= 2 THEN 'Nightlife Hours (21-02h)'
+                ELSE 'Midday & Off-Peak'
+            END AS time_window,
+            COALESCE(w.weather_condition, 'Clear') AS weather_condition,
+            COUNT(*) AS trip_count,
+            ROUND(AVG(s.fare_amount), 2) AS avg_fare,
+            ROUND(AVG(s.tip_amount), 2) AS avg_tip_amount,
+            ROUND(AVG(s.tip_rate) * 100, 2) AS avg_tip_pct,
+            ROUND(SUM(CASE WHEN s.tip_amount > 0 THEN 1.0 ELSE 0 END) * 100.0 / COUNT(*), 2) AS pct_trips_with_tip
+        FROM silver s
+        LEFT JOIN weather_table w
+            ON CAST(s.tpep_pickup_datetime AS DATE) = CAST(w.date AS DATE)
+        WHERE s.payment_type = 1
+        GROUP BY 1, 2, 3
+        ORDER BY customer_segment, time_window, weather_condition
+    """,
+
+    "transit_hub_bottleneck": """
+        SELECT
+            CASE
+                WHEN s.PULocationID IN (186, 230) THEN 'Penn Station / Moynihan Hub'
+                WHEN s.PULocationID IN (161, 170) THEN 'Grand Central Terminal'
+                WHEN s.PULocationID = 61 THEN 'Atlantic Terminal (Brooklyn)'
+                WHEN s.PULocationID = 163 THEN 'Port Authority Bus Terminal'
+                ELSE 'Other Transit Hubs'
+            END AS hub_name,
+            COALESCE(w.weather_condition, 'Clear') AS weather_condition,
+            s.is_peak,
+            COUNT(*) AS trip_count,
+            ROUND(AVG(s.trip_distance / (NULLIF(s.trip_duration_min, 0) / 60.0)), 2) AS avg_speed_mph,
+            ROUND(AVG(s.trip_duration_min), 2) AS avg_duration_min,
+            ROUND(AVG(s.total_amount), 2) AS avg_fare,
+            ROUND(AVG(s.tip_rate) * 100, 2) AS avg_tip_pct
+        FROM silver s
+        LEFT JOIN weather_table w
+            ON CAST(s.tpep_pickup_datetime AS DATE) = CAST(w.date AS DATE)
+        WHERE s.PULocationID IN (186, 230, 161, 170, 61, 163)
+        GROUP BY 1, 2, 3
+        ORDER BY hub_name, weather_condition, s.is_peak DESC
+    """,
 }
 
 

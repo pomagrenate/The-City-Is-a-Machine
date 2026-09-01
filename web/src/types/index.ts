@@ -266,6 +266,46 @@ export interface WeatherImpact {
   avg_duration_min: number;
 }
 
+export interface WeatherSurgeTrap {
+  corridor_name: string;
+  weather_condition: string;
+  trip_count: number;
+  avg_gross_fare: number;
+  avg_duration_min: number;
+  avg_distance_miles: number;
+  est_deadhead_min: number;
+  effective_hourly_revenue: number;
+  avg_revenue_per_km: number;
+  avg_tip_pct: number;
+  recommendation?: string;
+}
+
+export interface TippingWeatherSegment {
+  customer_segment: string;
+  time_window: string;
+  weather_condition: string;
+  trip_count: number;
+  avg_fare: number;
+  avg_tip_amount: number;
+  avg_tip_pct: number;
+  pct_trips_with_tip: number;
+  sensitivity_label?: string;
+  suggested_smart_tip_pct?: number;
+}
+
+export interface TransitHubBottleneck {
+  hub_name: string;
+  weather_condition: string;
+  trip_count_rush_hour: number;
+  demand_spike_multiplier: number;
+  avg_speed_mph: number;
+  avg_duration_min: number;
+  nearby_supply_lag_min: number;
+  unmet_demand_estimate_pct: number;
+  dispatch_action?: string;
+}
+
+
 
 
 

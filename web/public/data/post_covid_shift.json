@@ -1,0 +1,30 @@
+[
+  {
+    "period": "Morning Rush (7-9 AM)",
+    "trips_2019": 18400000,
+    "trips_2023": 8400000,
+    "change_pct": -54.3,
+    "primary_cause": "Hybrid WFH Shift"
+  },
+  {
+    "period": "Midday (10 AM-3 PM)",
+    "trips_2019": 22100000,
+    "trips_2023": 16800000,
+    "change_pct": -23.9,
+    "primary_cause": "Local District Mobility"
+  },
+  {
+    "period": "Evening Peak (4-7 PM)",
+    "trips_2019": 24800000,
+    "trips_2023": 22500000,
+    "change_pct": -9.2,
+    "primary_cause": "Social & Dining Recovery"
+  },
+  {
+    "period": "Late Night (10 PM-3 AM)",
+    "trips_2019": 18700000,
+    "trips_2023": 18400000,
+    "change_pct": -1.6,
+    "primary_cause": "Nightlife Resilience"
+  }
+]

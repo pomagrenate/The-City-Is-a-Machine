@@ -1,1 +1,1682 @@
-[{"pickup_hour":0,"pickup_dayofweek":0,"day_name":"Monday","trip_count":251339,"total_revenue":6697289.48,"avg_revenue":26.65,"avg_duration_min":13.49,"active_zones":230},{"pickup_hour":1,"pickup_dayofweek":0,"day_name":"Monday","trip_count":139822,"total_revenue":3463459.96,"avg_revenue":24.77,"avg_duration_min":12.72,"active_zones":218},{"pickup_hour":2,"pickup_dayofweek":0,"day_name":"Monday","trip_count":84296,"total_revenue":1872206.0,"avg_revenue":22.21,"avg_duration_min":11.95,"active_zones":212},{"pickup_hour":3,"pickup_dayofweek":0,"day_name":"Monday","trip_count":59246,"total_revenue":1395221.75,"avg_revenue":23.55,"avg_duration_min":12.31,"active_zones":214},{"pickup_hour":4,"pickup_dayofweek":0,"day_name":"Monday","trip_count":72789,"total_revenue":2049120.44,"avg_revenue":28.15,"avg_duration_min":13.66,"active_zones":224},{"pickup_hour":5,"pickup_dayofweek":0,"day_name":"Monday","trip_count":141596,"total_revenue":3824677.83,"avg_revenue":27.01,"avg_duration_min":13.41,"active_zones":238},{"pickup_hour":6,"pickup_dayofweek":0,"day_name":"Monday","trip_count":358562,"total_revenue":7911290.82,"avg_revenue":22.06,"avg_duration_min":13.27,"active_zones":238},{"pickup_hour":7,"pickup_dayofweek":0,"day_name":"Monday","trip_count":629058,"total_revenue":12976910.38,"avg_revenue":20.63,"avg_duration_min":14.29,"active_zones":240},{"pickup_hour":8,"pickup_dayofweek":0,"day_name":"Monday","trip_count":789649,"total_revenue":16285707.64,"avg_revenue":20.62,"avg_duration_min":15.4,"active_zones":243},{"pickup_hour":9,"pickup_dayofweek":0,"day_name":"Monday","trip_count":774760,"total_revenue":16255637.47,"avg_revenue":20.98,"avg_duration_min":15.53,"active_zones":244},{"pickup_hour":10,"pickup_dayofweek":0,"day_name":"Monday","trip_count":750804,"total_revenue":16083640.18,"avg_revenue":21.42,"avg_duration_min":15.6,"active_zones":247},{"pickup_hour":11,"pickup_dayofweek":0,"day_name":"Monday","trip_count":773718,"total_revenue":16653632.73,"avg_revenue":21.52,"avg_duration_min":15.69,"active_zones":250},{"pickup_hour":12,"pickup_dayofweek":0,"day_name":"Monday","trip_count":819128,"total_revenue":17737513.78,"avg_revenue":21.65,"avg_duration_min":15.6,"active_zones":246},{"pickup_hour":13,"pickup_dayofweek":0,"day_name":"Monday","trip_count":838093,"total_revenue":18589851.81,"avg_revenue":22.18,"avg_duration_min":15.82,"active_zones":251},{"pickup_hour":14,"pickup_dayofweek":0,"day_name":"Monday","trip_count":913377,"total_revenue":20740628.69,"avg_revenue":22.71,"avg_duration_min":16.61,"active_zones":250},{"pickup_hour":15,"pickup_dayofweek":0,"day_name":"Monday","trip_count":939834,"total_revenue":21163505.81,"avg_revenue":22.52,"avg_duration_min":16.9,"active_zones":242},{"pickup_hour":16,"pickup_dayofweek":0,"day_name":"Monday","trip_count":903959,"total_revenue":22090588.82,"avg_revenue":24.44,"avg_duration_min":17.01,"active_zones":245},{"pickup_hour":17,"pickup_dayofweek":0,"day_name":"Monday","trip_count":1015249,"total_revenue":23477873.39,"avg_revenue":23.13,"avg_duration_min":15.97,"active_zones":248},{"pickup_hour":18,"pickup_dayofweek":0,"day_name":"Monday","trip_count":1093001,"total_revenue":23691986.98,"avg_revenue":21.68,"avg_duration_min":14.1,"active_zones":244},{"pickup_hour":19,"pickup_dayofweek":0,"day_name":"Monday","trip_count":970526,"total_revenue":20835708.93,"avg_revenue":21.47,"avg_duration_min":12.88,"active_zones":247},{"pickup_hour":20,"pickup_dayofweek":0,"day_name":"Monday","trip_count":889355,"total_revenue":19141703.5,"avg_revenue":21.52,"avg_duration_min":12.82,"active_zones":242},{"pickup_hour":21,"pickup_dayofweek":0,"day_name":"Monday","trip_count":847808,"total_revenue":18563168.59,"avg_revenue":21.9,"avg_duration_min":12.87,"active_zones":244},{"pickup_hour":22,"pickup_dayofweek":0,"day_name":"Monday","trip_count":689856,"total_revenue":15618024.5,"avg_revenue":22.64,"avg_duration_min":13.04,"active_zones":240},{"pickup_hour":23,"pickup_dayofweek":0,"day_name":"Monday","trip_count":455909,"total_revenue":11119957.4,"avg_revenue":24.39,"avg_duration_min":13.37,"active_zones":235},{"pickup_hour":0,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":281194,"total_revenue":6854962.84,"avg_revenue":24.38,"avg_duration_min":13.21,"active_zones":232},{"pickup_hour":1,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":153367,"total_revenue":3474051.21,"avg_revenue":22.65,"avg_duration_min":12.56,"active_zones":229},{"pickup_hour":2,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":89588,"total_revenue":1878213.71,"avg_revenue":20.97,"avg_duration_min":12.03,"active_zones":213},{"pickup_hour":3,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":60902,"total_revenue":1330764.63,"avg_revenue":21.85,"avg_duration_min":12.23,"active_zones":216},{"pickup_hour":4,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":68913,"total_revenue":1806788.33,"avg_revenue":26.22,"avg_duration_min":13.32,"active_zones":223},{"pickup_hour":5,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":146397,"total_revenue":3655183.54,"avg_revenue":24.97,"avg_duration_min":12.63,"active_zones":242},{"pickup_hour":6,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":388061,"total_revenue":7962245.31,"avg_revenue":20.52,"avg_duration_min":12.49,"active_zones":243},{"pickup_hour":7,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":730174,"total_revenue":14268971.37,"avg_revenue":19.54,"avg_duration_min":13.88,"active_zones":249},{"pickup_hour":8,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":908281,"total_revenue":18267155.15,"avg_revenue":20.11,"avg_duration_min":15.53,"active_zones":249},{"pickup_hour":9,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":888470,"total_revenue":18503830.79,"avg_revenue":20.83,"avg_duration_min":16.21,"active_zones":249},{"pickup_hour":10,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":851187,"total_revenue":18061126.68,"avg_revenue":21.22,"avg_duration_min":16.4,"active_zones":246},{"pickup_hour":11,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":868104,"total_revenue":18596538.17,"avg_revenue":21.42,"avg_duration_min":16.63,"active_zones":242},{"pickup_hour":12,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":917766,"total_revenue":19758278.89,"avg_revenue":21.53,"avg_duration_min":16.59,"active_zones":246},{"pickup_hour":13,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":923273,"total_revenue":20340702.39,"avg_revenue":22.03,"avg_duration_min":16.67,"active_zones":248},{"pickup_hour":14,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":997984,"total_revenue":22496848.37,"avg_revenue":22.54,"avg_duration_min":17.38,"active_zones":246},{"pickup_hour":15,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":1013886,"total_revenue":22761109.32,"avg_revenue":22.45,"avg_duration_min":17.73,"active_zones":245},{"pickup_hour":16,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":965673,"total_revenue":23629889.55,"avg_revenue":24.47,"avg_duration_min":17.82,"active_zones":244},{"pickup_hour":17,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":1104562,"total_revenue":25646642.29,"avg_revenue":23.22,"avg_duration_min":16.82,"active_zones":248},{"pickup_hour":18,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":1234048,"total_revenue":26799381.59,"avg_revenue":21.72,"avg_duration_min":14.85,"active_zones":246},{"pickup_hour":19,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":1112880,"total_revenue":23751713.77,"avg_revenue":21.34,"avg_duration_min":13.41,"active_zones":245},{"pickup_hour":20,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":1060173,"total_revenue":22306940.5,"avg_revenue":21.04,"avg_duration_min":13.17,"active_zones":244},{"pickup_hour":21,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":1071003,"total_revenue":22722997.2,"avg_revenue":21.22,"avg_duration_min":13.18,"active_zones":241},{"pickup_hour":22,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":913431,"total_revenue":19829955.96,"avg_revenue":21.71,"avg_duration_min":13.25,"active_zones":247},{"pickup_hour":23,"pickup_dayofweek":1,"day_name":"Tuesday","trip_count":606213,"total_revenue":13729889.66,"avg_revenue":22.65,"avg_duration_min":13.22,"active_zones":241},{"pickup_hour":0,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":335512,"total_revenue":7661221.03,"avg_revenue":22.83,"avg_duration_min":12.77,"active_zones":236},{"pickup_hour":1,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":172896,"total_revenue":3714397.32,"avg_revenue":21.48,"avg_duration_min":11.82,"active_zones":221},{"pickup_hour":2,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":97116,"total_revenue":1968085.77,"avg_revenue":20.27,"avg_duration_min":11.32,"active_zones":215},{"pickup_hour":3,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":63857,"total_revenue":1380610.98,"avg_revenue":21.62,"avg_duration_min":11.79,"active_zones":216},{"pickup_hour":4,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":69436,"total_revenue":1891513.21,"avg_revenue":27.24,"avg_duration_min":13.44,"active_zones":228},{"pickup_hour":5,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":146088,"total_revenue":3734365.9,"avg_revenue":25.56,"avg_duration_min":12.72,"active_zones":234},{"pickup_hour":6,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":389569,"total_revenue":8017714.62,"avg_revenue":20.58,"avg_duration_min":12.38,"active_zones":242},{"pickup_hour":7,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":741599,"total_revenue":14484508.02,"avg_revenue":19.53,"avg_duration_min":13.76,"active_zones":246},{"pickup_hour":8,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":930820,"total_revenue":18581188.88,"avg_revenue":19.96,"avg_duration_min":15.28,"active_zones":247},{"pickup_hour":9,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":903202,"total_revenue":18650549.43,"avg_revenue":20.65,"avg_duration_min":15.98,"active_zones":248},{"pickup_hour":10,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":867261,"total_revenue":18356485.13,"avg_revenue":21.17,"avg_duration_min":16.43,"active_zones":250},{"pickup_hour":11,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":896876,"total_revenue":19342585.41,"avg_revenue":21.57,"avg_duration_min":16.9,"active_zones":252},{"pickup_hour":12,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":947956,"total_revenue":20763612.07,"avg_revenue":21.9,"avg_duration_min":17.11,"active_zones":251},{"pickup_hour":13,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":955551,"total_revenue":21491422.37,"avg_revenue":22.49,"avg_duration_min":17.4,"active_zones":244},{"pickup_hour":14,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":1016607,"total_revenue":23473432.98,"avg_revenue":23.09,"avg_duration_min":18.28,"active_zones":243},{"pickup_hour":15,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":1021579,"total_revenue":23505052.59,"avg_revenue":23.01,"avg_duration_min":18.72,"active_zones":249},{"pickup_hour":16,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":967910,"total_revenue":24313020.19,"avg_revenue":25.12,"avg_duration_min":18.92,"active_zones":247},{"pickup_hour":17,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":1113692,"total_revenue":26584719.86,"avg_revenue":23.87,"avg_duration_min":17.92,"active_zones":247},{"pickup_hour":18,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":1248963,"total_revenue":27752140.76,"avg_revenue":22.22,"avg_duration_min":15.69,"active_zones":241},{"pickup_hour":19,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":1164084,"total_revenue":25287528.06,"avg_revenue":21.72,"avg_duration_min":14.12,"active_zones":245},{"pickup_hour":20,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":1096076,"total_revenue":23318246.18,"avg_revenue":21.27,"avg_duration_min":13.75,"active_zones":242},{"pickup_hour":21,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":1108369,"total_revenue":23824052.15,"avg_revenue":21.49,"avg_duration_min":13.65,"active_zones":244},{"pickup_hour":22,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":997114,"total_revenue":21777143.49,"avg_revenue":21.84,"avg_duration_min":13.72,"active_zones":241},{"pickup_hour":23,"pickup_dayofweek":2,"day_name":"Wednesday","trip_count":685319,"total_revenue":15412245.22,"avg_revenue":22.49,"avg_duration_min":13.52,"active_zones":244},{"pickup_hour":0,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":398147,"total_revenue":8956953.58,"avg_revenue":22.5,"avg_duration_min":12.86,"active_zones":231},{"pickup_hour":1,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":215751,"total_revenue":4630085.0,"avg_revenue":21.46,"avg_duration_min":11.9,"active_zones":222},{"pickup_hour":2,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":123582,"total_revenue":2511202.03,"avg_revenue":20.32,"avg_duration_min":11.36,"active_zones":214},{"pickup_hour":3,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":80607,"total_revenue":1735820.04,"avg_revenue":21.53,"avg_duration_min":11.74,"active_zones":213},{"pickup_hour":4,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":80715,"total_revenue":2167673.33,"avg_revenue":26.86,"avg_duration_min":13.26,"active_zones":226},{"pickup_hour":5,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":150582,"total_revenue":3898282.57,"avg_revenue":25.89,"avg_duration_min":12.87,"active_zones":240},{"pickup_hour":6,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":396291,"total_revenue":8343289.34,"avg_revenue":21.05,"avg_duration_min":12.73,"active_zones":246},{"pickup_hour":7,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":747177,"total_revenue":14688198.48,"avg_revenue":19.66,"avg_duration_min":13.94,"active_zones":247},{"pickup_hour":8,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":933952,"total_revenue":18751034.86,"avg_revenue":20.08,"avg_duration_min":15.55,"active_zones":247},{"pickup_hour":9,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":906248,"total_revenue":18843635.94,"avg_revenue":20.79,"avg_duration_min":16.38,"active_zones":244},{"pickup_hour":10,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":871867,"total_revenue":18650992.66,"avg_revenue":21.39,"avg_duration_min":16.84,"active_zones":246},{"pickup_hour":11,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":898608,"total_revenue":19643462.56,"avg_revenue":21.86,"avg_duration_min":17.29,"active_zones":251},{"pickup_hour":12,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":946246,"total_revenue":21017240.85,"avg_revenue":22.21,"avg_duration_min":17.4,"active_zones":249},{"pickup_hour":13,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":950542,"total_revenue":21755696.44,"avg_revenue":22.89,"avg_duration_min":17.8,"active_zones":248},{"pickup_hour":14,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":1027232,"total_revenue":24111217.55,"avg_revenue":23.47,"avg_duration_min":18.84,"active_zones":249},{"pickup_hour":15,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":1043193,"total_revenue":24471202.24,"avg_revenue":23.46,"avg_duration_min":19.47,"active_zones":247},{"pickup_hour":16,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":980027,"total_revenue":25138936.65,"avg_revenue":25.65,"avg_duration_min":19.82,"active_zones":249},{"pickup_hour":17,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":1128865,"total_revenue":27256222.72,"avg_revenue":24.14,"avg_duration_min":18.5,"active_zones":248},{"pickup_hour":18,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":1262476,"total_revenue":28578570.65,"avg_revenue":22.64,"avg_duration_min":16.37,"active_zones":245},{"pickup_hour":19,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":1184065,"total_revenue":26039859.98,"avg_revenue":21.99,"avg_duration_min":14.85,"active_zones":247},{"pickup_hour":20,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":1121044,"total_revenue":24184892.36,"avg_revenue":21.57,"avg_duration_min":14.58,"active_zones":244},{"pickup_hour":21,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":1140076,"total_revenue":24837597.5,"avg_revenue":21.79,"avg_duration_min":14.52,"active_zones":244},{"pickup_hour":22,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":1059699,"total_revenue":23467802.03,"avg_revenue":22.15,"avg_duration_min":14.56,"active_zones":248},{"pickup_hour":23,"pickup_dayofweek":3,"day_name":"Thursday","trip_count":831882,"total_revenue":18683113.2,"avg_revenue":22.46,"avg_duration_min":14.15,"active_zones":244},{"pickup_hour":0,"pickup_dayofweek":4,"day_name":"Friday","trip_count":550291,"total_revenue":12184893.63,"avg_revenue":22.14,"avg_duration_min":13.29,"active_zones":238},{"pickup_hour":1,"pickup_dayofweek":4,"day_name":"Friday","trip_count":332022,"total_revenue":6953266.11,"avg_revenue":20.94,"avg_duration_min":12.03,"active_zones":227},{"pickup_hour":2,"pickup_dayofweek":4,"day_name":"Friday","trip_count":198839,"total_revenue":3932915.93,"avg_revenue":19.78,"avg_duration_min":11.27,"active_zones":216},{"pickup_hour":3,"pickup_dayofweek":4,"day_name":"Friday","trip_count":124970,"total_revenue":2607276.54,"avg_revenue":20.86,"avg_duration_min":11.56,"active_zones":227},{"pickup_hour":4,"pickup_dayofweek":4,"day_name":"Friday","trip_count":107641,"total_revenue":2821234.85,"avg_revenue":26.21,"avg_duration_min":13.27,"active_zones":229},{"pickup_hour":5,"pickup_dayofweek":4,"day_name":"Friday","trip_count":154500,"total_revenue":4170339.51,"avg_revenue":26.99,"avg_duration_min":13.38,"active_zones":234},{"pickup_hour":6,"pickup_dayofweek":4,"day_name":"Friday","trip_count":366984,"total_revenue":8072276.71,"avg_revenue":22.0,"avg_duration_min":13.17,"active_zones":240},{"pickup_hour":7,"pickup_dayofweek":4,"day_name":"Friday","trip_count":662818,"total_revenue":13223240.12,"avg_revenue":19.95,"avg_duration_min":13.88,"active_zones":247},{"pickup_hour":8,"pickup_dayofweek":4,"day_name":"Friday","trip_count":834911,"total_revenue":16623222.75,"avg_revenue":19.91,"avg_duration_min":15.0,"active_zones":246},{"pickup_hour":9,"pickup_dayofweek":4,"day_name":"Friday","trip_count":831032,"total_revenue":17183153.55,"avg_revenue":20.68,"avg_duration_min":15.74,"active_zones":251},{"pickup_hour":10,"pickup_dayofweek":4,"day_name":"Friday","trip_count":819754,"total_revenue":17418460.5,"avg_revenue":21.25,"avg_duration_min":16.15,"active_zones":250},{"pickup_hour":11,"pickup_dayofweek":4,"day_name":"Friday","trip_count":856362,"total_revenue":18431054.84,"avg_revenue":21.52,"avg_duration_min":16.52,"active_zones":247},{"pickup_hour":12,"pickup_dayofweek":4,"day_name":"Friday","trip_count":905085,"total_revenue":19601915.21,"avg_revenue":21.66,"avg_duration_min":16.46,"active_zones":248},{"pickup_hour":13,"pickup_dayofweek":4,"day_name":"Friday","trip_count":922351,"total_revenue":20566184.96,"avg_revenue":22.3,"avg_duration_min":17.0,"active_zones":249},{"pickup_hour":14,"pickup_dayofweek":4,"day_name":"Friday","trip_count":1007428,"total_revenue":23130107.49,"avg_revenue":22.96,"avg_duration_min":18.36,"active_zones":252},{"pickup_hour":15,"pickup_dayofweek":4,"day_name":"Friday","trip_count":1013249,"total_revenue":23236710.17,"avg_revenue":22.93,"avg_duration_min":18.97,"active_zones":246},{"pickup_hour":16,"pickup_dayofweek":4,"day_name":"Friday","trip_count":953404,"total_revenue":23799705.23,"avg_revenue":24.96,"avg_duration_min":18.98,"active_zones":243},{"pickup_hour":17,"pickup_dayofweek":4,"day_name":"Friday","trip_count":1094284,"total_revenue":25632324.0,"avg_revenue":23.42,"avg_duration_min":17.38,"active_zones":251},{"pickup_hour":18,"pickup_dayofweek":4,"day_name":"Friday","trip_count":1215651,"total_revenue":26638564.13,"avg_revenue":21.91,"avg_duration_min":15.4,"active_zones":240},{"pickup_hour":19,"pickup_dayofweek":4,"day_name":"Friday","trip_count":1173677,"total_revenue":25219265.69,"avg_revenue":21.49,"avg_duration_min":14.52,"active_zones":246},{"pickup_hour":20,"pickup_dayofweek":4,"day_name":"Friday","trip_count":982738,"total_revenue":20819912.29,"avg_revenue":21.19,"avg_duration_min":14.42,"active_zones":244},{"pickup_hour":21,"pickup_dayofweek":4,"day_name":"Friday","trip_count":973865,"total_revenue":20816096.04,"avg_revenue":21.37,"avg_duration_min":14.39,"active_zones":243},{"pickup_hour":22,"pickup_dayofweek":4,"day_name":"Friday","trip_count":1012138,"total_revenue":21889954.74,"avg_revenue":21.63,"avg_duration_min":14.72,"active_zones":241},{"pickup_hour":23,"pickup_dayofweek":4,"day_name":"Friday","trip_count":947670,"total_revenue":20732879.04,"avg_revenue":21.88,"avg_duration_min":14.64,"active_zones":241},{"pickup_hour":0,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":801527,"total_revenue":16964303.0,"avg_revenue":21.16,"avg_duration_min":13.6,"active_zones":244},{"pickup_hour":1,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":643804,"total_revenue":12743038.31,"avg_revenue":19.79,"avg_duration_min":12.21,"active_zones":242},{"pickup_hour":2,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":490623,"total_revenue":9344436.03,"avg_revenue":19.05,"avg_duration_min":11.48,"active_zones":230},{"pickup_hour":3,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":331015,"total_revenue":6443995.98,"avg_revenue":19.47,"avg_duration_min":11.43,"active_zones":233},{"pickup_hour":4,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":195674,"total_revenue":4267738.98,"avg_revenue":21.81,"avg_duration_min":12.33,"active_zones":239},{"pickup_hour":5,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":105681,"total_revenue":2900517.95,"avg_revenue":27.45,"avg_duration_min":13.6,"active_zones":235},{"pickup_hour":6,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":167920,"total_revenue":4256866.39,"avg_revenue":25.35,"avg_duration_min":12.51,"active_zones":237},{"pickup_hour":7,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":264667,"total_revenue":5908586.6,"avg_revenue":22.32,"avg_duration_min":11.62,"active_zones":238},{"pickup_hour":8,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":410827,"total_revenue":8185957.25,"avg_revenue":19.93,"avg_duration_min":11.33,"active_zones":240},{"pickup_hour":9,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":598101,"total_revenue":11192767.16,"avg_revenue":18.71,"avg_duration_min":11.36,"active_zones":246},{"pickup_hour":10,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":738728,"total_revenue":13857983.87,"avg_revenue":18.76,"avg_duration_min":12.05,"active_zones":243},{"pickup_hour":11,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":837581,"total_revenue":15969621.69,"avg_revenue":19.07,"avg_duration_min":12.92,"active_zones":249},{"pickup_hour":12,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":918431,"total_revenue":18026816.12,"avg_revenue":19.63,"avg_duration_min":13.77,"active_zones":247},{"pickup_hour":13,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":946213,"total_revenue":19158967.38,"avg_revenue":20.25,"avg_duration_min":14.51,"active_zones":245},{"pickup_hour":14,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":928929,"total_revenue":19716216.56,"avg_revenue":21.22,"avg_duration_min":15.32,"active_zones":253},{"pickup_hour":15,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":959706,"total_revenue":20456753.88,"avg_revenue":21.32,"avg_duration_min":15.75,"active_zones":251},{"pickup_hour":16,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":952163,"total_revenue":20348081.92,"avg_revenue":21.37,"avg_duration_min":16.0,"active_zones":248},{"pickup_hour":17,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":1011629,"total_revenue":21272397.76,"avg_revenue":21.03,"avg_duration_min":15.97,"active_zones":249},{"pickup_hour":18,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":1057943,"total_revenue":21514119.27,"avg_revenue":20.34,"avg_duration_min":15.44,"active_zones":246},{"pickup_hour":19,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":1050603,"total_revenue":21127421.73,"avg_revenue":20.11,"avg_duration_min":15.22,"active_zones":248},{"pickup_hour":20,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":874293,"total_revenue":18473150.36,"avg_revenue":21.13,"avg_duration_min":14.89,"active_zones":242},{"pickup_hour":21,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":874468,"total_revenue":18454686.25,"avg_revenue":21.1,"avg_duration_min":14.62,"active_zones":245},{"pickup_hour":22,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":951758,"total_revenue":20260873.61,"avg_revenue":21.29,"avg_duration_min":14.8,"active_zones":245},{"pickup_hour":23,"pickup_dayofweek":5,"day_name":"Saturday","trip_count":942282,"total_revenue":20109455.82,"avg_revenue":21.34,"avg_duration_min":14.57,"active_zones":247},{"pickup_hour":0,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":821628,"total_revenue":16869784.5,"avg_revenue":20.53,"avg_duration_min":13.34,"active_zones":243},{"pickup_hour":1,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":700011,"total_revenue":13627784.63,"avg_revenue":19.47,"avg_duration_min":12.35,"active_zones":242},{"pickup_hour":2,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":524318,"total_revenue":10017642.78,"avg_revenue":19.11,"avg_duration_min":11.53,"active_zones":232},{"pickup_hour":3,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":378937,"total_revenue":7416870.47,"avg_revenue":19.57,"avg_duration_min":11.48,"active_zones":232},{"pickup_hour":4,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":225108,"total_revenue":4951531.68,"avg_revenue":22.0,"avg_duration_min":12.31,"active_zones":234},{"pickup_hour":5,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":108163,"total_revenue":3115734.3,"avg_revenue":28.81,"avg_duration_min":13.91,"active_zones":233},{"pickup_hour":6,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":144618,"total_revenue":4126347.9,"avg_revenue":28.53,"avg_duration_min":13.31,"active_zones":234},{"pickup_hour":7,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":217101,"total_revenue":5389018.03,"avg_revenue":24.82,"avg_duration_min":11.88,"active_zones":241},{"pickup_hour":8,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":334600,"total_revenue":7254279.22,"avg_revenue":21.68,"avg_duration_min":11.12,"active_zones":240},{"pickup_hour":9,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":502614,"total_revenue":10002332.91,"avg_revenue":19.9,"avg_duration_min":10.92,"active_zones":247},{"pickup_hour":10,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":680910,"total_revenue":13368526.42,"avg_revenue":19.63,"avg_duration_min":11.57,"active_zones":249},{"pickup_hour":11,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":785118,"total_revenue":15488371.86,"avg_revenue":19.73,"avg_duration_min":12.42,"active_zones":245},{"pickup_hour":12,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":869032,"total_revenue":17956971.07,"avg_revenue":20.66,"avg_duration_min":13.6,"active_zones":247},{"pickup_hour":13,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":889035,"total_revenue":19325325.84,"avg_revenue":21.74,"avg_duration_min":14.77,"active_zones":246},{"pickup_hour":14,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":903228,"total_revenue":20630612.26,"avg_revenue":22.84,"avg_duration_min":16.04,"active_zones":247},{"pickup_hour":15,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":878008,"total_revenue":20503823.77,"avg_revenue":23.35,"avg_duration_min":16.59,"active_zones":247},{"pickup_hour":16,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":872259,"total_revenue":20323242.74,"avg_revenue":23.3,"avg_duration_min":16.55,"active_zones":246},{"pickup_hour":17,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":895686,"total_revenue":20267512.18,"avg_revenue":22.63,"avg_duration_min":16.04,"active_zones":248},{"pickup_hour":18,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":881436,"total_revenue":19098963.88,"avg_revenue":21.67,"avg_duration_min":14.96,"active_zones":246},{"pickup_hour":19,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":766855,"total_revenue":16792927.45,"avg_revenue":21.9,"avg_duration_min":14.41,"active_zones":246},{"pickup_hour":20,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":701118,"total_revenue":16284065.49,"avg_revenue":23.23,"avg_duration_min":14.29,"active_zones":246},{"pickup_hour":21,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":653932,"total_revenue":15490809.0,"avg_revenue":23.69,"avg_duration_min":14.06,"active_zones":245},{"pickup_hour":22,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":561475,"total_revenue":13665530.88,"avg_revenue":24.34,"avg_duration_min":13.78,"active_zones":243},{"pickup_hour":23,"pickup_dayofweek":6,"day_name":"Sunday","trip_count":408207,"total_revenue":10784269.06,"avg_revenue":26.42,"avg_duration_min":13.85,"active_zones":239}]
+[
+  {
+    "pickup_hour": 0,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 15868,
+    "total_revenue": 356640.49,
+    "avg_revenue": 20.69,
+    "avg_duration_min": 12.0,
+    "active_zones": 184
+  },
+  {
+    "pickup_hour": 1,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 10378,
+    "total_revenue": 222294.53,
+    "avg_revenue": 24.45,
+    "avg_duration_min": 19.2,
+    "active_zones": 186
+  },
+  {
+    "pickup_hour": 2,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 10808,
+    "total_revenue": 217743.08,
+    "avg_revenue": 22.99,
+    "avg_duration_min": 18.0,
+    "active_zones": 230
+  },
+  {
+    "pickup_hour": 3,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 17134,
+    "total_revenue": 380395.39,
+    "avg_revenue": 23.35,
+    "avg_duration_min": 14.8,
+    "active_zones": 236
+  },
+  {
+    "pickup_hour": 4,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 14598,
+    "total_revenue": 362544.59,
+    "avg_revenue": 22.57,
+    "avg_duration_min": 14.4,
+    "active_zones": 235
+  },
+  {
+    "pickup_hour": 5,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 12224,
+    "total_revenue": 252749.15,
+    "avg_revenue": 20.44,
+    "avg_duration_min": 19.0,
+    "active_zones": 205
+  },
+  {
+    "pickup_hour": 6,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 12108,
+    "total_revenue": 242591.39,
+    "avg_revenue": 23.6,
+    "avg_duration_min": 12.5,
+    "active_zones": 209
+  },
+  {
+    "pickup_hour": 7,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 13734,
+    "total_revenue": 292548.41,
+    "avg_revenue": 21.07,
+    "avg_duration_min": 16.7,
+    "active_zones": 219
+  },
+  {
+    "pickup_hour": 8,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 36883,
+    "total_revenue": 777785.99,
+    "avg_revenue": 24.48,
+    "avg_duration_min": 16.7,
+    "active_zones": 189
+  },
+  {
+    "pickup_hour": 9,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 32993,
+    "total_revenue": 767614.96,
+    "avg_revenue": 20.38,
+    "avg_duration_min": 14.1,
+    "active_zones": 239
+  },
+  {
+    "pickup_hour": 10,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 10847,
+    "total_revenue": 232677.14,
+    "avg_revenue": 21.99,
+    "avg_duration_min": 19.0,
+    "active_zones": 204
+  },
+  {
+    "pickup_hour": 11,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 11633,
+    "total_revenue": 239054.42,
+    "avg_revenue": 22.07,
+    "avg_duration_min": 17.7,
+    "active_zones": 224
+  },
+  {
+    "pickup_hour": 12,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 11515,
+    "total_revenue": 270082.75,
+    "avg_revenue": 20.08,
+    "avg_duration_min": 17.6,
+    "active_zones": 200
+  },
+  {
+    "pickup_hour": 13,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 9687,
+    "total_revenue": 221507.95,
+    "avg_revenue": 21.68,
+    "avg_duration_min": 15.0,
+    "active_zones": 217
+  },
+  {
+    "pickup_hour": 14,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 19806,
+    "total_revenue": 459625.39,
+    "avg_revenue": 23.68,
+    "avg_duration_min": 14.8,
+    "active_zones": 204
+  },
+  {
+    "pickup_hour": 15,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 9610,
+    "total_revenue": 230541.93,
+    "avg_revenue": 20.88,
+    "avg_duration_min": 16.9,
+    "active_zones": 224
+  },
+  {
+    "pickup_hour": 16,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 13653,
+    "total_revenue": 333972.61,
+    "avg_revenue": 23.44,
+    "avg_duration_min": 18.7,
+    "active_zones": 188
+  },
+  {
+    "pickup_hour": 17,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 46299,
+    "total_revenue": 1097119.68,
+    "avg_revenue": 23.03,
+    "avg_duration_min": 14.8,
+    "active_zones": 184
+  },
+  {
+    "pickup_hour": 18,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 46985,
+    "total_revenue": 943297.71,
+    "avg_revenue": 24.28,
+    "avg_duration_min": 14.3,
+    "active_zones": 221
+  },
+  {
+    "pickup_hour": 19,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 50729,
+    "total_revenue": 1208032.46,
+    "avg_revenue": 20.16,
+    "avg_duration_min": 19.5,
+    "active_zones": 204
+  },
+  {
+    "pickup_hour": 20,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 10244,
+    "total_revenue": 207067.07,
+    "avg_revenue": 23.97,
+    "avg_duration_min": 19.9,
+    "active_zones": 197
+  },
+  {
+    "pickup_hour": 21,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 19164,
+    "total_revenue": 414732.32,
+    "avg_revenue": 24.47,
+    "avg_duration_min": 12.7,
+    "active_zones": 210
+  },
+  {
+    "pickup_hour": 22,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 13174,
+    "total_revenue": 310154.0,
+    "avg_revenue": 24.29,
+    "avg_duration_min": 19.9,
+    "active_zones": 238
+  },
+  {
+    "pickup_hour": 23,
+    "pickup_dayofweek": 0,
+    "day_name": "Mon",
+    "trip_count": 11005,
+    "total_revenue": 251435.97,
+    "avg_revenue": 21.95,
+    "avg_duration_min": 14.3,
+    "active_zones": 195
+  },
+  {
+    "pickup_hour": 0,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 10842,
+    "total_revenue": 255536.4,
+    "avg_revenue": 23.76,
+    "avg_duration_min": 12.6,
+    "active_zones": 221
+  },
+  {
+    "pickup_hour": 1,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 14606,
+    "total_revenue": 320565.88,
+    "avg_revenue": 21.92,
+    "avg_duration_min": 16.5,
+    "active_zones": 229
+  },
+  {
+    "pickup_hour": 2,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 16535,
+    "total_revenue": 399649.52,
+    "avg_revenue": 23.38,
+    "avg_duration_min": 15.1,
+    "active_zones": 235
+  },
+  {
+    "pickup_hour": 3,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 12146,
+    "total_revenue": 274652.99,
+    "avg_revenue": 23.96,
+    "avg_duration_min": 19.0,
+    "active_zones": 211
+  },
+  {
+    "pickup_hour": 4,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 10740,
+    "total_revenue": 226099.23,
+    "avg_revenue": 23.48,
+    "avg_duration_min": 13.1,
+    "active_zones": 193
+  },
+  {
+    "pickup_hour": 5,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 19266,
+    "total_revenue": 398955.21,
+    "avg_revenue": 23.61,
+    "avg_duration_min": 19.0,
+    "active_zones": 180
+  },
+  {
+    "pickup_hour": 6,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 11554,
+    "total_revenue": 254841.19,
+    "avg_revenue": 24.93,
+    "avg_duration_min": 16.0,
+    "active_zones": 212
+  },
+  {
+    "pickup_hour": 7,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 9664,
+    "total_revenue": 203335.96,
+    "avg_revenue": 22.31,
+    "avg_duration_min": 16.1,
+    "active_zones": 220
+  },
+  {
+    "pickup_hour": 8,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 46563,
+    "total_revenue": 1015593.72,
+    "avg_revenue": 23.79,
+    "avg_duration_min": 13.0,
+    "active_zones": 180
+  },
+  {
+    "pickup_hour": 9,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 35499,
+    "total_revenue": 751866.55,
+    "avg_revenue": 24.19,
+    "avg_duration_min": 19.6,
+    "active_zones": 227
+  },
+  {
+    "pickup_hour": 10,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 19398,
+    "total_revenue": 483265.43,
+    "avg_revenue": 20.39,
+    "avg_duration_min": 17.6,
+    "active_zones": 235
+  },
+  {
+    "pickup_hour": 11,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 13715,
+    "total_revenue": 300059.82,
+    "avg_revenue": 20.67,
+    "avg_duration_min": 19.7,
+    "active_zones": 238
+  },
+  {
+    "pickup_hour": 12,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 11964,
+    "total_revenue": 290066.5,
+    "avg_revenue": 24.9,
+    "avg_duration_min": 17.3,
+    "active_zones": 204
+  },
+  {
+    "pickup_hour": 13,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 10539,
+    "total_revenue": 245161.64,
+    "avg_revenue": 22.57,
+    "avg_duration_min": 16.5,
+    "active_zones": 226
+  },
+  {
+    "pickup_hour": 14,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 17236,
+    "total_revenue": 349855.04,
+    "avg_revenue": 24.98,
+    "avg_duration_min": 16.2,
+    "active_zones": 207
+  },
+  {
+    "pickup_hour": 15,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 18452,
+    "total_revenue": 403378.0,
+    "avg_revenue": 20.75,
+    "avg_duration_min": 12.4,
+    "active_zones": 200
+  },
+  {
+    "pickup_hour": 16,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 18460,
+    "total_revenue": 380361.1,
+    "avg_revenue": 21.33,
+    "avg_duration_min": 13.2,
+    "active_zones": 205
+  },
+  {
+    "pickup_hour": 17,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 35992,
+    "total_revenue": 887035.55,
+    "avg_revenue": 23.43,
+    "avg_duration_min": 16.9,
+    "active_zones": 219
+  },
+  {
+    "pickup_hour": 18,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 52648,
+    "total_revenue": 1246787.42,
+    "avg_revenue": 23.24,
+    "avg_duration_min": 18.3,
+    "active_zones": 206
+  },
+  {
+    "pickup_hour": 19,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 32168,
+    "total_revenue": 659100.52,
+    "avg_revenue": 20.84,
+    "avg_duration_min": 12.9,
+    "active_zones": 221
+  },
+  {
+    "pickup_hour": 20,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 13794,
+    "total_revenue": 295019.8,
+    "avg_revenue": 22.81,
+    "avg_duration_min": 17.7,
+    "active_zones": 209
+  },
+  {
+    "pickup_hour": 21,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 17648,
+    "total_revenue": 355769.67,
+    "avg_revenue": 20.73,
+    "avg_duration_min": 18.7,
+    "active_zones": 195
+  },
+  {
+    "pickup_hour": 22,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 18244,
+    "total_revenue": 402694.54,
+    "avg_revenue": 22.9,
+    "avg_duration_min": 18.6,
+    "active_zones": 216
+  },
+  {
+    "pickup_hour": 23,
+    "pickup_dayofweek": 1,
+    "day_name": "Tue",
+    "trip_count": 19130,
+    "total_revenue": 426405.29,
+    "avg_revenue": 21.02,
+    "avg_duration_min": 19.1,
+    "active_zones": 181
+  },
+  {
+    "pickup_hour": 0,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 15447,
+    "total_revenue": 382160.66,
+    "avg_revenue": 24.33,
+    "avg_duration_min": 14.3,
+    "active_zones": 236
+  },
+  {
+    "pickup_hour": 1,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 19247,
+    "total_revenue": 392582.13,
+    "avg_revenue": 20.67,
+    "avg_duration_min": 14.3,
+    "active_zones": 207
+  },
+  {
+    "pickup_hour": 2,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 13450,
+    "total_revenue": 309419.56,
+    "avg_revenue": 22.66,
+    "avg_duration_min": 17.8,
+    "active_zones": 208
+  },
+  {
+    "pickup_hour": 3,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 15610,
+    "total_revenue": 335386.57,
+    "avg_revenue": 22.51,
+    "avg_duration_min": 13.9,
+    "active_zones": 206
+  },
+  {
+    "pickup_hour": 4,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 13904,
+    "total_revenue": 314007.91,
+    "avg_revenue": 24.27,
+    "avg_duration_min": 16.4,
+    "active_zones": 207
+  },
+  {
+    "pickup_hour": 5,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 14276,
+    "total_revenue": 301830.73,
+    "avg_revenue": 21.53,
+    "avg_duration_min": 14.8,
+    "active_zones": 214
+  },
+  {
+    "pickup_hour": 6,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 12424,
+    "total_revenue": 251359.7,
+    "avg_revenue": 23.16,
+    "avg_duration_min": 14.9,
+    "active_zones": 216
+  },
+  {
+    "pickup_hour": 7,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 13216,
+    "total_revenue": 321008.04,
+    "avg_revenue": 24.71,
+    "avg_duration_min": 18.0,
+    "active_zones": 199
+  },
+  {
+    "pickup_hour": 8,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 40847,
+    "total_revenue": 1011548.83,
+    "avg_revenue": 24.59,
+    "avg_duration_min": 12.1,
+    "active_zones": 238
+  },
+  {
+    "pickup_hour": 9,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 42473,
+    "total_revenue": 1031260.55,
+    "avg_revenue": 21.99,
+    "avg_duration_min": 17.9,
+    "active_zones": 223
+  },
+  {
+    "pickup_hour": 10,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 12680,
+    "total_revenue": 289773.33,
+    "avg_revenue": 23.08,
+    "avg_duration_min": 15.9,
+    "active_zones": 217
+  },
+  {
+    "pickup_hour": 11,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 18275,
+    "total_revenue": 446605.77,
+    "avg_revenue": 22.57,
+    "avg_duration_min": 19.3,
+    "active_zones": 213
+  },
+  {
+    "pickup_hour": 12,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 13869,
+    "total_revenue": 307889.23,
+    "avg_revenue": 20.38,
+    "avg_duration_min": 19.0,
+    "active_zones": 226
+  },
+  {
+    "pickup_hour": 13,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 16210,
+    "total_revenue": 386638.15,
+    "avg_revenue": 22.67,
+    "avg_duration_min": 15.6,
+    "active_zones": 230
+  },
+  {
+    "pickup_hour": 14,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 13183,
+    "total_revenue": 293884.6,
+    "avg_revenue": 24.19,
+    "avg_duration_min": 14.0,
+    "active_zones": 194
+  },
+  {
+    "pickup_hour": 15,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 19426,
+    "total_revenue": 434394.26,
+    "avg_revenue": 24.61,
+    "avg_duration_min": 12.5,
+    "active_zones": 234
+  },
+  {
+    "pickup_hour": 16,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 18603,
+    "total_revenue": 408315.22,
+    "avg_revenue": 24.66,
+    "avg_duration_min": 12.0,
+    "active_zones": 234
+  },
+  {
+    "pickup_hour": 17,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 44343,
+    "total_revenue": 1023155.47,
+    "avg_revenue": 20.16,
+    "avg_duration_min": 12.5,
+    "active_zones": 212
+  },
+  {
+    "pickup_hour": 18,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 28721,
+    "total_revenue": 616355.35,
+    "avg_revenue": 24.96,
+    "avg_duration_min": 12.9,
+    "active_zones": 180
+  },
+  {
+    "pickup_hour": 19,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 38099,
+    "total_revenue": 822371.65,
+    "avg_revenue": 22.12,
+    "avg_duration_min": 17.0,
+    "active_zones": 217
+  },
+  {
+    "pickup_hour": 20,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 18229,
+    "total_revenue": 399245.04,
+    "avg_revenue": 23.31,
+    "avg_duration_min": 19.1,
+    "active_zones": 238
+  },
+  {
+    "pickup_hour": 21,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 9937,
+    "total_revenue": 238746.81,
+    "avg_revenue": 22.11,
+    "avg_duration_min": 18.6,
+    "active_zones": 189
+  },
+  {
+    "pickup_hour": 22,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 14199,
+    "total_revenue": 286850.84,
+    "avg_revenue": 24.76,
+    "avg_duration_min": 20.0,
+    "active_zones": 217
+  },
+  {
+    "pickup_hour": 23,
+    "pickup_dayofweek": 2,
+    "day_name": "Wed",
+    "trip_count": 10256,
+    "total_revenue": 226947.93,
+    "avg_revenue": 24.37,
+    "avg_duration_min": 14.8,
+    "active_zones": 197
+  },
+  {
+    "pickup_hour": 0,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 17056,
+    "total_revenue": 350970.34,
+    "avg_revenue": 20.4,
+    "avg_duration_min": 17.5,
+    "active_zones": 192
+  },
+  {
+    "pickup_hour": 1,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 15472,
+    "total_revenue": 319379.03,
+    "avg_revenue": 22.28,
+    "avg_duration_min": 18.1,
+    "active_zones": 234
+  },
+  {
+    "pickup_hour": 2,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 19667,
+    "total_revenue": 438369.31,
+    "avg_revenue": 24.25,
+    "avg_duration_min": 16.1,
+    "active_zones": 192
+  },
+  {
+    "pickup_hour": 3,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 17978,
+    "total_revenue": 419583.42,
+    "avg_revenue": 24.15,
+    "avg_duration_min": 14.7,
+    "active_zones": 220
+  },
+  {
+    "pickup_hour": 4,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 16507,
+    "total_revenue": 380057.0,
+    "avg_revenue": 22.94,
+    "avg_duration_min": 19.7,
+    "active_zones": 191
+  },
+  {
+    "pickup_hour": 5,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 18500,
+    "total_revenue": 375898.12,
+    "avg_revenue": 21.25,
+    "avg_duration_min": 17.4,
+    "active_zones": 206
+  },
+  {
+    "pickup_hour": 6,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 13390,
+    "total_revenue": 283363.5,
+    "avg_revenue": 20.11,
+    "avg_duration_min": 13.2,
+    "active_zones": 182
+  },
+  {
+    "pickup_hour": 7,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 13459,
+    "total_revenue": 284192.87,
+    "avg_revenue": 21.63,
+    "avg_duration_min": 15.7,
+    "active_zones": 213
+  },
+  {
+    "pickup_hour": 8,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 41322,
+    "total_revenue": 837923.56,
+    "avg_revenue": 20.14,
+    "avg_duration_min": 13.6,
+    "active_zones": 228
+  },
+  {
+    "pickup_hour": 9,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 26864,
+    "total_revenue": 573358.81,
+    "avg_revenue": 24.29,
+    "avg_duration_min": 12.8,
+    "active_zones": 215
+  },
+  {
+    "pickup_hour": 10,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 14247,
+    "total_revenue": 323778.74,
+    "avg_revenue": 20.46,
+    "avg_duration_min": 19.2,
+    "active_zones": 188
+  },
+  {
+    "pickup_hour": 11,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 15681,
+    "total_revenue": 377473.99,
+    "avg_revenue": 23.84,
+    "avg_duration_min": 18.3,
+    "active_zones": 182
+  },
+  {
+    "pickup_hour": 12,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 19314,
+    "total_revenue": 443683.92,
+    "avg_revenue": 23.49,
+    "avg_duration_min": 15.7,
+    "active_zones": 213
+  },
+  {
+    "pickup_hour": 13,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 19844,
+    "total_revenue": 411118.13,
+    "avg_revenue": 21.08,
+    "avg_duration_min": 13.2,
+    "active_zones": 188
+  },
+  {
+    "pickup_hour": 14,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 19348,
+    "total_revenue": 413260.19,
+    "avg_revenue": 21.66,
+    "avg_duration_min": 14.7,
+    "active_zones": 230
+  },
+  {
+    "pickup_hour": 15,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 17334,
+    "total_revenue": 401210.07,
+    "avg_revenue": 24.08,
+    "avg_duration_min": 14.4,
+    "active_zones": 204
+  },
+  {
+    "pickup_hour": 16,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 14404,
+    "total_revenue": 293480.74,
+    "avg_revenue": 24.6,
+    "avg_duration_min": 18.1,
+    "active_zones": 230
+  },
+  {
+    "pickup_hour": 17,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 37061,
+    "total_revenue": 883358.61,
+    "avg_revenue": 24.68,
+    "avg_duration_min": 14.3,
+    "active_zones": 181
+  },
+  {
+    "pickup_hour": 18,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 35585,
+    "total_revenue": 727129.1,
+    "avg_revenue": 22.15,
+    "avg_duration_min": 19.9,
+    "active_zones": 203
+  },
+  {
+    "pickup_hour": 19,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 37648,
+    "total_revenue": 933755.45,
+    "avg_revenue": 21.11,
+    "avg_duration_min": 12.9,
+    "active_zones": 208
+  },
+  {
+    "pickup_hour": 20,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 16615,
+    "total_revenue": 373653.75,
+    "avg_revenue": 23.77,
+    "avg_duration_min": 14.3,
+    "active_zones": 191
+  },
+  {
+    "pickup_hour": 21,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 18822,
+    "total_revenue": 448725.2,
+    "avg_revenue": 23.56,
+    "avg_duration_min": 12.9,
+    "active_zones": 206
+  },
+  {
+    "pickup_hour": 22,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 13500,
+    "total_revenue": 272305.77,
+    "avg_revenue": 21.61,
+    "avg_duration_min": 19.3,
+    "active_zones": 223
+  },
+  {
+    "pickup_hour": 23,
+    "pickup_dayofweek": 3,
+    "day_name": "Thu",
+    "trip_count": 16971,
+    "total_revenue": 351734.71,
+    "avg_revenue": 20.13,
+    "avg_duration_min": 14.6,
+    "active_zones": 191
+  },
+  {
+    "pickup_hour": 0,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 16282,
+    "total_revenue": 381070.39,
+    "avg_revenue": 24.83,
+    "avg_duration_min": 16.6,
+    "active_zones": 196
+  },
+  {
+    "pickup_hour": 1,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 18144,
+    "total_revenue": 422917.79,
+    "avg_revenue": 24.25,
+    "avg_duration_min": 13.0,
+    "active_zones": 199
+  },
+  {
+    "pickup_hour": 2,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 11993,
+    "total_revenue": 278301.83,
+    "avg_revenue": 23.2,
+    "avg_duration_min": 17.0,
+    "active_zones": 233
+  },
+  {
+    "pickup_hour": 3,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 15634,
+    "total_revenue": 375913.47,
+    "avg_revenue": 24.09,
+    "avg_duration_min": 17.2,
+    "active_zones": 198
+  },
+  {
+    "pickup_hour": 4,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 15263,
+    "total_revenue": 337765.8,
+    "avg_revenue": 23.74,
+    "avg_duration_min": 15.4,
+    "active_zones": 212
+  },
+  {
+    "pickup_hour": 5,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 11325,
+    "total_revenue": 261317.06,
+    "avg_revenue": 21.78,
+    "avg_duration_min": 17.8,
+    "active_zones": 229
+  },
+  {
+    "pickup_hour": 6,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 9815,
+    "total_revenue": 221411.33,
+    "avg_revenue": 23.87,
+    "avg_duration_min": 15.7,
+    "active_zones": 194
+  },
+  {
+    "pickup_hour": 7,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 9723,
+    "total_revenue": 239568.0,
+    "avg_revenue": 21.24,
+    "avg_duration_min": 17.7,
+    "active_zones": 217
+  },
+  {
+    "pickup_hour": 8,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 41980,
+    "total_revenue": 1010358.49,
+    "avg_revenue": 22.28,
+    "avg_duration_min": 12.3,
+    "active_zones": 183
+  },
+  {
+    "pickup_hour": 9,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 27321,
+    "total_revenue": 594450.72,
+    "avg_revenue": 23.05,
+    "avg_duration_min": 12.9,
+    "active_zones": 225
+  },
+  {
+    "pickup_hour": 10,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 9623,
+    "total_revenue": 240554.29,
+    "avg_revenue": 22.49,
+    "avg_duration_min": 12.9,
+    "active_zones": 228
+  },
+  {
+    "pickup_hour": 11,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 11265,
+    "total_revenue": 235493.51,
+    "avg_revenue": 21.58,
+    "avg_duration_min": 14.7,
+    "active_zones": 227
+  },
+  {
+    "pickup_hour": 12,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 13274,
+    "total_revenue": 312541.43,
+    "avg_revenue": 22.34,
+    "avg_duration_min": 20.0,
+    "active_zones": 238
+  },
+  {
+    "pickup_hour": 13,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 18744,
+    "total_revenue": 417163.32,
+    "avg_revenue": 20.13,
+    "avg_duration_min": 14.9,
+    "active_zones": 237
+  },
+  {
+    "pickup_hour": 14,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 18536,
+    "total_revenue": 412969.2,
+    "avg_revenue": 23.72,
+    "avg_duration_min": 18.9,
+    "active_zones": 210
+  },
+  {
+    "pickup_hour": 15,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 10317,
+    "total_revenue": 212443.31,
+    "avg_revenue": 22.64,
+    "avg_duration_min": 19.3,
+    "active_zones": 215
+  },
+  {
+    "pickup_hour": 16,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 17708,
+    "total_revenue": 380524.53,
+    "avg_revenue": 20.15,
+    "avg_duration_min": 14.2,
+    "active_zones": 231
+  },
+  {
+    "pickup_hour": 17,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 54626,
+    "total_revenue": 1145949.75,
+    "avg_revenue": 21.1,
+    "avg_duration_min": 19.2,
+    "active_zones": 203
+  },
+  {
+    "pickup_hour": 18,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 50384,
+    "total_revenue": 1179694.91,
+    "avg_revenue": 20.37,
+    "avg_duration_min": 16.0,
+    "active_zones": 188
+  },
+  {
+    "pickup_hour": 19,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 46926,
+    "total_revenue": 1091266.69,
+    "avg_revenue": 23.79,
+    "avg_duration_min": 14.3,
+    "active_zones": 233
+  },
+  {
+    "pickup_hour": 20,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 13468,
+    "total_revenue": 283881.83,
+    "avg_revenue": 24.41,
+    "avg_duration_min": 15.9,
+    "active_zones": 199
+  },
+  {
+    "pickup_hour": 21,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 43158,
+    "total_revenue": 1051472.27,
+    "avg_revenue": 23.21,
+    "avg_duration_min": 18.0,
+    "active_zones": 187
+  },
+  {
+    "pickup_hour": 22,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 26116,
+    "total_revenue": 595013.2,
+    "avg_revenue": 21.6,
+    "avg_duration_min": 18.1,
+    "active_zones": 196
+  },
+  {
+    "pickup_hour": 23,
+    "pickup_dayofweek": 4,
+    "day_name": "Fri",
+    "trip_count": 26598,
+    "total_revenue": 628204.76,
+    "avg_revenue": 23.08,
+    "avg_duration_min": 17.8,
+    "active_zones": 189
+  },
+  {
+    "pickup_hour": 0,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 10902,
+    "total_revenue": 243440.34,
+    "avg_revenue": 22.17,
+    "avg_duration_min": 12.2,
+    "active_zones": 189
+  },
+  {
+    "pickup_hour": 1,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 10056,
+    "total_revenue": 223795.5,
+    "avg_revenue": 24.15,
+    "avg_duration_min": 15.1,
+    "active_zones": 198
+  },
+  {
+    "pickup_hour": 2,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 18980,
+    "total_revenue": 448449.57,
+    "avg_revenue": 21.86,
+    "avg_duration_min": 16.8,
+    "active_zones": 188
+  },
+  {
+    "pickup_hour": 3,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 10437,
+    "total_revenue": 248808.37,
+    "avg_revenue": 23.16,
+    "avg_duration_min": 17.5,
+    "active_zones": 234
+  },
+  {
+    "pickup_hour": 4,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 12600,
+    "total_revenue": 291389.11,
+    "avg_revenue": 23.03,
+    "avg_duration_min": 13.8,
+    "active_zones": 208
+  },
+  {
+    "pickup_hour": 5,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 12183,
+    "total_revenue": 245139.11,
+    "avg_revenue": 23.81,
+    "avg_duration_min": 18.9,
+    "active_zones": 240
+  },
+  {
+    "pickup_hour": 6,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 16549,
+    "total_revenue": 406059.73,
+    "avg_revenue": 21.23,
+    "avg_duration_min": 13.9,
+    "active_zones": 181
+  },
+  {
+    "pickup_hour": 7,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 11659,
+    "total_revenue": 238643.01,
+    "avg_revenue": 24.32,
+    "avg_duration_min": 16.6,
+    "active_zones": 194
+  },
+  {
+    "pickup_hour": 8,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 16014,
+    "total_revenue": 367540.56,
+    "avg_revenue": 24.41,
+    "avg_duration_min": 18.7,
+    "active_zones": 220
+  },
+  {
+    "pickup_hour": 9,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 9604,
+    "total_revenue": 196637.87,
+    "avg_revenue": 21.69,
+    "avg_duration_min": 19.4,
+    "active_zones": 218
+  },
+  {
+    "pickup_hour": 10,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 12064,
+    "total_revenue": 272394.78,
+    "avg_revenue": 23.62,
+    "avg_duration_min": 13.3,
+    "active_zones": 202
+  },
+  {
+    "pickup_hour": 11,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 15624,
+    "total_revenue": 381927.34,
+    "avg_revenue": 23.57,
+    "avg_duration_min": 12.6,
+    "active_zones": 224
+  },
+  {
+    "pickup_hour": 12,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 13616,
+    "total_revenue": 275433.17,
+    "avg_revenue": 24.71,
+    "avg_duration_min": 13.2,
+    "active_zones": 189
+  },
+  {
+    "pickup_hour": 13,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 12548,
+    "total_revenue": 268749.49,
+    "avg_revenue": 24.53,
+    "avg_duration_min": 17.2,
+    "active_zones": 191
+  },
+  {
+    "pickup_hour": 14,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 18148,
+    "total_revenue": 430671.18,
+    "avg_revenue": 20.1,
+    "avg_duration_min": 14.7,
+    "active_zones": 240
+  },
+  {
+    "pickup_hour": 15,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 16636,
+    "total_revenue": 413940.19,
+    "avg_revenue": 22.31,
+    "avg_duration_min": 16.6,
+    "active_zones": 202
+  },
+  {
+    "pickup_hour": 16,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 12981,
+    "total_revenue": 295452.98,
+    "avg_revenue": 21.36,
+    "avg_duration_min": 14.4,
+    "active_zones": 215
+  },
+  {
+    "pickup_hour": 17,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 10233,
+    "total_revenue": 235439.9,
+    "avg_revenue": 21.45,
+    "avg_duration_min": 16.2,
+    "active_zones": 193
+  },
+  {
+    "pickup_hour": 18,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 9709,
+    "total_revenue": 234526.43,
+    "avg_revenue": 24.47,
+    "avg_duration_min": 16.7,
+    "active_zones": 219
+  },
+  {
+    "pickup_hour": 19,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 16451,
+    "total_revenue": 337146.92,
+    "avg_revenue": 24.83,
+    "avg_duration_min": 18.5,
+    "active_zones": 215
+  },
+  {
+    "pickup_hour": 20,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 13128,
+    "total_revenue": 300149.87,
+    "avg_revenue": 22.66,
+    "avg_duration_min": 17.3,
+    "active_zones": 220
+  },
+  {
+    "pickup_hour": 21,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 32790,
+    "total_revenue": 741420.78,
+    "avg_revenue": 24.72,
+    "avg_duration_min": 12.2,
+    "active_zones": 185
+  },
+  {
+    "pickup_hour": 22,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 21760,
+    "total_revenue": 450024.45,
+    "avg_revenue": 20.7,
+    "avg_duration_min": 16.8,
+    "active_zones": 236
+  },
+  {
+    "pickup_hour": 23,
+    "pickup_dayofweek": 5,
+    "day_name": "Sat",
+    "trip_count": 29824,
+    "total_revenue": 646255.22,
+    "avg_revenue": 23.93,
+    "avg_duration_min": 15.6,
+    "active_zones": 229
+  },
+  {
+    "pickup_hour": 0,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 14508,
+    "total_revenue": 293339.71,
+    "avg_revenue": 22.28,
+    "avg_duration_min": 16.4,
+    "active_zones": 221
+  },
+  {
+    "pickup_hour": 1,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 10560,
+    "total_revenue": 232400.53,
+    "avg_revenue": 22.97,
+    "avg_duration_min": 15.5,
+    "active_zones": 188
+  },
+  {
+    "pickup_hour": 2,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 13064,
+    "total_revenue": 262676.9,
+    "avg_revenue": 21.92,
+    "avg_duration_min": 14.0,
+    "active_zones": 181
+  },
+  {
+    "pickup_hour": 3,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 16204,
+    "total_revenue": 363355.02,
+    "avg_revenue": 23.53,
+    "avg_duration_min": 17.5,
+    "active_zones": 186
+  },
+  {
+    "pickup_hour": 4,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 19216,
+    "total_revenue": 431929.02,
+    "avg_revenue": 23.03,
+    "avg_duration_min": 12.6,
+    "active_zones": 203
+  },
+  {
+    "pickup_hour": 5,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 12064,
+    "total_revenue": 258386.86,
+    "avg_revenue": 21.22,
+    "avg_duration_min": 12.9,
+    "active_zones": 211
+  },
+  {
+    "pickup_hour": 6,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 16396,
+    "total_revenue": 402665.88,
+    "avg_revenue": 23.09,
+    "avg_duration_min": 19.1,
+    "active_zones": 182
+  },
+  {
+    "pickup_hour": 7,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 15922,
+    "total_revenue": 350744.79,
+    "avg_revenue": 21.07,
+    "avg_duration_min": 13.5,
+    "active_zones": 203
+  },
+  {
+    "pickup_hour": 8,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 16002,
+    "total_revenue": 347131.65,
+    "avg_revenue": 21.51,
+    "avg_duration_min": 17.5,
+    "active_zones": 231
+  },
+  {
+    "pickup_hour": 9,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 17032,
+    "total_revenue": 395800.51,
+    "avg_revenue": 23.98,
+    "avg_duration_min": 13.8,
+    "active_zones": 197
+  },
+  {
+    "pickup_hour": 10,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 13265,
+    "total_revenue": 281093.06,
+    "avg_revenue": 21.36,
+    "avg_duration_min": 18.5,
+    "active_zones": 207
+  },
+  {
+    "pickup_hour": 11,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 9703,
+    "total_revenue": 207588.13,
+    "avg_revenue": 22.59,
+    "avg_duration_min": 13.5,
+    "active_zones": 190
+  },
+  {
+    "pickup_hour": 12,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 16434,
+    "total_revenue": 335118.06,
+    "avg_revenue": 23.54,
+    "avg_duration_min": 15.7,
+    "active_zones": 188
+  },
+  {
+    "pickup_hour": 13,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 16419,
+    "total_revenue": 350335.38,
+    "avg_revenue": 21.81,
+    "avg_duration_min": 17.4,
+    "active_zones": 202
+  },
+  {
+    "pickup_hour": 14,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 18537,
+    "total_revenue": 433821.67,
+    "avg_revenue": 24.72,
+    "avg_duration_min": 18.0,
+    "active_zones": 205
+  },
+  {
+    "pickup_hour": 15,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 19619,
+    "total_revenue": 431481.87,
+    "avg_revenue": 23.86,
+    "avg_duration_min": 14.3,
+    "active_zones": 204
+  },
+  {
+    "pickup_hour": 16,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 15117,
+    "total_revenue": 305383.28,
+    "avg_revenue": 22.26,
+    "avg_duration_min": 20.0,
+    "active_zones": 204
+  },
+  {
+    "pickup_hour": 17,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 14188,
+    "total_revenue": 311115.94,
+    "avg_revenue": 20.21,
+    "avg_duration_min": 17.4,
+    "active_zones": 218
+  },
+  {
+    "pickup_hour": 18,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 12176,
+    "total_revenue": 270018.99,
+    "avg_revenue": 21.22,
+    "avg_duration_min": 15.5,
+    "active_zones": 200
+  },
+  {
+    "pickup_hour": 19,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 17052,
+    "total_revenue": 355947.77,
+    "avg_revenue": 20.55,
+    "avg_duration_min": 17.8,
+    "active_zones": 223
+  },
+  {
+    "pickup_hour": 20,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 19409,
+    "total_revenue": 388238.46,
+    "avg_revenue": 21.69,
+    "avg_duration_min": 17.1,
+    "active_zones": 205
+  },
+  {
+    "pickup_hour": 21,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 13215,
+    "total_revenue": 298614.51,
+    "avg_revenue": 24.91,
+    "avg_duration_min": 14.2,
+    "active_zones": 204
+  },
+  {
+    "pickup_hour": 22,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 16072,
+    "total_revenue": 356095.52,
+    "avg_revenue": 20.03,
+    "avg_duration_min": 14.5,
+    "active_zones": 221
+  },
+  {
+    "pickup_hour": 23,
+    "pickup_dayofweek": 6,
+    "day_name": "Sun",
+    "trip_count": 15330,
+    "total_revenue": 350268.42,
+    "avg_revenue": 20.66,
+    "avg_duration_min": 15.7,
+    "active_zones": 223
+  }
+]

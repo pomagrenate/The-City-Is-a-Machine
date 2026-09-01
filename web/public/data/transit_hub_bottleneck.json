@@ -1,0 +1,90 @@
+[
+  {
+    "hub_name": "Penn Station / Moynihan Hub",
+    "weather_condition": "Clear",
+    "trip_count_rush_hour": 18500,
+    "demand_spike_multiplier": 1.0,
+    "avg_speed_mph": 5.8,
+    "avg_duration_min": 14.5,
+    "nearby_supply_lag_min": 8.5,
+    "unmet_demand_estimate_pct": 12.0,
+    "dispatch_action": "C\u00e2n b\u1eb1ng t\u1ef1 nhi\u00ean"
+  },
+  {
+    "hub_name": "Penn Station / Moynihan Hub",
+    "weather_condition": "Heavy Rain",
+    "trip_count_rush_hour": 42500,
+    "demand_spike_multiplier": 2.3,
+    "avg_speed_mph": 3.4,
+    "avg_duration_min": 28.2,
+    "nearby_supply_lag_min": 26.5,
+    "unmet_demand_estimate_pct": 44.5,
+    "dispatch_action": "K\u00cdCH HO\u1ea0T RADAR DISPATCH: \u0110i\u1ec1u h\u01b0\u1edbng xe t\u1eeb 1.5km tr\u01b0\u1edbc 20 ph\u00fat"
+  },
+  {
+    "hub_name": "Grand Central Terminal",
+    "weather_condition": "Clear",
+    "trip_count_rush_hour": 16200,
+    "demand_spike_multiplier": 1.0,
+    "avg_speed_mph": 5.5,
+    "avg_duration_min": 15.0,
+    "nearby_supply_lag_min": 9.0,
+    "unmet_demand_estimate_pct": 10.5,
+    "dispatch_action": "C\u00e2n b\u1eb1ng t\u1ef1 nhi\u00ean"
+  },
+  {
+    "hub_name": "Grand Central Terminal",
+    "weather_condition": "Heavy Rain",
+    "trip_count_rush_hour": 38900,
+    "demand_spike_multiplier": 2.4,
+    "avg_speed_mph": 3.2,
+    "avg_duration_min": 31.0,
+    "nearby_supply_lag_min": 29.0,
+    "unmet_demand_estimate_pct": 48.0,
+    "dispatch_action": "K\u00cdCH HO\u1ea0T RADAR DISPATCH: T\u1eafc ngh\u1ebdn 42nd St, c\u1ea7n \u0111\u00f3n \u0111\u1ea7u t\u1eeb Park Ave"
+  },
+  {
+    "hub_name": "Port Authority Bus Terminal",
+    "weather_condition": "Clear",
+    "trip_count_rush_hour": 12400,
+    "demand_spike_multiplier": 1.0,
+    "avg_speed_mph": 4.8,
+    "avg_duration_min": 16.2,
+    "nearby_supply_lag_min": 11.0,
+    "unmet_demand_estimate_pct": 14.0,
+    "dispatch_action": "C\u00e2n b\u1eb1ng t\u1ef1 nhi\u00ean"
+  },
+  {
+    "hub_name": "Port Authority Bus Terminal",
+    "weather_condition": "Heavy Rain",
+    "trip_count_rush_hour": 27800,
+    "demand_spike_multiplier": 2.24,
+    "avg_speed_mph": 3.0,
+    "avg_duration_min": 34.5,
+    "nearby_supply_lag_min": 32.0,
+    "unmet_demand_estimate_pct": 52.0,
+    "dispatch_action": "K\u00cdCH HO\u1ea0T RADAR DISPATCH: 8th Ave t\u00ea li\u1ec7t, \u0111i\u1ec1u h\u01b0\u1edbng xe t\u1eeb 9th Ave"
+  },
+  {
+    "hub_name": "Atlantic Terminal (Brooklyn)",
+    "weather_condition": "Clear",
+    "trip_count_rush_hour": 4200,
+    "demand_spike_multiplier": 1.0,
+    "avg_speed_mph": 11.2,
+    "avg_duration_min": 12.0,
+    "nearby_supply_lag_min": 6.0,
+    "unmet_demand_estimate_pct": 8.0,
+    "dispatch_action": "C\u00e2n b\u1eb1ng t\u1ef1 nhi\u00ean"
+  },
+  {
+    "hub_name": "Atlantic Terminal (Brooklyn)",
+    "weather_condition": "Heavy Rain",
+    "trip_count_rush_hour": 9800,
+    "demand_spike_multiplier": 2.33,
+    "avg_speed_mph": 7.5,
+    "avg_duration_min": 19.5,
+    "nearby_supply_lag_min": 16.0,
+    "unmet_demand_estimate_pct": 36.0,
+    "dispatch_action": "K\u00cdCH HO\u1ea0T RADAR DISPATCH: T\u0103ng c\u01b0\u1eddng xe t\u1eeb Downtown Brooklyn"
+  }
+]

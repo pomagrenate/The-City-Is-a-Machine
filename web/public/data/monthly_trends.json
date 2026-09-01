@@ -1,1 +1,134 @@
-[{"pickup_month":1,"total_trips":10359206,"total_revenue":193485675.55,"avg_revenue_per_trip":18.68,"avg_revenue_per_km":5.69,"avg_duration_min":13.41,"avg_tip_rate_pct":16.98,"pct_airport_trips":7.41,"pct_weekend_trips":25.52},{"pickup_month":2,"total_trips":9666006,"total_revenue":201757300.87,"avg_revenue_per_trip":20.87,"avg_revenue_per_km":6.615,"avg_duration_min":14.12,"avg_tip_rate_pct":19.33,"pct_airport_trips":7.44,"pct_weekend_trips":26.98},{"pickup_month":3,"total_trips":10962895,"total_revenue":236719437.15,"avg_revenue_per_trip":21.59,"avg_revenue_per_km":6.662,"avg_duration_min":14.7,"avg_tip_rate_pct":19.25,"pct_airport_trips":8.27,"pct_weekend_trips":28.92},{"pickup_month":4,"total_trips":10451750,"total_revenue":228919880.1,"avg_revenue_per_trip":21.9,"avg_revenue_per_km":6.643,"avg_duration_min":14.97,"avg_tip_rate_pct":19.0,"pct_airport_trips":8.52,"pct_weekend_trips":26.81},{"pickup_month":5,"total_trips":10781311,"total_revenue":241698767.83,"avg_revenue_per_trip":22.42,"avg_revenue_per_km":6.745,"avg_duration_min":15.7,"avg_tip_rate_pct":18.97,"pct_airport_trips":9.05,"pct_weekend_trips":23.98},{"pickup_month":6,"total_trips":9951940,"total_revenue":224070534.99,"avg_revenue_per_trip":22.52,"avg_revenue_per_km":6.731,"avg_duration_min":15.7,"avg_tip_rate_pct":18.86,"pct_airport_trips":9.23,"pct_weekend_trips":28.45},{"pickup_month":7,"total_trips":8902917,"total_revenue":197483514.97,"avg_revenue_per_trip":22.18,"avg_revenue_per_km":6.652,"avg_duration_min":15.07,"avg_tip_rate_pct":18.54,"pct_airport_trips":9.36,"pct_weekend_trips":25.08},{"pickup_month":8,"total_trips":8575756,"total_revenue":190578707.85,"avg_revenue_per_trip":22.22,"avg_revenue_per_km":6.541,"avg_duration_min":14.92,"avg_tip_rate_pct":18.43,"pct_airport_trips":9.78,"pct_weekend_trips":25.28},{"pickup_month":9,"total_trips":9047720,"total_revenue":204512854.87,"avg_revenue_per_trip":22.6,"avg_revenue_per_km":6.856,"avg_duration_min":16.12,"avg_tip_rate_pct":18.88,"pct_airport_trips":9.21,"pct_weekend_trips":27.29},{"pickup_month":10,"total_trips":10327333,"total_revenue":233897844.39,"avg_revenue_per_trip":22.65,"avg_revenue_per_km":6.95,"avg_duration_min":16.0,"avg_tip_rate_pct":19.16,"pct_airport_trips":8.9,"pct_weekend_trips":25.66},{"pickup_month":11,"total_trips":9832370,"total_revenue":218966816.59,"avg_revenue_per_trip":22.27,"avg_revenue_per_km":7.025,"avg_duration_min":15.68,"avg_tip_rate_pct":19.31,"pct_airport_trips":8.45,"pct_weekend_trips":28.09},{"pickup_month":12,"total_trips":9914013,"total_revenue":221642963.34,"avg_revenue_per_trip":22.36,"avg_revenue_per_km":7.119,"avg_duration_min":15.85,"avg_tip_rate_pct":19.0,"pct_airport_trips":8.4,"pct_weekend_trips":28.6}]
+[
+  {
+    "pickup_month": 1,
+    "total_trips": 3019400,
+    "total_revenue": 70261438.0,
+    "avg_revenue_per_trip": 23.27,
+    "avg_revenue_per_km": 5.32,
+    "avg_duration_min": 15.0,
+    "avg_tip_rate_pct": 16.96,
+    "pct_airport_trips": 5.57,
+    "pct_weekend_trips": 26.04
+  },
+  {
+    "pickup_month": 2,
+    "total_trips": 2925212,
+    "total_revenue": 69561541.36,
+    "avg_revenue_per_trip": 23.78,
+    "avg_revenue_per_km": 5.25,
+    "avg_duration_min": 16.5,
+    "avg_tip_rate_pct": 17.78,
+    "pct_airport_trips": 7.31,
+    "pct_weekend_trips": 25.19
+  },
+  {
+    "pickup_month": 3,
+    "total_trips": 3104582,
+    "total_revenue": 66810604.64,
+    "avg_revenue_per_trip": 21.52,
+    "avg_revenue_per_km": 5.17,
+    "avg_duration_min": 15.0,
+    "avg_tip_rate_pct": 15.89,
+    "pct_airport_trips": 5.75,
+    "pct_weekend_trips": 24.31
+  },
+  {
+    "pickup_month": 4,
+    "total_trips": 3229482,
+    "total_revenue": 68561902.86,
+    "avg_revenue_per_trip": 21.23,
+    "avg_revenue_per_km": 5.12,
+    "avg_duration_min": 14.6,
+    "avg_tip_rate_pct": 15.51,
+    "pct_airport_trips": 7.0,
+    "pct_weekend_trips": 28.56
+  },
+  {
+    "pickup_month": 5,
+    "total_trips": 3372154,
+    "total_revenue": 72197817.14,
+    "avg_revenue_per_trip": 21.41,
+    "avg_revenue_per_km": 5.45,
+    "avg_duration_min": 15.0,
+    "avg_tip_rate_pct": 15.61,
+    "pct_airport_trips": 7.53,
+    "pct_weekend_trips": 26.48
+  },
+  {
+    "pickup_month": 6,
+    "total_trips": 3373505,
+    "total_revenue": 75802657.35,
+    "avg_revenue_per_trip": 22.47,
+    "avg_revenue_per_km": 5.03,
+    "avg_duration_min": 15.9,
+    "avg_tip_rate_pct": 17.31,
+    "pct_airport_trips": 6.47,
+    "pct_weekend_trips": 27.86
+  },
+  {
+    "pickup_month": 7,
+    "total_trips": 3047325,
+    "total_revenue": 74628989.25,
+    "avg_revenue_per_trip": 24.49,
+    "avg_revenue_per_km": 5.18,
+    "avg_duration_min": 14.7,
+    "avg_tip_rate_pct": 16.9,
+    "pct_airport_trips": 6.24,
+    "pct_weekend_trips": 24.74
+  },
+  {
+    "pickup_month": 8,
+    "total_trips": 3120708,
+    "total_revenue": 70059894.6,
+    "avg_revenue_per_trip": 22.45,
+    "avg_revenue_per_km": 5.21,
+    "avg_duration_min": 16.8,
+    "avg_tip_rate_pct": 16.85,
+    "pct_airport_trips": 5.2,
+    "pct_weekend_trips": 28.42
+  },
+  {
+    "pickup_month": 9,
+    "total_trips": 3275332,
+    "total_revenue": 72483097.16,
+    "avg_revenue_per_trip": 22.13,
+    "avg_revenue_per_km": 5.27,
+    "avg_duration_min": 16.3,
+    "avg_tip_rate_pct": 15.94,
+    "pct_airport_trips": 7.49,
+    "pct_weekend_trips": 25.01
+  },
+  {
+    "pickup_month": 10,
+    "total_trips": 3110277,
+    "total_revenue": 74771059.08,
+    "avg_revenue_per_trip": 24.04,
+    "avg_revenue_per_km": 5.07,
+    "avg_duration_min": 17.1,
+    "avg_tip_rate_pct": 15.89,
+    "pct_airport_trips": 5.3,
+    "pct_weekend_trips": 24.63
+  },
+  {
+    "pickup_month": 11,
+    "total_trips": 3322969,
+    "total_revenue": 73337925.83,
+    "avg_revenue_per_trip": 22.07,
+    "avg_revenue_per_km": 5.33,
+    "avg_duration_min": 16.9,
+    "avg_tip_rate_pct": 17.63,
+    "pct_airport_trips": 6.32,
+    "pct_weekend_trips": 28.33
+  },
+  {
+    "pickup_month": 12,
+    "total_trips": 3019338,
+    "total_revenue": 70833669.48,
+    "avg_revenue_per_trip": 23.46,
+    "avg_revenue_per_km": 4.89,
+    "avg_duration_min": 16.4,
+    "avg_tip_rate_pct": 17.53,
+    "pct_airport_trips": 5.81,
+    "pct_weekend_trips": 27.96
+  }
+]

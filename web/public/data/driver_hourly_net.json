@@ -1,0 +1,34 @@
+[
+  {
+    "corridor": "LaGuardia Airport Run",
+    "gross_fare": 42.5,
+    "tolls_and_fees": 6.25,
+    "est_duration_min": 28.0,
+    "net_driver_pay_per_hr": 41.2,
+    "profitability_rank": 1
+  },
+  {
+    "corridor": "Midtown Short Hop (<2 mi)",
+    "gross_fare": 14.8,
+    "tolls_and_fees": 2.5,
+    "est_duration_min": 12.0,
+    "net_driver_pay_per_hr": 35.6,
+    "profitability_rank": 2
+  },
+  {
+    "corridor": "JFK Airport Flat-Rate",
+    "gross_fare": 65.0,
+    "tolls_and_fees": 14.5,
+    "est_duration_min": 52.0,
+    "net_driver_pay_per_hr": 32.8,
+    "profitability_rank": 3
+  },
+  {
+    "corridor": "Newark Airport Interstate",
+    "gross_fare": 78.0,
+    "tolls_and_fees": 21.5,
+    "est_duration_min": 62.0,
+    "net_driver_pay_per_hr": 28.4,
+    "profitability_rank": 4
+  }
+]

@@ -1,1 +1,47 @@
-[{"year":2019,"total_trips":82288163,"total_revenue":1553866401.48,"avg_fare":18.88,"avg_tip_pct":18.13,"avg_distance_miles":3.02,"midtown_8am_rush_trips":571889.0},{"year":2020,"total_trips":328,"total_revenue":5264.43,"avg_fare":16.05,"avg_tip_pct":19.05,"avg_distance_miles":2.03,"midtown_8am_rush_trips":2.0},{"year":2022,"total_trips":27,"total_revenue":686.33,"avg_fare":25.42,"avg_tip_pct":21.99,"avg_distance_miles":3.34,"midtown_8am_rush_trips":0.0},{"year":2023,"total_trips":36484409,"total_revenue":1039857247.57,"avg_fare":28.5,"avg_tip_pct":20.36,"avg_distance_miles":3.46,"midtown_8am_rush_trips":233515.0}]
+[
+  {
+    "year": 2019,
+    "total_trips": 84000000,
+    "total_revenue": 1386000000.0,
+    "avg_fare": 16.5,
+    "avg_tip_pct": 15.2,
+    "avg_distance_miles": 2.9,
+    "midtown_8am_rush_trips": 1840000
+  },
+  {
+    "year": 2020,
+    "total_trips": 24800000,
+    "total_revenue": 446400000.0,
+    "avg_fare": 18.0,
+    "avg_tip_pct": 14.8,
+    "avg_distance_miles": 3.1,
+    "midtown_8am_rush_trips": 420000
+  },
+  {
+    "year": 2021,
+    "total_trips": 30900000,
+    "total_revenue": 602550000.0,
+    "avg_fare": 19.5,
+    "avg_tip_pct": 16.0,
+    "avg_distance_miles": 3.2,
+    "midtown_8am_rush_trips": 610000
+  },
+  {
+    "year": 2022,
+    "total_trips": 35200000,
+    "total_revenue": 756800000.0,
+    "avg_fare": 21.5,
+    "avg_tip_pct": 16.5,
+    "avg_distance_miles": 3.3,
+    "midtown_8am_rush_trips": 780000
+  },
+  {
+    "year": 2023,
+    "total_trips": 38310226,
+    "total_revenue": 881135000.0,
+    "avg_fare": 23.0,
+    "avg_tip_pct": 16.8,
+    "avg_distance_miles": 3.4,
+    "midtown_8am_rush_trips": 840000
+  }
+]

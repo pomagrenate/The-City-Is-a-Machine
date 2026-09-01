@@ -1,0 +1,170 @@
+[
+  {
+    "pickup_hour": 0,
+    "credit_card_zero_tip_pct": 5.2,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 21.92,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 1,
+    "credit_card_zero_tip_pct": 3.67,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 22.21,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 2,
+    "credit_card_zero_tip_pct": 5.21,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 22.14,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 3,
+    "credit_card_zero_tip_pct": 5.23,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 17.39,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 4,
+    "credit_card_zero_tip_pct": 5.69,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 19.3,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 5,
+    "credit_card_zero_tip_pct": 2.38,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 13.4,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 6,
+    "credit_card_zero_tip_pct": 4.49,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 22.18,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 7,
+    "credit_card_zero_tip_pct": 4.99,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 23.94,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 8,
+    "credit_card_zero_tip_pct": 3.16,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 21.94,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 9,
+    "credit_card_zero_tip_pct": 3.44,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 13.76,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 10,
+    "credit_card_zero_tip_pct": 2.96,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 22.23,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 11,
+    "credit_card_zero_tip_pct": 5.7,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 15.25,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 12,
+    "credit_card_zero_tip_pct": 4.94,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 17.84,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 13,
+    "credit_card_zero_tip_pct": 2.54,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 23.46,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 14,
+    "credit_card_zero_tip_pct": 5.51,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 22.41,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 15,
+    "credit_card_zero_tip_pct": 3.14,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 13.29,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 16,
+    "credit_card_zero_tip_pct": 5.57,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 22.49,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 17,
+    "credit_card_zero_tip_pct": 3.51,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 16.26,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 18,
+    "credit_card_zero_tip_pct": 2.77,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 19.14,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 19,
+    "credit_card_zero_tip_pct": 4.76,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 16.86,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 20,
+    "credit_card_zero_tip_pct": 3.94,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 23.21,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 21,
+    "credit_card_zero_tip_pct": 4.94,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 18.18,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 22,
+    "credit_card_zero_tip_pct": 3.3,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 20.42,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  },
+  {
+    "pickup_hour": 23,
+    "credit_card_zero_tip_pct": 5.21,
+    "cash_zero_tip_pct": 100.0,
+    "overall_zero_tip_pct": 14.84,
+    "highest_risk_zone": "Times Sq/Theatre District"
+  }
+]

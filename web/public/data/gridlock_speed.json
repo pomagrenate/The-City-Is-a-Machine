@@ -1,0 +1,146 @@
+[
+  {
+    "pickup_hour": 0,
+    "midtown_speed_mph": 11.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 1,
+    "midtown_speed_mph": 11.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 2,
+    "midtown_speed_mph": 11.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 3,
+    "midtown_speed_mph": 11.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 4,
+    "midtown_speed_mph": 11.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 5,
+    "midtown_speed_mph": 11.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 6,
+    "midtown_speed_mph": 11.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 7,
+    "midtown_speed_mph": 11.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 8,
+    "midtown_speed_mph": 4.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 9,
+    "midtown_speed_mph": 4.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 10,
+    "midtown_speed_mph": 4.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 11,
+    "midtown_speed_mph": 4.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 12,
+    "midtown_speed_mph": 4.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 13,
+    "midtown_speed_mph": 3.8,
+    "is_slower_than_walking": true,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 14,
+    "midtown_speed_mph": 3.8,
+    "is_slower_than_walking": true,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 15,
+    "midtown_speed_mph": 3.8,
+    "is_slower_than_walking": true,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 16,
+    "midtown_speed_mph": 3.8,
+    "is_slower_than_walking": true,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 17,
+    "midtown_speed_mph": 3.8,
+    "is_slower_than_walking": true,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 18,
+    "midtown_speed_mph": 6.2,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 19,
+    "midtown_speed_mph": 6.2,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 20,
+    "midtown_speed_mph": 6.2,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 21,
+    "midtown_speed_mph": 6.2,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 22,
+    "midtown_speed_mph": 11.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  },
+  {
+    "pickup_hour": 23,
+    "midtown_speed_mph": 11.5,
+    "is_slower_than_walking": false,
+    "walking_speed_mph": 4.0
+  }
+]
