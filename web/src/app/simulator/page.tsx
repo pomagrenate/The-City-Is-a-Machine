@@ -26,6 +26,12 @@ import {
   FaChevronDown,
   FaChevronUp,
   FaTimes,
+  FaPlus,
+  FaMinus,
+  FaCrosshairs,
+  FaClock,
+  FaFire,
+  FaCar,
 } from 'react-icons/fa';
 import styles from './simulator.module.css';
 
@@ -34,15 +40,14 @@ export interface ZoneDef {
   id: string;
   name: string;
   shortName: string;
-  nx: number; // normalized x (0 to 1)
-  ny: number; // normalized y (0 to 1)
+  nx: number;
+  ny: number;
   borough: 'Manhattan' | 'Brooklyn' | 'Queens' | 'Bronx' | 'Staten Island';
-  baseLambda: number; // baseline Poisson request arrivals per min
+  baseLambda: number;
   avgFare: number;
 }
 
 export const NYC_24_ZONES: Record<string, ZoneDef> = {
-  // Manhattan
   riverdale: { id: 'riverdale', name: 'Riverdale / Spuyten Duyvil', shortName: 'Riverdale', nx: 0.41, ny: 0.06, borough: 'Bronx', baseLambda: 28, avgFare: 24.5 },
   yankee: { id: 'yankee', name: 'Yankee Stadium / Concourse', shortName: 'Yankee Hub', nx: 0.47, ny: 0.11, borough: 'Bronx', baseLambda: 65, avgFare: 21.0 },
   south_bronx: { id: 'south_bronx', name: 'South Bronx / Mott Haven', shortName: 'S. Bronx', nx: 0.54, ny: 0.15, borough: 'Bronx', baseLambda: 42, avgFare: 19.5 },
@@ -53,16 +58,12 @@ export const NYC_24_ZONES: Record<string, ZoneDef> = {
   midtown: { id: 'midtown', name: 'Midtown Hub (Penn & Times Sq & Grand Central)', shortName: 'Midtown Core', nx: 0.40, ny: 0.44, borough: 'Manhattan', baseLambda: 420, avgFare: 23.5 },
   chelsea_village: { id: 'chelsea_village', name: 'Chelsea / Greenwich Village / SoHo', shortName: 'Village / SoHo', nx: 0.36, ny: 0.57, borough: 'Manhattan', baseLambda: 260, avgFare: 21.2 },
   fidi: { id: 'fidi', name: 'Financial District / Wall St', shortName: 'FiDi / Downtown', nx: 0.33, ny: 0.70, borough: 'Manhattan', baseLambda: 240, avgFare: 25.0 },
-
-  // Brooklyn
   dumbo: { id: 'dumbo', name: 'DUMBO / Brooklyn Heights', shortName: 'DUMBO / Heights', nx: 0.43, ny: 0.71, borough: 'Brooklyn', baseLambda: 115, avgFare: 22.8 },
   williamsburg: { id: 'williamsburg', name: 'Williamsburg / Greenpoint', shortName: 'Williamsburg', nx: 0.52, ny: 0.56, borough: 'Brooklyn', baseLambda: 180, avgFare: 20.5 },
   bushwick: { id: 'bushwick', name: 'Bushwick / East New York', shortName: 'Bushwick', nx: 0.64, ny: 0.62, borough: 'Brooklyn', baseLambda: 95, avgFare: 19.8 },
   atlantic_downtown: { id: 'atlantic_downtown', name: 'Atlantic Terminal / Downtown Brooklyn', shortName: 'Atlantic Hub', nx: 0.48, ny: 0.80, borough: 'Brooklyn', baseLambda: 210, avgFare: 22.0 },
   crown_heights: { id: 'crown_heights', name: 'Bed-Stuy / Crown Heights', shortName: 'Bed-Stuy / Crown', nx: 0.58, ny: 0.81, borough: 'Brooklyn', baseLambda: 125, avgFare: 19.2 },
   coney_island: { id: 'coney_island', name: 'Bay Ridge / Coney Island', shortName: 'Coney / S. BK', nx: 0.43, ny: 0.94, borough: 'Brooklyn', baseLambda: 60, avgFare: 31.0 },
-
-  // Queens
   astoria: { id: 'astoria', name: 'Astoria / Ditmars', shortName: 'Astoria Hub', nx: 0.56, ny: 0.30, borough: 'Queens', baseLambda: 130, avgFare: 21.5 },
   lic: { id: 'lic', name: 'Long Island City (Hunters Point)', shortName: 'Queens LIC', nx: 0.53, ny: 0.43, borough: 'Queens', baseLambda: 175, avgFare: 22.4 },
   lga: { id: 'lga', name: 'LaGuardia Airport (LGA)', shortName: 'LGA Airport', nx: 0.72, ny: 0.22, borough: 'Queens', baseLambda: 240, avgFare: 42.0 },
@@ -70,8 +71,6 @@ export const NYC_24_ZONES: Record<string, ZoneDef> = {
   forest_hills: { id: 'forest_hills', name: 'Forest Hills / Kew Gardens', shortName: 'Forest Hills', nx: 0.72, ny: 0.51, borough: 'Queens', baseLambda: 105, avgFare: 23.0 },
   jamaica: { id: 'jamaica', name: 'Jamaica AirTrain / LIRR Hub', shortName: 'Jamaica Hub', nx: 0.83, ny: 0.63, borough: 'Queens', baseLambda: 160, avgFare: 28.5 },
   jfk: { id: 'jfk', name: 'JFK International Airport', shortName: 'JFK Airport', nx: 0.88, ny: 0.85, borough: 'Queens', baseLambda: 340, avgFare: 72.0 },
-
-  // Staten Island & Gateway
   st_george: { id: 'st_george', name: 'St. George Ferry (Staten Island)', shortName: 'St. George (SI)', nx: 0.22, ny: 0.89, borough: 'Staten Island', baseLambda: 45, avgFare: 36.0 },
   ewr_gateway: { id: 'ewr_gateway', name: 'Newark Airport / NJ Gateway', shortName: 'NJ / EWR Gateway', nx: 0.20, ny: 0.56, borough: 'Manhattan', baseLambda: 75, avgFare: 58.0 },
 };
@@ -88,14 +87,11 @@ export interface EdgeGraphDef {
 }
 
 export const NYC_36_EDGES: EdgeGraphDef[] = [
-  // Bronx <-> Manhattan
   { id: 'broadway_spine_0', from: 'riverdale', to: 'yankee', name: 'Major Deegan North', isCrossing: false, distanceMiles: 2.5, baseSpeedMph: 28 },
   { id: 'broadway_spine_1', from: 'yankee', to: 'inwood', name: 'Macombs Dam Bridge', isCrossing: true, distanceMiles: 1.2, baseSpeedMph: 16 },
   { id: 'cross_bronx', from: 'riverdale', to: 'south_bronx', name: 'Cross Bronx Expressway', isCrossing: false, distanceMiles: 3.8, baseSpeedMph: 22 },
   { id: 'triborough_manh_bx', from: 'harlem', to: 'south_bronx', name: '3rd Ave / Willis Ave Bridge', isCrossing: true, distanceMiles: 1.1, baseSpeedMph: 15 },
   { id: 'triborough_bx_qns', from: 'south_bronx', to: 'astoria', name: 'RFK Triborough (Bronx-Queens)', isCrossing: true, distanceMiles: 2.4, baseSpeedMph: 32 },
-
-  // Manhattan Internal Spine
   { id: 'broadway_spine_2', from: 'inwood', to: 'harlem', name: 'Broadway Upper Spine', isCrossing: false, distanceMiles: 2.1, baseSpeedMph: 14 },
   { id: 'cpw_spine', from: 'harlem', to: 'uws', name: 'Central Park West', isCrossing: false, distanceMiles: 1.9, baseSpeedMph: 12 },
   { id: '5th_ave_spine', from: 'harlem', to: 'ues', name: '5th Ave / Madison Corridor', isCrossing: false, distanceMiles: 1.8, baseSpeedMph: 11 },
@@ -103,23 +99,15 @@ export const NYC_36_EDGES: EdgeGraphDef[] = [
   { id: 'park_ave_midtown', from: 'ues', to: 'midtown', name: 'Park Ave / Lexington Ave', isCrossing: false, distanceMiles: 1.7, baseSpeedMph: 9 },
   { id: 'fdr_mid_chelsea', from: 'midtown', to: 'chelsea_village', name: '7th Ave / 5th Ave Village Spine', isCrossing: false, distanceMiles: 1.5, baseSpeedMph: 8 },
   { id: 'westside_fidi', from: 'chelsea_village', to: 'fidi', name: 'West Side Hwy / West St', isCrossing: false, distanceMiles: 1.8, baseSpeedMph: 15 },
-
-  // Manhattan <-> New Jersey Gateway
   { id: 'holland_tunnel', from: 'chelsea_village', to: 'ewr_gateway', name: 'Holland Tunnel / I-78 Corridor', isCrossing: true, distanceMiles: 4.2, baseSpeedMph: 24 },
   { id: 'lincoln_tunnel', from: 'midtown', to: 'ewr_gateway', name: 'Lincoln Tunnel Express', isCrossing: true, distanceMiles: 3.9, baseSpeedMph: 22 },
-
-  // Manhattan <-> Queens Crossings
   { id: 'triborough_manh_qns', from: 'harlem', to: 'astoria', name: 'RFK Triborough (Manhattan-Queens)', isCrossing: true, distanceMiles: 2.2, baseSpeedMph: 30 },
   { id: 'queensboro_bridge', from: 'midtown', to: 'lic', name: 'Queensboro Bridge (59th St)', isCrossing: true, distanceMiles: 1.4, baseSpeedMph: 16 },
   { id: 'midtown_tunnel', from: 'midtown', to: 'lic', name: 'Queens-Midtown Tunnel (I-495)', isCrossing: true, distanceMiles: 1.6, baseSpeedMph: 18 },
-
-  // Manhattan <-> Brooklyn Crossings
   { id: 'williamsburg_bridge', from: 'chelsea_village', to: 'williamsburg', name: 'Williamsburg Bridge (Delancey)', isCrossing: true, distanceMiles: 1.7, baseSpeedMph: 16 },
   { id: 'manhattan_bridge', from: 'fidi', to: 'dumbo', name: 'Manhattan Bridge (Canal St)', isCrossing: true, distanceMiles: 1.5, baseSpeedMph: 16 },
   { id: 'brooklyn_bridge', from: 'fidi', to: 'dumbo', name: 'Brooklyn Bridge (Park Row)', isCrossing: true, distanceMiles: 1.3, baseSpeedMph: 14 },
   { id: 'si_ferry_water', from: 'fidi', to: 'st_george', name: 'Staten Island Ferry Maritime Channel', isCrossing: true, distanceMiles: 5.2, baseSpeedMph: 18 },
-
-  // Queens Internal Arteries
   { id: 'astoria_lic', from: 'astoria', to: 'lic', name: '21st St / Vernon Blvd', isCrossing: false, distanceMiles: 2.0, baseSpeedMph: 18 },
   { id: 'gcp_lga', from: 'astoria', to: 'lga', name: 'Grand Central Parkway LGA', isCrossing: false, distanceMiles: 3.1, baseSpeedMph: 26 },
   { id: 'flushing_lga', from: 'lga', to: 'flushing', name: 'Northern Blvd / Whitestone', isCrossing: false, distanceMiles: 2.8, baseSpeedMph: 22 },
@@ -127,8 +115,6 @@ export const NYC_36_EDGES: EdgeGraphDef[] = [
   { id: 'van_wyck_flushing_fh', from: 'flushing', to: 'forest_hills', name: 'Grand Central Pkwy Central', isCrossing: false, distanceMiles: 3.2, baseSpeedMph: 25 },
   { id: 'van_wyck_fh_jam', from: 'forest_hills', to: 'jamaica', name: 'Queens Blvd / Van Wyck Expwy', isCrossing: false, distanceMiles: 2.9, baseSpeedMph: 24 },
   { id: 'van_wyck_jam_jfk', from: 'jamaica', to: 'jfk', name: 'Van Wyck Expressway JFK Spine (I-678)', isCrossing: false, distanceMiles: 3.8, baseSpeedMph: 32 },
-
-  // Brooklyn Internal Arteries
   { id: 'pulaski_lic_wburg', from: 'lic', to: 'williamsburg', name: 'Pulaski Bridge / McGuinness Blvd', isCrossing: true, distanceMiles: 1.8, baseSpeedMph: 18 },
   { id: 'bqe_wburg_dumbo', from: 'williamsburg', to: 'dumbo', name: 'Brooklyn-Queens Expressway (BQE / I-278)', isCrossing: false, distanceMiles: 2.2, baseSpeedMph: 20 },
   { id: 'bqe_dumbo_atlantic', from: 'dumbo', to: 'atlantic_downtown', name: 'Flatbush Ave / Fulton St', isCrossing: false, distanceMiles: 1.4, baseSpeedMph: 12 },
@@ -239,6 +225,13 @@ interface MultiHopAgent {
   fare: number;
 }
 
+interface RainParticle {
+  x: number;
+  y: number;
+  length: number;
+  speed: number;
+}
+
 export default function SimulatorPage() {
   const [baseData, setBaseData] = useState<SimulatorBase[]>([]);
   const [zonesData, setZonesData] = useState<ZoneRevenue[]>([]);
@@ -248,6 +241,18 @@ export default function SimulatorPage() {
   // ── Simulator Persona Navigation ────────────────────────────────────────────
   const [activePersona, setActivePersona] = useState<'fleet' | 'pricing' | 'fatigue' | 'micro_surge'>('fleet');
   const [isDrawerCollapsed, setIsDrawerCollapsed] = useState<boolean>(false);
+
+  // ── Visualization Mode (Particles vs Heatmap) ──────────────────────────────
+  const [viewMode, setViewMode] = useState<'particles' | 'heatmap'>('particles');
+
+  // ── Camera Pan & Zoom State (Google Maps Style) ─────────────────────────────
+  const [camera, setCamera] = useState<{ x: number; y: number; scale: number }>({ x: 0, y: 0, scale: 1.0 });
+  const isDraggingRef = useRef<boolean>(false);
+  const dragStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const cameraStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  // ── 24-Hour Diurnal Clock (0.0 to 24.0 hours) ──────────────────────────────
+  const [timeOfDay, setTimeOfDay] = useState<number>(18.5); // Default 18:30 (Evening Rush)
 
   // ── Animation Playback State ────────────────────────────────────────────────
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
@@ -282,7 +287,7 @@ export default function SimulatorPage() {
   const [selectedRouteKey, setSelectedRouteKey] = useState<string>('midtown_lic');
   const [hazardSurcharge, setHazardSurcharge] = useState<number>(3.50);
 
-  // ── Disruption Crossings State ──────────────────────────────────────────────
+  // ── Disruption Crossings State (Click-to-Block Arteries) ─────────────────────
   const [closedCrossings, setClosedCrossings] = useState<Record<string, boolean>>({
     queensboro_bridge: false,
     midtown_tunnel: true,
@@ -294,6 +299,7 @@ export default function SimulatorPage() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const agentsRef = useRef<MultiHopAgent[]>([]);
+  const rainParticlesRef = useRef<RainParticle[]>([]);
 
   // Load backend baseline datasets
   useEffect(() => {
@@ -354,6 +360,18 @@ export default function SimulatorPage() {
       });
     }
     agentsRef.current = initialAgents;
+
+    // Initialize 120 Rain Particles
+    const rainParticles: RainParticle[] = [];
+    for (let i = 0; i < 140; i++) {
+      rainParticles.push({
+        x: Math.random() * 2000,
+        y: Math.random() * 1500,
+        length: 12 + Math.random() * 16,
+        speed: 8 + Math.random() * 10,
+      });
+    }
+    rainParticlesRef.current = rainParticles;
   }, [graphAdjacency]);
 
   // Handle Fullscreen Dynamic Resizing
@@ -371,7 +389,7 @@ export default function SimulatorPage() {
     return () => window.removeEventListener('resize', updateCanvasSize);
   }, []);
 
-  // ── Helper to convert Normalized Coords (nx, ny) to Canvas Pixels ──────────
+  // ── Helper to convert Normalized Coords (nx, ny) to Base Canvas Pixels ────
   const getCanvasCoords = (nx: number, ny: number, width: number, height: number) => {
     const padX = width * 0.08;
     const padY = height * 0.10;
@@ -382,6 +400,30 @@ export default function SimulatorPage() {
       y: padY + ny * innerH,
     };
   };
+
+  // ── Diurnal Time Multiplier (00:00 to 23:59) ──────────────────────────────
+  const diurnalMultiplier = useMemo(() => {
+    if (timeOfDay >= 7.5 && timeOfDay <= 9.5) return 1.75; // Morning peak
+    if (timeOfDay >= 11.5 && timeOfDay <= 14.5) return 1.05; // Midday
+    if (timeOfDay >= 17.0 && timeOfDay <= 20.5) return 2.35; // Evening peak
+    if (timeOfDay >= 21.0 || timeOfDay <= 2.0) return 1.60; // Nightlife
+    return 0.45; // Late night
+  }, [timeOfDay]);
+
+  // Formatted Time of Day string (e.g. "18:30 (Evening Rush)")
+  const formattedTimeStr = useMemo(() => {
+    const totalMinutes = Math.round(timeOfDay * 60);
+    const hours = Math.floor(totalMinutes / 60) % 24;
+    const minutes = totalMinutes % 60;
+    const hh = hours.toString().padStart(2, '0');
+    const mm = minutes.toString().padStart(2, '0');
+    let label = 'Regular';
+    if (hours >= 7 && hours <= 9) label = 'Morning Commute';
+    else if (hours >= 17 && hours <= 20) label = 'Evening Rush';
+    else if (hours >= 21 || hours <= 2) label = 'Nightlife Wave';
+    else if (hours >= 3 && hours <= 6) label = 'Overnight Lull';
+    return `${hh}:${mm} • ${label}`;
+  }, [timeOfDay]);
 
   // ── Fullscreen Live Animation Loop ─────────────────────────────────────────
   useEffect(() => {
@@ -402,6 +444,12 @@ export default function SimulatorPage() {
       // Light background fill
       ctx.fillStyle = '#f8fafc';
       ctx.fillRect(0, 0, w, h);
+
+      // ── Apply Camera Pan & Zoom Transform ─────────────────────────────────
+      ctx.save();
+      ctx.translate(w / 2 + camera.x * dpr, h / 2 + camera.y * dpr);
+      ctx.scale(camera.scale, camera.scale);
+      ctx.translate(-w / 2, -h / 2);
 
       // Subtle Water Arteries Background (East River & Hudson River visual shapes)
       const hudsonCenter = getCanvasCoords(0.28, 0.48, w, h);
@@ -481,6 +529,25 @@ export default function SimulatorPage() {
         }
       });
 
+      // ── DUAL VIEW: KERNEL DENSITY HEATMAP LAYER ───────────────────────────
+      if (viewMode === 'heatmap') {
+        Object.values(NYC_24_ZONES).forEach(node => {
+          const pos = getCanvasCoords(node.nx, node.ny, w, h);
+          const effectiveLambda = node.baseLambda * diurnalMultiplier * (weatherSeverity === 'heavy_storm' ? 2.1 : 1.0);
+          const radius = Math.min(180, (effectiveLambda / 400) * 120 * dpr);
+
+          const grad = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, radius);
+          grad.addColorStop(0, 'rgba(239, 68, 68, 0.45)');
+          grad.addColorStop(0.5, 'rgba(245, 158, 11, 0.25)');
+          grad.addColorStop(1, 'rgba(245, 158, 11, 0)');
+
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
       // 2. Pulse Rings on High-Demand Hubs / Virtual Hubs / Shocks
       const pulseTime = Date.now() / 400;
       const pulseRadius = (16 + Math.sin(pulseTime) * 6) * dpr;
@@ -547,115 +614,140 @@ export default function SimulatorPage() {
         ctx.globalAlpha = 1.0;
       });
 
-      // 4. Update and Draw Moving Multi-Hop Agents
-      const agents = agentsRef.current;
-      const nodeKeys = Object.keys(NYC_24_ZONES);
+      // 4. Update and Draw Moving Multi-Hop Agents (Particle Mode)
+      if (viewMode === 'particles') {
+        const agents = agentsRef.current;
+        const nodeKeys = Object.keys(NYC_24_ZONES);
 
-      agents.forEach(agent => {
-        if (agent.status === 'offline') return;
+        agents.forEach(agent => {
+          if (agent.status === 'offline') return;
 
-        if (isPlaying) {
-          let currentSpeed = agent.speed * simSpeed;
-          if (weatherSeverity === 'heavy_storm') currentSpeed *= 0.65;
-          if (activeShock === 'gas_price_spike') currentSpeed *= 0.85;
+          if (isPlaying) {
+            let currentSpeed = agent.speed * simSpeed;
+            if (weatherSeverity === 'heavy_storm') currentSpeed *= 0.65;
+            if (activeShock === 'gas_price_spike') currentSpeed *= 0.85;
 
-          const edge = NYC_36_EDGES.find(
-            e => (e.from === agent.currentFrom && e.to === agent.currentTo) || (e.from === agent.currentTo && e.to === agent.currentFrom)
-          );
+            const edge = NYC_36_EDGES.find(
+              e => (e.from === agent.currentFrom && e.to === agent.currentTo) || (e.from === agent.currentTo && e.to === agent.currentFrom)
+            );
 
-          if (edge && (closedCrossings[edge.id] || (activeShock === 'flash_flood' && edge.isCrossing))) {
-            agent.status = 'stuck';
-            currentSpeed *= 0.12;
-            const staminaDrain = Math.max(0.02, 0.08 - trafficJamSubsidy * 0.012);
-            agent.stamina = Math.max(0, agent.stamina - staminaDrain * simSpeed);
-          } else if (proactiveDispatch && agent.currentTo === 'midtown') {
-            agent.status = 'dispatched';
-            agent.stamina = Math.min(100, agent.stamina + 0.01 * simSpeed);
-          } else if (agent.status === 'cruising') {
-            const staminaDrain = Math.max(0.01, 0.04 - trafficJamSubsidy * 0.006);
-            agent.stamina = Math.max(0, agent.stamina - staminaDrain * simSpeed);
-          }
+            if (edge && (closedCrossings[edge.id] || (activeShock === 'flash_flood' && edge.isCrossing))) {
+              agent.status = 'stuck';
+              currentSpeed *= 0.12;
+              const staminaDrain = Math.max(0.02, 0.08 - trafficJamSubsidy * 0.012);
+              agent.stamina = Math.max(0, agent.stamina - staminaDrain * simSpeed);
+            } else if (proactiveDispatch && agent.currentTo === 'midtown') {
+              agent.status = 'dispatched';
+              agent.stamina = Math.min(100, agent.stamina + 0.01 * simSpeed);
+            } else if (agent.status === 'cruising') {
+              const staminaDrain = Math.max(0.01, 0.04 - trafficJamSubsidy * 0.006);
+              agent.stamina = Math.max(0, agent.stamina - staminaDrain * simSpeed);
+            }
 
-          if (agent.stamina <= 0) {
-            agent.status = 'offline';
-          }
+            if (agent.stamina <= 0) {
+              agent.status = 'offline';
+            }
 
-          agent.progress += currentSpeed;
+            agent.progress += currentSpeed;
 
-          if (agent.progress >= 1) {
-            agent.progress = 0;
-            agent.waypointIndex += 1;
+            if (agent.progress >= 1) {
+              agent.progress = 0;
+              agent.waypointIndex += 1;
 
-            if (agent.waypointIndex < agent.pathWaypoints.length - 1) {
-              agent.currentFrom = agent.pathWaypoints[agent.waypointIndex];
-              agent.currentTo = agent.pathWaypoints[agent.waypointIndex + 1];
-            } else {
-              const startFrom = agent.pathWaypoints[agent.pathWaypoints.length - 1] || agent.currentTo;
-              let nextTarget = nodeKeys[Math.floor(Math.random() * nodeKeys.length)];
+              if (agent.waypointIndex < agent.pathWaypoints.length - 1) {
+                agent.currentFrom = agent.pathWaypoints[agent.waypointIndex];
+                agent.currentTo = agent.pathWaypoints[agent.waypointIndex + 1];
+              } else {
+                const startFrom = agent.pathWaypoints[agent.pathWaypoints.length - 1] || agent.currentTo;
+                let nextTarget = nodeKeys[Math.floor(Math.random() * nodeKeys.length)];
 
-              if ((selectedScenario === 'penn_rain' || activeShock === 'msg_concert') && Math.random() < 0.45) {
-                nextTarget = 'midtown';
-              } else if (selectedScenario === 'lic_starvation' && Math.random() < 0.40) {
-                nextTarget = 'lic';
-              } else if (selectedScenario === 'jfk_surge' && Math.random() < 0.50) {
-                nextTarget = 'jfk';
-              } else if (selectedScenario === 'yankee_egress' && Math.random() < 0.45) {
-                nextTarget = 'yankee';
-              }
+                if ((selectedScenario === 'penn_rain' || activeShock === 'msg_concert') && Math.random() < 0.45) {
+                  nextTarget = 'midtown';
+                } else if (selectedScenario === 'lic_starvation' && Math.random() < 0.40) {
+                  nextTarget = 'lic';
+                } else if (selectedScenario === 'jfk_surge' && Math.random() < 0.50) {
+                  nextTarget = 'jfk';
+                } else if (selectedScenario === 'yankee_egress' && Math.random() < 0.45) {
+                  nextTarget = 'yankee';
+                }
 
-              while (nextTarget === startFrom) {
-                nextTarget = nodeKeys[Math.floor(Math.random() * nodeKeys.length)];
-              }
+                while (nextTarget === startFrom) {
+                  nextTarget = nodeKeys[Math.floor(Math.random() * nodeKeys.length)];
+                }
 
-              const newPath = dijkstraShortestPath(startFrom, nextTarget, graphAdjacency);
-              agent.pathWaypoints = newPath;
-              agent.waypointIndex = 0;
-              agent.currentFrom = newPath[0] || startFrom;
-              agent.currentTo = newPath[1] || nextTarget;
+                const newPath = dijkstraShortestPath(startFrom, nextTarget, graphAdjacency);
+                agent.pathWaypoints = newPath;
+                agent.waypointIndex = 0;
+                agent.currentFrom = newPath[0] || startFrom;
+                agent.currentTo = newPath[1] || nextTarget;
 
-              const pickupProb = surgeMultiplier > 2.2 ? 0.32 : (surgeMultiplier >= 1.6 ? 0.84 : 0.72);
-              agent.status = Math.random() < pickupProb ? 'in_trip' : 'cruising';
-              if (agent.status === 'in_trip') {
-                agent.stamina = Math.min(100, agent.stamina + 3.0);
+                const pickupProb = surgeMultiplier > 2.2 ? 0.32 : (surgeMultiplier >= 1.6 ? 0.84 : 0.72);
+                agent.status = Math.random() < pickupProb ? 'in_trip' : 'cruising';
+                if (agent.status === 'in_trip') {
+                  agent.stamina = Math.min(100, agent.stamina + 3.0);
+                }
               }
             }
           }
-        }
 
-        const fromNode = NYC_24_ZONES[agent.currentFrom];
-        const toNode = NYC_24_ZONES[agent.currentTo];
-        if (!fromNode || !toNode) return;
+          const fromNode = NYC_24_ZONES[agent.currentFrom];
+          const toNode = NYC_24_ZONES[agent.currentTo];
+          if (!fromNode || !toNode) return;
 
-        const fromPos = getCanvasCoords(fromNode.nx, fromNode.ny, w, h);
-        const toPos = getCanvasCoords(toNode.nx, toNode.ny, w, h);
+          const fromPos = getCanvasCoords(fromNode.nx, fromNode.ny, w, h);
+          const toPos = getCanvasCoords(toNode.nx, toNode.ny, w, h);
 
-        const curX = fromPos.x + (toPos.x - fromPos.x) * agent.progress;
-        const curY = fromPos.y + (toPos.y - fromPos.y) * agent.progress;
+          const curX = fromPos.x + (toPos.x - fromPos.x) * agent.progress;
+          const curY = fromPos.y + (toPos.y - fromPos.y) * agent.progress;
 
-        let dotColor = '#f59e0b'; // cruising amber
-        if (agent.status === 'in_trip') dotColor = '#10b981'; // in-trip green
-        if (agent.status === 'stuck') dotColor = '#ef4444'; // stuck red
-        if (agent.status === 'dispatched') dotColor = '#2563eb'; // proactive blue
+          let dotColor = '#f59e0b'; // cruising amber
+          if (agent.status === 'in_trip') dotColor = '#10b981'; // in-trip green
+          if (agent.status === 'stuck') dotColor = '#ef4444'; // stuck red
+          if (agent.status === 'dispatched') dotColor = '#2563eb'; // proactive blue
 
-        ctx.beginPath();
-        ctx.arc(curX, curY, (agent.status === 'in_trip' ? 4.0 : 3.0) * dpr, 0, Math.PI * 2);
-        ctx.fillStyle = dotColor;
-        ctx.fill();
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1.0 * dpr;
-        ctx.stroke();
-
-        if (agent.stamina < 30) {
           ctx.beginPath();
-          ctx.arc(curX, curY, 6.0 * dpr, 0, Math.PI * 2);
-          ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
-          ctx.lineWidth = 1.2 * dpr;
+          ctx.arc(curX, curY, (agent.status === 'in_trip' ? 4.0 : 3.0) * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = dotColor;
+          ctx.fill();
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 1.0 * dpr;
           ctx.stroke();
-        }
-      });
 
+          if (agent.stamina < 30) {
+            ctx.beginPath();
+            ctx.arc(curX, curY, 6.0 * dpr, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
+            ctx.lineWidth = 1.2 * dpr;
+            ctx.stroke();
+          }
+        });
+      }
+
+      // ── DYNAMIC WEATHER RAIN PARTICLES ANIMATION ───────────────────────────
+      if (weatherSeverity === 'heavy_storm' || weatherSeverity === 'moderate') {
+        ctx.strokeStyle = weatherSeverity === 'heavy_storm' ? 'rgba(59, 130, 246, 0.35)' : 'rgba(59, 130, 246, 0.18)';
+        ctx.lineWidth = 1.2 * dpr;
+        rainParticlesRef.current.forEach(p => {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x - 3 * dpr, p.y + p.length * dpr);
+          ctx.stroke();
+
+          if (isPlaying) {
+            p.y += p.speed * simSpeed;
+            p.x -= 2 * simSpeed;
+            if (p.y > h * 1.5) p.y = -50;
+            if (p.x < -50) p.x = w * 1.5;
+          }
+        });
+      }
+
+      ctx.restore();
+
+      // Clock advance and loss ticker
       if (isPlaying) {
         setSimTick(t => t + 1);
+        setTimeOfDay(prev => (prev + (0.003 * simSpeed)) % 24);
         if (!proactiveDispatch || surgeMultiplier > 2.2) {
           setCumulativeLostRevenue(prev => prev + (0.45 * simSpeed));
         }
@@ -668,37 +760,106 @@ export default function SimulatorPage() {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [isPlaying, simSpeed, selectedScenario, activeShock, proactiveDispatch, virtualBatchingHubs, surgeMultiplier, weatherSeverity, trafficJamSubsidy, closedCrossings, graphAdjacency, inspectedZoneId, selectedBoroughFilter]);
+  }, [isPlaying, simSpeed, selectedScenario, activeShock, proactiveDispatch, virtualBatchingHubs, surgeMultiplier, weatherSeverity, trafficJamSubsidy, closedCrossings, graphAdjacency, inspectedZoneId, selectedBoroughFilter, camera, viewMode, diurnalMultiplier]);
 
-  // Click on Fullscreen Canvas to inspect Zone
+  // ── Mouse Drag & Pan Handlers (Google Maps Navigation) ─────────────────────
+  const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    isDraggingRef.current = true;
+    dragStartRef.current = { x: e.clientX, y: e.clientY };
+    cameraStartRef.current = { x: camera.x, y: camera.y };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!isDraggingRef.current) return;
+    const dx = e.clientX - dragStartRef.current.x;
+    const dy = e.clientY - dragStartRef.current.y;
+    setCamera({
+      ...camera,
+      x: cameraStartRef.current.x + dx / camera.scale,
+      y: cameraStartRef.current.y + dy / camera.scale,
+    });
+  };
+
+  const handleMouseUp = () => {
+    isDraggingRef.current = false;
+  };
+
+  const handleWheel = (e: React.WheelEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    const zoomFactor = 1 - e.deltaY * 0.0012;
+    setCamera(c => ({
+      ...c,
+      scale: Math.max(0.5, Math.min(3.5, c.scale * zoomFactor)),
+    }));
+  };
+
+  // Click on Canvas to inspect Zone OR Click-to-Block Arteries
   const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
-    const clickX = (e.clientX - rect.left) * dpr;
-    const clickY = (e.clientY - rect.top) * dpr;
+    const w = canvas.width;
+    const h = canvas.height;
 
-    let closestId: string | null = null;
+    // Transform screen click coordinates into camera-transformed canvas coords
+    const rawX = (e.clientX - rect.left) * dpr;
+    const rawY = (e.clientY - rect.top) * dpr;
+
+    const clickX = (rawX - (w / 2 + camera.x * dpr)) / camera.scale + w / 2;
+    const clickY = (rawY - (h / 2 + camera.y * dpr)) / camera.scale + h / 2;
+
+    // 1. Check if clicked near any Zone Node
+    let closestZoneId: string | null = null;
     let minDist = 35 * dpr;
 
     Object.values(NYC_24_ZONES).forEach(node => {
-      const pos = getCanvasCoords(node.nx, node.ny, canvas.width, canvas.height);
+      const pos = getCanvasCoords(node.nx, node.ny, w, h);
       const dist = Math.hypot(pos.x - clickX, pos.y - clickY);
       if (dist < minDist) {
         minDist = dist;
-        closestId = node.id;
+        closestZoneId = node.id;
       }
     });
 
-    if (closestId) {
-      setInspectedZoneId(closestId);
+    if (closestZoneId) {
+      setInspectedZoneId(closestZoneId);
+      return;
+    }
+
+    // 2. Check if clicked near any Edge (Click-to-Block Incident Injector)
+    let closestEdgeId: string | null = null;
+    let minEdgeDist = 20 * dpr;
+
+    NYC_36_EDGES.forEach(edge => {
+      const fromNode = NYC_24_ZONES[edge.from];
+      const toNode = NYC_24_ZONES[edge.to];
+      if (!fromNode || !toNode) return;
+
+      const fromPos = getCanvasCoords(fromNode.nx, fromNode.ny, w, h);
+      const toPos = getCanvasCoords(toNode.nx, toNode.ny, w, h);
+      const midX = (fromPos.x + toPos.x) / 2;
+      const midY = (fromPos.y + toPos.y) / 2;
+
+      const dist = Math.hypot(midX - clickX, midY - clickY);
+      if (dist < minEdgeDist) {
+        minEdgeDist = dist;
+        closestEdgeId = edge.id;
+      }
+    });
+
+    if (closestEdgeId) {
+      const targetEdge = closestEdgeId;
+      setClosedCrossings(prev => ({
+        ...prev,
+        [targetEdge]: !prev[targetEdge],
+      }));
     }
   };
 
   // ── Calculated Real-Time Metrics ──────────────────────────────────────────
   const liveMetrics = useMemo(() => {
-    const baselineTrips = 18500;
+    const baselineTrips = Math.round(18500 * diurnalMultiplier);
     const baseFare = 24.80;
 
     const surgeFactor = surgeMultiplier;
@@ -737,9 +898,8 @@ export default function SimulatorPage() {
     const deadheadReductionPct = proactiveDispatch ? 36.5 : 0;
     const fulfillmentRatePct = Math.min(97.2, (completedTrips / baselineTrips) * 100);
 
-    // Inspected zone specific metrics
     const activeZone = inspectedZoneId ? NYC_24_ZONES[inspectedZoneId] : null;
-    const zonePoissonDemand = activeZone ? Math.round(activeZone.baseLambda * (weatherSeverity === 'heavy_storm' ? 2.1 : (weatherSeverity === 'moderate' ? 1.4 : 1.0)) * (activeShock === 'msg_concert' && inspectedZoneId === 'midtown' ? 3.0 : 1.0)) : 0;
+    const zonePoissonDemand = activeZone ? Math.round(activeZone.baseLambda * diurnalMultiplier * (weatherSeverity === 'heavy_storm' ? 2.1 : (weatherSeverity === 'moderate' ? 1.4 : 1.0)) * (activeShock === 'msg_concert' && inspectedZoneId === 'midtown' ? 3.0 : 1.0)) : 0;
     const zoneActiveVehicles = activeZone ? (agentsRef.current.filter(a => a.currentTo === activeZone.id && a.status !== 'offline').length || 8) : 0;
     const zoneDeficit = Math.max(0, zonePoissonDemand - zoneActiveVehicles * 12);
     const zoneLostRevenueRate = activeZone ? Math.round(zoneDeficit * activeZone.avgFare * 0.65) : 0;
@@ -767,16 +927,20 @@ export default function SimulatorPage() {
       zoneDeficit,
       zoneLostRevenueRate,
     };
-  }, [surgeMultiplier, weatherSeverity, proactiveDispatch, virtualBatchingHubs, additionalFleetCount, closedCrossings, activeShock, selectedRouteKey, hazardSurcharge, inspectedZoneId]);
+  }, [surgeMultiplier, weatherSeverity, proactiveDispatch, virtualBatchingHubs, additionalFleetCount, closedCrossings, activeShock, selectedRouteKey, hazardSurcharge, inspectedZoneId, diurnalMultiplier]);
 
   return (
     <div className={styles.fullscreenContainer} ref={containerRef}>
-      {/* ── 100% FULLSCREEN CANVAS MAP ── */}
+      {/* ── 100% FULLSCREEN INTERACTIVE CANVAS MAP (ZOOM & PAN ENABLED) ── */}
       <canvas
         ref={canvasRef}
         className={styles.fullscreenCanvas}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onWheel={handleWheel}
         onClick={handleCanvasClick}
-        title="Click any TLC Zone to inspect live telemetry"
+        title="Drag to pan • Scroll to zoom • Click zone for details • Click road to block/unblock"
       />
 
       {/* ── TOP FLOATING BAR (GOOGLE MAPS STYLE) ── */}
@@ -787,8 +951,24 @@ export default function SimulatorPage() {
             <FaArrowLeft /> Analytics
           </Link>
           <div className={styles.appBrand}>
-            <FaCity color="var(--color-blue)" /> The City Machine Arena v3.0
+            <FaCity color="var(--color-blue)" /> The City Machine Arena
           </div>
+        </div>
+
+        {/* 24-Hour Diurnal Clock Scrubber Pill */}
+        <div className={styles.floatingClockPill}>
+          <FaClock color="var(--color-blue)" />
+          <span className={styles.clockBadge}>{formattedTimeStr}</span>
+          <input
+            type="range"
+            min={0}
+            max={24}
+            step={0.25}
+            value={timeOfDay}
+            onChange={e => setTimeOfDay(Number(e.target.value))}
+            className={styles.timeSlider}
+            title="Scrub time of day (00:00 to 24:00)"
+          />
         </div>
 
         {/* Center Live Lost Revenue Pill */}
@@ -825,14 +1005,27 @@ export default function SimulatorPage() {
           >
             4x
           </button>
-          <span style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', marginLeft: 4 }}>
-            ({liveMetrics.onlineAgents}/{liveMetrics.totalAgents} Online)
-          </span>
         </div>
       </div>
 
       {/* ── TOP-RIGHT FLOATING TOOLBARS (TRANSLUCENT PILLS) ── */}
       <div className={styles.floatingRightToolbar}>
+        {/* View Mode Switcher (Particles vs Heatmap) */}
+        <div className={styles.viewModeGroup}>
+          <button
+            className={`${styles.viewModeBtn} ${viewMode === 'particles' ? styles.viewModeBtnActive : ''}`}
+            onClick={() => setViewMode('particles')}
+          >
+            <FaCar /> Vehicle Particles
+          </button>
+          <button
+            className={`${styles.viewModeBtn} ${viewMode === 'heatmap' ? styles.viewModeBtnActive : ''}`}
+            onClick={() => setViewMode('heatmap')}
+          >
+            <FaFire color="var(--color-amber)" /> Demand Heatmap
+          </button>
+        </div>
+
         {/* Persona Switcher Group */}
         <div className={styles.personaGroup}>
           <button
@@ -976,9 +1169,35 @@ export default function SimulatorPage() {
                   </div>
                 </div>
 
-                <div className={styles.recommendationBox}>
-                  <FaCheckCircle style={{ marginRight: 4 }} />
-                  <strong>Operations Recommendation:</strong> Forward staging with virtual hubs clears bottlenecks <strong>68% faster</strong> with a <strong>{liveMetrics.operationalRoi.toFixed(1)}x ROI</strong>.
+                {/* Policy A/B Comparison Table */}
+                <div style={{ marginTop: 4 }}>
+                  <label className={styles.label}>Policy A/B Benchmark</label>
+                  <table className={styles.abComparisonTable}>
+                    <thead>
+                      <tr>
+                        <th>Metric</th>
+                        <th>Legacy Model</th>
+                        <th>AI Staging</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Avg Wait Time</td>
+                        <td className={styles.abLegacyVal}>24.5 min</td>
+                        <td className={styles.abAiVal}>{liveMetrics.avgWaitTimeMin.toFixed(1)} min</td>
+                      </tr>
+                      <tr>
+                        <td>Fulfillment</td>
+                        <td className={styles.abLegacyVal}>64.2%</td>
+                        <td className={styles.abAiVal}>{liveMetrics.fulfillmentRatePct.toFixed(1)}%</td>
+                      </tr>
+                      <tr>
+                        <td>Lost GMV</td>
+                        <td className={styles.abLegacyVal}>-$14,200</td>
+                        <td className={styles.abAiVal}>-$3,120</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </>
             )}
@@ -1220,12 +1439,40 @@ export default function SimulatorPage() {
         </div>
       )}
 
+      {/* ── FLOATING ZOOM & PAN CONTROLS (BOTTOM RIGHT) ── */}
+      <div className={styles.floatingZoomGroup}>
+        <button
+          className={styles.zoomBtn}
+          onClick={() => setCamera(c => ({ ...c, scale: Math.min(3.5, c.scale * 1.25) }))}
+          title="Zoom In (+)"
+        >
+          <FaPlus size={12} />
+        </button>
+        <button
+          className={styles.zoomBtn}
+          onClick={() => setCamera(c => ({ ...c, scale: Math.max(0.5, c.scale / 1.25) }))}
+          title="Zoom Out (-)"
+        >
+          <FaMinus size={12} />
+        </button>
+        <button
+          className={styles.zoomBtn}
+          onClick={() => setCamera({ x: 0, y: 0, scale: 1.0 })}
+          title="Reset Camera View"
+        >
+          <FaCrosshairs size={12} />
+        </button>
+      </div>
+
       {/* ── FLOATING BOTTOM LEGEND (BOTTOM LEFT) ── */}
       <div className={styles.floatingLegend}>
-        <div><span className={styles.legendDot} style={{ background: '#10b981' }} /> In-Trip (Revenue)</div>
-        <div><span className={styles.legendDot} style={{ background: '#f59e0b' }} /> Cruising (Deadhead)</div>
-        <div><span className={styles.legendDot} style={{ background: '#ef4444' }} /> Delayed / Flooded</div>
+        <div><span className={styles.legendDot} style={{ background: '#10b981' }} /> In-Trip</div>
+        <div><span className={styles.legendDot} style={{ background: '#f59e0b' }} /> Cruising</div>
+        <div><span className={styles.legendDot} style={{ background: '#ef4444' }} /> Delayed / Blocked</div>
         <div><span className={styles.legendDot} style={{ background: '#2563eb' }} /> Forward Staged</div>
+        <div style={{ borderLeft: '1px solid var(--color-border)', paddingLeft: 8, color: 'var(--color-blue)', fontWeight: 600 }}>
+          💡 Click any road to close/open
+        </div>
       </div>
     </div>
   );

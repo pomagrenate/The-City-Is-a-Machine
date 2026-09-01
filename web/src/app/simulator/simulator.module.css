@@ -580,15 +580,145 @@ input:checked + .slider:before {
   margin-right: 4px;
 }
 
-.recommendationBox {
-  background: linear-gradient(135deg, #f0fdf4 0%, #e6f6f1 100%);
-  border: 1px solid #bbf7d0;
-  border-radius: var(--radius-sm);
-  padding: 10px 12px;
-  font-size: 0.75rem;
-  color: #166534;
-  line-height: 1.45;
+/* ── FLOATING ZOOM & PAN CONTROLS (GOOGLE MAPS STYLE) ─────── */
+.floatingZoomGroup {
+  position: absolute;
+  bottom: 24px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 25;
+  pointer-events: auto;
 }
+
+.zoomBtn {
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: all var(--transition);
+}
+
+.zoomBtn:hover {
+  background: #ffffff;
+  color: var(--color-blue);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+/* ── FLOATING 24-HOUR CLOCK SCRUBBER ───────────────────────── */
+.floatingClockPill {
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 30px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.clockBadge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: var(--color-blue);
+  background: var(--color-blue-light);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.timeSlider {
+  width: 110px;
+  accent-color: var(--color-blue);
+  cursor: pointer;
+}
+
+/* ── VIEW MODE SWITCHER (PARTICLE VS HEATMAP) ──────────────── */
+.viewModeGroup {
+  display: flex;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 20px;
+  padding: 3px 6px;
+  gap: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.viewModeBtn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  padding: 5px 12px;
+  border-radius: 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition);
+}
+
+.viewModeBtn:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--color-text-primary);
+}
+
+.viewModeBtnActive {
+  background: var(--color-purple);
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+/* ── POLICY A/B COMPARISON TABLE ───────────────────────────── */
+.abComparisonTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  margin-top: 6px;
+}
+
+.abComparisonTable th {
+  text-align: left;
+  padding: 4px 6px;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  border-bottom: 1px solid var(--color-border-light);
+  text-transform: uppercase;
+  font-size: 0.625rem;
+}
+
+.abComparisonTable td {
+  padding: 6px 6px;
+  border-bottom: 1px solid var(--color-border-light);
+  color: var(--color-text-primary);
+}
+
+.abLegacyVal {
+  color: var(--color-red);
+  font-weight: 600;
+}
+
+.abAiVal {
+  color: var(--color-green);
+  font-weight: 700;
+}
+
 
 
 
