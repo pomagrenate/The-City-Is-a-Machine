@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { getData, formatCurrency, formatNumber, DAY_NAMES } from '@/lib/data';
 import type { SimulatorBase, ZoneRevenue, SurgeElasticityPoint } from '@/types';
 import StatCard from '@/components/ui/StatCard';
@@ -17,30 +17,113 @@ import {
 } from 'recharts';
 import {
   FaSlidersH,
-  FaChartLine,
+  FaPlay,
+  FaPause,
+  FaRedo,
   FaBolt,
+  FaTaxi,
+  FaSubway,
+  FaWater,
+  FaShieldAlt,
   FaExclamationTriangle,
   FaLightbulb,
   FaCheckCircle,
+  FaMapMarkedAlt,
 } from 'react-icons/fa';
 import styles from './simulator.module.css';
 
+// ── NYC Spatial Network Topology Definition ──────────────────────────────────
+interface NodeDef {
+  id: string;
+  name: string;
+  shortName: string;
+  x: number;
+  y: number;
+  demandWeight: number; // baseline demand weight
+  borough: string;
+}
+
+const NYC_NODES: Record<string, NodeDef> = {
+  upper: { id: 'upper', name: 'Upper Manhattan / Harlem', shortName: 'Upper Manh', x: 220, y: 80, demandWeight: 1.0, borough: 'Manhattan' },
+  midtown: { id: 'midtown', name: 'Midtown (Penn & Grand Central)', shortName: 'Midtown Hub', x: 210, y: 170, demandWeight: 3.5, borough: 'Manhattan' },
+  financial: { id: 'financial', name: 'Financial District / Wall St', shortName: 'FiDi / Downtown', x: 190, y: 290, demandWeight: 2.2, borough: 'Manhattan' },
+  lic: { id: 'lic', name: 'Long Island City (Queens)', shortName: 'Queens LIC', x: 330, y: 150, demandWeight: 1.4, borough: 'Queens' },
+  lga: { id: 'lga', name: 'LaGuardia Airport (LGA)', shortName: 'LGA Airport', x: 420, y: 90, demandWeight: 2.0, borough: 'Queens' },
+  williamsburg: { id: 'williamsburg', name: 'Williamsburg / DUMBO', shortName: 'Williamsburg', x: 300, y: 260, demandWeight: 1.8, borough: 'Brooklyn' },
+  atlantic: { id: 'atlantic', name: 'Atlantic Terminal / Barclays', shortName: 'Atlantic Hub', x: 280, y: 350, demandWeight: 1.9, borough: 'Brooklyn' },
+  jfk: { id: 'jfk', name: 'JFK International Airport', shortName: 'JFK Airport', x: 450, y: 340, demandWeight: 2.8, borough: 'Queens' },
+};
+
+interface EdgeDef {
+  id: string;
+  from: string;
+  to: string;
+  name: string;
+  isCrossing: boolean;
+}
+
+const NYC_EDGES: EdgeDef[] = [
+  { id: 'broadway_north', from: 'upper', to: 'midtown', name: 'Broadway Spine North', isCrossing: false },
+  { id: 'broadway_south', from: 'midtown', to: 'financial', name: 'Broadway / 5th Ave Spine', isCrossing: false },
+  { id: 'queensboro_bridge', from: 'midtown', to: 'lic', name: 'Queensboro Bridge (59th St)', isCrossing: true },
+  { id: 'midtown_tunnel', from: 'midtown', to: 'lic', name: 'Queens-Midtown Tunnel', isCrossing: true },
+  { id: 'triborough', from: 'upper', to: 'lga', name: 'RFK Triborough Corridor', isCrossing: true },
+  { id: 'grand_central_pkwy', from: 'lic', to: 'lga', name: 'Grand Central Parkway', isCrossing: false },
+  { id: 'williamsburg_bridge', from: 'financial', to: 'williamsburg', name: 'Williamsburg Bridge', isCrossing: true },
+  { id: 'manhattan_bridge', from: 'financial', to: 'williamsburg', name: 'Manhattan Bridge', isCrossing: true },
+  { id: 'brooklyn_bridge', from: 'financial', to: 'atlantic', name: 'Brooklyn Bridge', isCrossing: true },
+  { id: 'bqe_corridor', from: 'williamsburg', to: 'atlantic', name: 'Brooklyn-Queens Expressway', isCrossing: false },
+  { id: 'van_wyck', from: 'lic', to: 'jfk', name: 'Van Wyck Expressway', isCrossing: false },
+  { id: 'belt_pkwy', from: 'atlantic', to: 'jfk', name: 'Belt Parkway Corridor', isCrossing: false },
+];
+
+interface Agent {
+  id: number;
+  fromNode: string;
+  toNode: string;
+  progress: number;
+  speed: number;
+  status: 'in_trip' | 'cruising' | 'stuck' | 'dispatched';
+  fare: number;
+}
+
 export default function SimulatorPage() {
   const [baseData, setBaseData] = useState<SimulatorBase[]>([]);
-  const [zones, setZones]       = useState<ZoneRevenue[]>([]);
+  const [zones, setZones] = useState<ZoneRevenue[]>([]);
   const [surgeCurve, setSurgeCurve] = useState<SurgeElasticityPoint[]>([]);
-  const [loading, setLoading]   = useState(true);
+  const [loading, setLoading] = useState(true);
 
-  // Form inputs for Fleet Simulator
-  const [selectedBorough, setSelectedBorough] = useState<string>('Manhattan');
-  const [selectedZoneId, setSelectedZoneId]   = useState<number | null>(null);
-  const [selectedDay, setSelectedDay]         = useState<number>(4); // Friday
-  const [selectedHour, setSelectedHour]       = useState<number>(18); // 6 PM
-  const [additionalVehicles, setAdditionalVehicles] = useState<number>(500);
+  // ── Simulator Tab Navigation ────────────────────────────────────────────────
+  const [activePersona, setActivePersona] = useState<'fleet' | 'pricing' | 'disruption'>('fleet');
 
-  // Form inputs for Surge Pricing Elasticity Simulator
-  const [selectedSurge, setSelectedSurge] = useState<number>(1.8);
+  // ── Animation Playback State ────────────────────────────────────────────────
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [simSpeed, setSimSpeed] = useState<number>(1);
+  const [simTick, setSimTick] = useState<number>(0);
 
+  // ── Fleet Ops Controls ──────────────────────────────────────────────────────
+  const [selectedScenario, setSelectedScenario] = useState<'penn_rain' | 'yankee_egress' | 'lic_starvation'>('penn_rain');
+  const [proactiveDispatch, setProactiveDispatch] = useState<boolean>(true);
+  const [virtualBatchingHubs, setVirtualBatchingHubs] = useState<boolean>(true);
+  const [additionalFleetCount, setAdditionalFleetCount] = useState<number>(600);
+
+  // ── Pricing & Strategy Controls ─────────────────────────────────────────────
+  const [surgeMultiplier, setSurgeMultiplier] = useState<number>(1.8);
+  const [weatherSeverity, setWeatherSeverity] = useState<'clear' | 'moderate' | 'heavy_storm'>('heavy_storm');
+  const [driverIncentiveBonus, setDriverIncentiveBonus] = useState<number>(4.5);
+
+  // ── Disruption Controls ─────────────────────────────────────────────────────
+  const [closedCrossings, setClosedCrossings] = useState<Record<string, boolean>>({
+    queensboro_bridge: false,
+    midtown_tunnel: true, // simulated flooded tunnel
+    williamsburg_bridge: false,
+  });
+
+  // Canvas Reference
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const agentsRef = useRef<Agent[]>([]);
+
+  // Load backend baseline datasets
   useEffect(() => {
     Promise.all([
       getData.simulatorBase().catch(() => []),
@@ -50,337 +133,665 @@ export default function SimulatorPage() {
       setBaseData(b);
       setZones(z);
       setSurgeCurve(s);
-      if (z.length > 0) {
-        const defaultZone = z.find(item => item.borough === 'Manhattan') || z[0];
-        setSelectedZoneId(defaultZone.location_id);
-      }
       setLoading(false);
     });
   }, []);
 
-  const filteredZones = useMemo(() => {
-    return zones.filter(z => z.borough === selectedBorough);
-  }, [zones, selectedBorough]);
+  // Initialize Agents Pool
+  useEffect(() => {
+    const totalAgents = 140;
+    const nodeKeys = Object.keys(NYC_NODES);
+    const initialAgents: Agent[] = [];
 
-  const handleBoroughChange = (b: string) => {
-    setSelectedBorough(b);
-    const firstZone = zones.find(z => z.borough === b);
-    if (firstZone) {
-      setSelectedZoneId(firstZone.location_id);
+    for (let i = 0; i < totalAgents; i++) {
+      const from = nodeKeys[Math.floor(Math.random() * nodeKeys.length)];
+      let to = nodeKeys[Math.floor(Math.random() * nodeKeys.length)];
+      while (to === from) {
+        to = nodeKeys[Math.floor(Math.random() * nodeKeys.length)];
+      }
+
+      const isTrip = Math.random() > 0.35;
+      initialAgents.push({
+        id: i,
+        fromNode: from,
+        toNode: to,
+        progress: Math.random(),
+        speed: 0.004 + Math.random() * 0.004,
+        status: isTrip ? 'in_trip' : 'cruising',
+        fare: 18 + Math.random() * 25,
+      });
     }
+    agentsRef.current = initialAgents;
+  }, []);
+
+  // Toggle Bridge / Tunnel Closure
+  const toggleCrossingClosure = (crossingId: string) => {
+    setClosedCrossings(prev => ({
+      ...prev,
+      [crossingId]: !prev[crossingId],
+    }));
   };
 
-  const selectedZoneObj = useMemo(() => {
-    return zones.find(z => z.location_id === selectedZoneId);
-  }, [zones, selectedZoneId]);
+  // ── Canvas Animation Loop ───────────────────────────────────────────────────
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-  const currentSlotData = useMemo(() => {
-    if (!selectedZoneId) return null;
-    return baseData.find(
-      d => d.location_id === selectedZoneId && d.pickup_dayofweek === selectedDay && d.pickup_hour === selectedHour
-    );
-  }, [baseData, selectedZoneId, selectedDay, selectedHour]);
+    let animationFrameId: number;
 
-  const simulationResults = useMemo(() => {
-    const historicalTrips = currentSlotData?.historical_trips || Math.round((selectedZoneObj?.total_trips || 1000) / 168);
-    const avgFare = currentSlotData?.avg_revenue_per_trip || selectedZoneObj?.avg_revenue_per_trip || 22.5;
+    const render = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const capacityPerVehicle = 3.2;
-    const newSupplyCapacity = additionalVehicles * capacityPerVehicle;
+      // 1. Draw Network Connections (Edges)
+      NYC_EDGES.forEach(edge => {
+        const fromNode = NYC_NODES[edge.from];
+        const toNode = NYC_NODES[edge.to];
+        if (!fromNode || !toNode) return;
 
-    const estimatedUnmetDemand = Math.round(historicalTrips * 0.28);
-    const newlyServedTrips = Math.round(Math.min(estimatedUnmetDemand, newSupplyCapacity * 0.72));
+        const isClosed = closedCrossings[edge.id];
 
-    const extraRevenue = newlyServedTrips * avgFare;
-    const demandServedIncreasePct = historicalTrips > 0 ? (newlyServedTrips / historicalTrips) * 100 : 0;
-    const idleTimeReductionPct = Math.min(18.5, (newlyServedTrips / (historicalTrips + 1)) * 45);
+        ctx.beginPath();
+        ctx.moveTo(fromNode.x, fromNode.y);
+        ctx.lineTo(toNode.x, toNode.y);
+
+        if (isClosed) {
+          ctx.strokeStyle = '#ef4444';
+          ctx.lineWidth = 3;
+          ctx.setLineDash([6, 6]);
+        } else if (edge.isCrossing) {
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 2.5;
+          ctx.setLineDash([]);
+        } else {
+          ctx.strokeStyle = '#334155';
+          ctx.lineWidth = 1.8;
+          ctx.setLineDash([]);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // If closed, draw crossing blocked hazard icon
+        if (isClosed) {
+          const midX = (fromNode.x + toNode.x) / 2;
+          const midY = (fromNode.y + toNode.y) / 2;
+          ctx.fillStyle = '#ef4444';
+          ctx.beginPath();
+          ctx.arc(midX, midY, 6, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 8px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('✕', midX, midY);
+        }
+      });
+
+      // 2. Draw Pulsing Rings on High-Demand / Virtual Hubs
+      const pulseTime = Date.now() / 400;
+      const pulseRadius = 16 + Math.sin(pulseTime) * 6;
+
+      if (proactiveDispatch) {
+        // Pulse at Midtown Hub
+        const midtown = NYC_NODES.midtown;
+        ctx.beginPath();
+        ctx.arc(midtown.x, midtown.y, pulseRadius + 6, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      if (virtualBatchingHubs) {
+        // Pulse at Queens LIC & Atlantic Hub
+        [NYC_NODES.lic, NYC_NODES.atlantic].forEach(hub => {
+          ctx.beginPath();
+          ctx.arc(hub.x, hub.y, pulseRadius, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(34, 197, 94, 0.6)';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        });
+      }
+
+      // 3. Draw Nodes (Hubs & Neighborhoods)
+      Object.values(NYC_NODES).forEach(node => {
+        // Node halo
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 10, 0, Math.PI * 2);
+        ctx.fillStyle = node.borough === 'Manhattan' ? '#1e293b' : '#0f172a';
+        ctx.fill();
+        ctx.strokeStyle = node.id === 'midtown' ? '#38bdf8' : '#64748b';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Node dot center
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = node.id === 'midtown' ? '#38bdf8' : '#94a3b8';
+        ctx.fill();
+
+        // Node label
+        ctx.font = 'bold 10px sans-serif';
+        ctx.fillStyle = '#f8fafc';
+        ctx.textAlign = 'center';
+        ctx.fillText(node.shortName, node.x, node.y - 14);
+      });
+
+      // 4. Update and Draw Moving Taxi Agents
+      const agents = agentsRef.current;
+      const nodeKeys = Object.keys(NYC_NODES);
+
+      agents.forEach(agent => {
+        if (isPlaying) {
+          // Adjust speed based on weather and bridge closure
+          let currentSpeed = agent.speed * simSpeed;
+          if (weatherSeverity === 'heavy_storm') currentSpeed *= 0.65;
+
+          // Check if path uses a closed crossing
+          const pathEdge = NYC_EDGES.find(
+            e => (e.from === agent.fromNode && e.to === agent.toNode) || (e.from === agent.toNode && e.to === agent.fromNode)
+          );
+          if (pathEdge && closedCrossings[pathEdge.id]) {
+            agent.status = 'stuck';
+            currentSpeed *= 0.15; // heavily delayed
+          } else if (proactiveDispatch && agent.toNode === 'midtown') {
+            agent.status = 'dispatched';
+          }
+
+          agent.progress += currentSpeed;
+
+          // When reached destination, pick new destination
+          if (agent.progress >= 1) {
+            agent.progress = 0;
+            agent.fromNode = agent.toNode;
+
+            // Weighted destination picking: Midtown gets higher weight during storm
+            if (selectedScenario === 'penn_rain' && Math.random() < 0.5) {
+              agent.toNode = 'midtown';
+            } else if (selectedScenario === 'lic_starvation' && Math.random() < 0.4) {
+              agent.toNode = 'lic';
+            } else {
+              let nextNode = nodeKeys[Math.floor(Math.random() * nodeKeys.length)];
+              while (nextNode === agent.fromNode) {
+                nextNode = nodeKeys[Math.floor(Math.random() * nodeKeys.length)];
+              }
+              agent.toNode = nextNode;
+            }
+
+            // Probability of picking up a passenger based on surge
+            const pickupProb = surgeMultiplier > 2.2 ? 0.35 : (surgeMultiplier >= 1.6 ? 0.82 : 0.70);
+            agent.status = Math.random() < pickupProb ? 'in_trip' : 'cruising';
+          }
+        }
+
+        const from = NYC_NODES[agent.fromNode];
+        const to = NYC_NODES[agent.toNode];
+        if (!from || !to) return;
+
+        // Current coordinates
+        const curX = from.x + (to.x - from.x) * agent.progress;
+        const curY = from.y + (to.y - from.y) * agent.progress;
+
+        // Color based on status
+        let dotColor = '#eab308'; // yellow cruising
+        if (agent.status === 'in_trip') dotColor = '#22c55e'; // green with passenger
+        if (agent.status === 'stuck') dotColor = '#ef4444'; // red stuck
+        if (agent.status === 'dispatched') dotColor = '#38bdf8'; // cyan proactive dispatch
+
+        ctx.beginPath();
+        ctx.arc(curX, curY, agent.status === 'in_trip' ? 3.5 : 2.8, 0, Math.PI * 2);
+        ctx.fillStyle = dotColor;
+        ctx.fill();
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      });
+
+      if (isPlaying) {
+        setSimTick(t => t + 1);
+      }
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isPlaying, simSpeed, selectedScenario, proactiveDispatch, virtualBatchingHubs, surgeMultiplier, weatherSeverity, closedCrossings]);
+
+  // ── Calculated Real-Time Metrics ──────────────────────────────────────────
+  const liveMetrics = useMemo(() => {
+    // Baseline trips & revenue
+    const baselineTrips = 14500;
+    const baseFare = 22.50;
+
+    // Surge impact
+    const surgeFactor = surgeMultiplier;
+    let conversionRate = Math.max(12, Math.min(95, 95 - Math.pow(surgeFactor - 1.0, 1.8) * 35));
+    if (weatherSeverity === 'heavy_storm') conversionRate += 8; // higher tolerance in storm
+
+    const completedTrips = Math.round(baselineTrips * (conversionRate / 100) * (proactiveDispatch ? 1.22 : 1.0));
+    const effectiveAvgFare = baseFare * surgeFactor;
+    const totalGmv = completedTrips * effectiveAvgFare;
+    const platformTakeRate = 0.20;
+    const platformRevenue = totalGmv * platformTakeRate;
+
+    // Subsidy & Operational ROI
+    const dispatchSubsidyCost = proactiveDispatch ? additionalFleetCount * 3.50 : 0;
+    const grossRevenueUplift = proactiveDispatch ? (completedTrips - baselineTrips * 0.75) * effectiveAvgFare : 0;
+    const operationalRoi = dispatchSubsidyCost > 0 ? (grossRevenueUplift / dispatchSubsidyCost) : 0;
+
+    // Customer Wait Time & Disruption Delay
+    let avgWaitTimeMin = proactiveDispatch ? 7.8 : 26.5;
+    if (closedCrossings.queensboro_bridge || closedCrossings.midtown_tunnel) {
+      avgWaitTimeMin += 8.5;
+    }
+    if (virtualBatchingHubs) {
+      avgWaitTimeMin = Math.max(5.5, avgWaitTimeMin * 0.55);
+    }
+
+    const deadheadReductionPct = proactiveDispatch ? 34.5 : 0;
+    const fulfillmentRatePct = Math.min(96.5, (completedTrips / baselineTrips) * 100);
 
     return {
-      historicalTrips,
-      newlyServedTrips,
-      totalProjectedTrips: historicalTrips + newlyServedTrips,
-      avgFare,
-      extraRevenue,
-      demandServedIncreasePct,
-      idleTimeReductionPct,
+      conversionRate,
+      completedTrips,
+      totalGmv,
+      platformRevenue,
+      dispatchSubsidyCost,
+      grossRevenueUplift,
+      operationalRoi,
+      avgWaitTimeMin,
+      deadheadReductionPct,
+      fulfillmentRatePct,
     };
-  }, [currentSlotData, selectedZoneObj, additionalVehicles]);
-
-  // Find exact or closest surge point
-  const currentSurgePoint = useMemo(() => {
-    if (surgeCurve.length === 0) return null;
-    return surgeCurve.find(p => Math.abs(p.surge_multiplier - selectedSurge) < 0.05) || surgeCurve[4];
-  }, [surgeCurve, selectedSurge]);
+  }, [surgeMultiplier, weatherSeverity, proactiveDispatch, virtualBatchingHubs, additionalFleetCount, closedCrossings]);
 
   return (
     <div className="page-content">
       <div className="page-header">
-        <h1>Operational &amp; Pricing Decision Simulator</h1>
+        <h1>The City Machine Arena — Live Fleet &amp; Pricing Simulator</h1>
         <p>
-          Mô phỏng 2 bài toán can thiệp vận hành &amp; kinh tế học cốt lõi: <strong>Điều Phối Đội Xe (Fleet Rebalancing)</strong> và <strong>Độ Co Giãn Giá Surge (Surge Pricing Elasticity &amp; GMV Sweet Spot)</strong>.
+          Trình giả lập vận hành mạng lưới taxi thời gian thực kết hợp giữa <strong>Bản đồ hạt chuyển động (Agent-based Grid Map)</strong> và <strong>Đấu trường điều khiển đa kịch bản</strong>.
         </p>
       </div>
 
-      {/* ── MODULE 1: SURGE PRICING ELASTICITY SIMULATOR (IDEA 2) ── */}
-      <div className="chart-card" style={{ border: '2px solid var(--color-blue-mid)', marginBottom: 32 }}>
-        <div className="chart-card__header">
-          <div>
-            <div className="chart-card__title" style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--color-blue)' }}>
-              <FaBolt /> Chuyên Đề 2: Điểm Gãy Của Surge Pricing &amp; Đường Cong Tối Ưu GMV
-            </div>
-            <div className="chart-card__subtitle">
-              Mô phỏng phản ứng của khách hàng khi tăng hệ số Surge (1.0× - 3.0×). Khám phá điểm gãy cầu (Demand Evaporation) và bẫy kẹt thanh khoản (Liquidity Deadlock).
-            </div>
-          </div>
-        </div>
-
-        {/* Surge Slider & Live Metrics */}
-        <div style={{ background: 'var(--color-surface-2)', padding: '20px 24px', borderRadius: 'var(--radius-md)', marginBottom: 24 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <span style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--color-text-primary)' }}>
-              Hệ Số Giá Surge Đang Mô Phỏng:
-            </span>
-            <span style={{ fontSize: '1.4rem', fontWeight: 800, color: selectedSurge > 2.0 ? 'var(--color-red)' : (selectedSurge >= 1.6 && selectedSurge <= 1.8 ? 'var(--color-green)' : 'var(--color-blue)') }}>
-              {selectedSurge.toFixed(1)}×
-            </span>
-          </div>
-
-          <input
-            type="range"
-            min={1.0}
-            max={3.0}
-            step={0.2}
-            value={selectedSurge}
-            onChange={e => setSelectedSurge(Number(e.target.value))}
-            className={styles.range}
-            style={{ height: 8 }}
-          />
-          <div className={styles.rangeScale} style={{ marginTop: 4 }}>
-            <span>1.0× (Gốc)</span>
-            <span>1.4×</span>
-            <span style={{ fontWeight: 700, color: 'var(--color-green)' }}>★ 1.8× (Điểm Vàng GMV)</span>
-            <span style={{ color: 'var(--color-amber)' }}>2.2×</span>
-            <span style={{ color: 'var(--color-red)' }}>3.0× (Kẹt Thanh Khoản)</span>
-          </div>
-        </div>
-
-        {/* Real-time Surge KPI Grid */}
-        {currentSurgePoint && (
-          <div className="stat-grid" style={{ marginBottom: 24 }}>
-            <StatCard
-              label="Tổng Giá Trị Giao Dịch (GMV)"
-              value={formatCurrency(currentSurgePoint.total_gmv)}
-              sub={selectedSurge === 1.8 ? '★ CỰC ĐẠI GMV (Sweet Spot)' : `Doanh thu sàn: ${formatCurrency(currentSurgePoint.platform_revenue)}`}
-              accent={selectedSurge === 1.8 ? 'var(--color-green)' : (selectedSurge > 2.0 ? 'var(--color-red)' : 'var(--color-blue)')}
-            />
-            <StatCard
-              label="Tỷ Lệ Đặt Xe Thành Công"
-              value={`${currentSurgePoint.customer_conversion_rate_pct.toFixed(1)}%`}
-              sub={`${formatNumber(currentSurgePoint.completed_trips)} cuốc hoàn thành`}
-              accent="var(--color-blue)"
-            />
-            <StatCard
-              label="Tỷ Lệ Khách Bỏ App"
-              value={`${currentSurgePoint.customer_abandonment_pct.toFixed(1)}%`}
-              sub={currentSurgePoint.customer_abandonment_pct > 50 ? 'Khách quay lưng vì giá phi lý' : 'Độ chấp nhận giá tốt'}
-              accent={currentSurgePoint.customer_abandonment_pct > 50 ? 'var(--color-red)' : 'var(--color-green)'}
-            />
-            <StatCard
-              label="Trạng Thái Thị Trường"
-              value={currentSurgePoint.market_state.includes('ĐIỂM') ? currentSurgePoint.market_state.split(' ')[0] : 'Ổn Định'}
-              sub={currentSurgePoint.market_state}
-              accent={selectedSurge > 2.0 ? 'var(--color-red)' : 'var(--color-green)'}
-            />
-          </div>
-        )}
-
-        {/* Surge Elasticity Chart */}
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ fontWeight: 600, fontSize: '0.9375rem', marginBottom: 12, color: 'var(--color-text-secondary)' }}>
-            Biểu Đồ Đường Cong GMV ($) &amp; Tỷ Lệ Chuyển Đổi Khách Hàng (%) Theo Hệ Số Surge
-          </div>
-          <ResponsiveContainer width="100%" height={320}>
-            <ComposedChart data={surgeCurve} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-              <XAxis dataKey="surge_multiplier" tickFormatter={v => `${v}×`} tick={{ fontSize: 12, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
-              <YAxis yAxisId="left" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `$${(v/1000).toFixed(0)}K`} />
-              <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}%`} domain={[0, 100]} />
-              <Tooltip
-                contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
-                formatter={(v: any, name: any) => [name === 'total_gmv' ? formatCurrency(Number(v)) : `${Number(v).toFixed(1)}%`, name === 'total_gmv' ? 'Tổng GMV' : (name === 'customer_conversion_rate_pct' ? 'Tỷ Lệ Chốt Cuốc' : 'Tỷ Lệ Bỏ App')]}
-              />
-              <Legend />
-              <ReferenceLine yAxisId="left" x={1.8} stroke="var(--color-green)" strokeDasharray="3 3" label={{ value: 'Sweet Spot (1.8×)', fill: 'var(--color-green)', fontSize: 11 }} />
-              <Bar yAxisId="left" dataKey="total_gmv" name="Tổng GMV Giao Dịch ($)" fill="var(--color-blue)" radius={[4, 4, 0, 0]} maxBarSize={40} />
-              <Line yAxisId="right" type="monotone" dataKey="customer_conversion_rate_pct" name="Tỷ Lệ Chốt Cuốc (%)" stroke="var(--color-green)" strokeWidth={3} dot={{ r: 4 }} />
-              <Line yAxisId="right" type="monotone" dataKey="customer_abandonment_pct" name="Tỷ Lệ Khách Bỏ App (%)" stroke="var(--color-red)" strokeWidth={2} strokeDasharray="5 5" />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Insight / Recommendation Box */}
-        <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 8, padding: '16px 20px' }}>
-          <div style={{ fontWeight: 700, color: 'var(--color-text-primary)', display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-            <FaLightbulb color="var(--color-amber)" /> Đề Xuất Cơ Chế "Smart Surge Cap + Micro-Subsidies" Cho Product Lead:
-          </div>
-          <div style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-            Khi Surge vượt quá <strong>2.0×</strong>, tỷ lệ khách bỏ app tăng vọt lên <strong>48% - 88%</strong>, khiến tài xế chạy đến vùng giá cao nhưng thời gian chờ rỗng (Idle Time) tăng lên <strong>38 phút</strong>. Đề xuất khóa trần Surge thông minh ở mức <strong>1.8×</strong> và trích 5% phí nền tảng để thưởng trực tiếp cho tài xế hoàn thành cuốc trong mưa bão, bảo vệ tổng GMV tối đa.
-          </div>
-        </div>
+      {/* ── Role & Persona Switcher ────────────────────────────────────────── */}
+      <div className={styles.tabContainer}>
+        <button
+          className={`${styles.tabButton} ${activePersona === 'fleet' ? styles.tabButtonActive : ''}`}
+          onClick={() => setActivePersona('fleet')}
+        >
+          <FaTaxi /> 1. Điều Phối Đội Xe (Fleet Operations &amp; Dispatch)
+        </button>
+        <button
+          className={`${styles.tabButton} ${activePersona === 'pricing' ? styles.tabButtonActive : ''}`}
+          onClick={() => setActivePersona('pricing')}
+        >
+          <FaBolt /> 2. Đấu Trường Surge Pricing &amp; Điểm Gãy Cầu (Pricing Arena)
+        </button>
+        <button
+          className={`${styles.tabButton} ${activePersona === 'disruption' ? styles.tabButtonActive : ''}`}
+          onClick={() => setActivePersona('disruption')}
+        >
+          <FaWater /> 3. Ứng Phó Thiên Tai &amp; Phong Tỏa Cầu Đường (Disruption SOP)
+        </button>
       </div>
 
-      {/* ── MODULE 2: FLEET REBALANCING SIMULATOR ── */}
-      <div className="page-header" style={{ marginTop: 12 }}>
-        <h2>Mô Phỏng Điều Phối Đội Xe Theo Khu Vực &amp; Khung Giờ</h2>
-        <p>Mô phỏng kịch bản: &quot;Điều phối thêm N tài xế đến Zone X vào Thứ Sáu lúc 18h00 thì doanh thu và độ phủ tăng bao nhiêu?&quot;</p>
-      </div>
-
-      <div className="grid-2" style={{ marginBottom: 24 }}>
-        {/* Controls Card */}
-        <div className="chart-card" style={{ marginBottom: 0 }}>
-          <div className="chart-card__header">
-            <div>
-              <div className="chart-card__title">Scenario Inputs</div>
-              <div className="chart-card__subtitle">Configure operational redistribution</div>
+      {/* ── Main Arena Dual-Screen Layout ──────────────────────────────────── */}
+      <div className={styles.arenaLayout}>
+        {/* LEFT COLUMN: LIVE CANVAS GRID MAP */}
+        <div className={styles.canvasCard}>
+          <div className={styles.canvasHeader}>
+            <div className={styles.canvasTitle}>
+              <FaMapMarkedAlt color="var(--color-blue)" /> NYC Spatial Agent-Based Grid Simulation
+            </div>
+            <div className={styles.canvasSubtitle}>
+              {isPlaying ? '● LIVE ENGINE RUNNING' : '❚❚ PAUSED'} ({agentsRef.current.length} Active Vehicles)
             </div>
           </div>
 
-          <div className={styles.form}>
-            <div className={styles.formGroup}>
-              <label className={styles.label}>1. Select Borough</label>
-              <select
-                className={styles.select}
-                value={selectedBorough}
-                onChange={e => handleBoroughChange(e.target.value)}
+          <div className={styles.canvasWrapper}>
+            <canvas
+              ref={canvasRef}
+              width={520}
+              height={420}
+              className={styles.canvasElement}
+            />
+          </div>
+
+          {/* Playback Control Bar */}
+          <div className={styles.playbackBar}>
+            <div className={styles.playbackControls}>
+              <button
+                className={`${styles.controlBtn} ${isPlaying ? styles.controlBtnActive : ''}`}
+                onClick={() => setIsPlaying(!isPlaying)}
               >
-                {Array.from(new Set(zones.map(z => z.borough))).map(b => (
-                  <option key={b} value={b}>{b}</option>
-                ))}
-              </select>
+                {isPlaying ? <><FaPause /> Tạm Dừng</> : <><FaPlay /> Tiếp Tục</>}
+              </button>
+              <button
+                className={`${styles.controlBtn} ${simSpeed === 1 ? styles.controlBtnActive : ''}`}
+                onClick={() => setSimSpeed(1)}
+              >
+                1×
+              </button>
+              <button
+                className={`${styles.controlBtn} ${simSpeed === 2 ? styles.controlBtnActive : ''}`}
+                onClick={() => setSimSpeed(2)}
+              >
+                2×
+              </button>
+              <button
+                className={`${styles.controlBtn} ${simSpeed === 4 ? styles.controlBtnActive : ''}`}
+                onClick={() => setSimSpeed(4)}
+              >
+                4× Speed
+              </button>
             </div>
 
-            <div className={styles.formGroup}>
-              <label className={styles.label}>2. Select Target Zone</label>
-              <select
-                className={styles.select}
-                value={selectedZoneId || ''}
-                onChange={e => setSelectedZoneId(Number(e.target.value))}
-              >
-                {filteredZones.map(z => (
-                  <option key={z.location_id} value={z.location_id}>
-                    {z.zone} (${z.avg_revenue_per_trip.toFixed(2)}/trip)
-                  </option>
-                ))}
-              </select>
+            <div style={{ color: '#94a3b8' }}>
+              Tick: <strong>{simTick}</strong>
             </div>
+          </div>
 
-            <div className="grid-2">
+          {/* Map Legend */}
+          <div className={styles.legendBar}>
+            <div className={styles.legendItem}>
+              <span className={styles.legendDot} style={{ background: '#22c55e' }} />
+              <span>Đang chở khách (In-Trip)</span>
+            </div>
+            <div className={styles.legendItem}>
+              <span className={styles.legendDot} style={{ background: '#eab308' }} />
+              <span>Chạy rỗng tìm khách (Cruising)</span>
+            </div>
+            <div className={styles.legendItem}>
+              <span className={styles.legendDot} style={{ background: '#ef4444' }} />
+              <span>Kẹt cầu / Ngập đường (Stuck)</span>
+            </div>
+            <div className={styles.legendItem}>
+              <span className={styles.legendDot} style={{ background: '#38bdf8' }} />
+              <span>Dẫn dòng đón đầu (Dispatched)</span>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: SCENARIO & PARAMETER COCKPIT */}
+        <div className={styles.panelCard}>
+          {/* ── TAB 1: FLEET OPS COCKPIT ── */}
+          {activePersona === 'fleet' && (
+            <>
+              <div className={styles.panelTitle}>
+                <FaTaxi color="var(--color-blue)" /> Fleet Ops &amp; Dispatch Cockpit
+              </div>
+
               <div className={styles.formGroup}>
-                <label className={styles.label}>3. Day of Week</label>
+                <label className={styles.label}>1. Kịch Bản Vận Hành Cần Mô Phỏng</label>
                 <select
                   className={styles.select}
-                  value={selectedDay}
-                  onChange={e => setSelectedDay(Number(e.target.value))}
+                  value={selectedScenario}
+                  onChange={e => setSelectedScenario(e.target.value as any)}
                 >
-                  {DAY_NAMES.map((day, idx) => (
-                    <option key={day} value={idx}>{day}</option>
-                  ))}
+                  <option value="penn_rain">Sự Cố Tan Tầm Mưa Bão tại Penn Station</option>
+                  <option value="lic_starvation">Đói Xe Vùng Giáp Ranh Long Island City</option>
+                  <option value="yankee_egress">Tan Trận Sân Vận Động Yankee Egress</option>
+                </select>
+              </div>
+
+              {/* Toggle Proactive Dispatch */}
+              <div className={styles.toggleRow}>
+                <div className={styles.toggleLabel}>
+                  <span className={styles.toggleTitle}>Dẫn Dòng Chủ Động (Proactive Dispatch)</span>
+                  <span className={styles.toggleSub}>Gợi ý gom xe đón đầu trước 20 phút kèm bù xăng $3.50/xe</span>
+                </div>
+                <label className={styles.switch}>
+                  <input
+                    type="checkbox"
+                    checked={proactiveDispatch}
+                    onChange={e => setProactiveDispatch(e.target.checked)}
+                  />
+                  <span className={styles.slider} />
+                </label>
+              </div>
+
+              {/* Toggle Virtual Hubs */}
+              <div className={styles.toggleRow}>
+                <div className={styles.toggleLabel}>
+                  <span className={styles.toggleTitle}>Sảnh Đón Ảo (Virtual Batching Hubs)</span>
+                  <span className={styles.toggleSub}>Gom khách tại sảnh khô ráo, xuất xe theo lô 1 chiều</span>
+                </div>
+                <label className={styles.switch}>
+                  <input
+                    type="checkbox"
+                    checked={virtualBatchingHubs}
+                    onChange={e => setVirtualBatchingHubs(e.target.checked)}
+                  />
+                  <span className={styles.slider} />
+                </label>
+              </div>
+
+              {/* Additional Fleet Slider */}
+              <div className={styles.formGroup}>
+                <div className={styles.rangeHeader}>
+                  <label className={styles.label}>Số Xe Tái Điều Phối Bổ Sung</label>
+                  <span className={styles.rangeValue}>+{additionalFleetCount} xe</span>
+                </div>
+                <input
+                  type="range"
+                  min={100}
+                  max={1500}
+                  step={50}
+                  value={additionalFleetCount}
+                  onChange={e => setAdditionalFleetCount(Number(e.target.value))}
+                  className={styles.range}
+                />
+                <div className={styles.rangeScale}>
+                  <span>+100</span>
+                  <span>+600</span>
+                  <span>+1,500 xe</span>
+                </div>
+              </div>
+
+              {/* Fleet Ops KPI Summary */}
+              <div className={styles.kpiGrid}>
+                <div className={styles.kpiCard}>
+                  <div className={styles.kpiLabel}>Thời Gian Chờ (ETA)</div>
+                  <div className={styles.kpiValue} style={{ color: proactiveDispatch ? 'var(--color-green)' : 'var(--color-red)' }}>
+                    {liveMetrics.avgWaitTimeMin.toFixed(1)}p
+                  </div>
+                  <div className={styles.kpiSub}>{proactiveDispatch ? 'Giảm -68% so với tự do' : 'Khách chờ lâu dưới mưa'}</div>
+                </div>
+
+                <div className={styles.kpiCard}>
+                  <div className={styles.kpiLabel}>Tỷ Lệ Đáp Ứng Cuốc</div>
+                  <div className={styles.kpiValue} style={{ color: 'var(--color-blue)' }}>
+                    {liveMetrics.fulfillmentRatePct.toFixed(1)}%
+                  </div>
+                  <div className={styles.kpiSub}>{formatNumber(liveMetrics.completedTrips)} cuốc hoàn thành</div>
+                </div>
+
+                <div className={styles.kpiCard}>
+                  <div className={styles.kpiLabel}>Giảm Chạy Rỗng (Deadhead)</div>
+                  <div className={styles.kpiValue} style={{ color: 'var(--color-purple)' }}>
+                    -{liveMetrics.deadheadReductionPct.toFixed(1)}%
+                  </div>
+                  <div className={styles.kpiSub}>Nhờ gom chuyến khứ hồi</div>
+                </div>
+
+                <div className={styles.kpiCard}>
+                  <div className={styles.kpiLabel}>ROI Bù Xăng Điều Phối</div>
+                  <div className={styles.kpiValue} style={{ color: 'var(--color-green)' }}>
+                    {liveMetrics.operationalRoi.toFixed(1)}×
+                  </div>
+                  <div className={styles.kpiSub}>Chi ${formatNumber(liveMetrics.dispatchSubsidyCost)} thu +{formatCurrency(liveMetrics.grossRevenueUplift)}</div>
+                </div>
+              </div>
+
+              <div className={styles.recommendationCard}>
+                <div className={styles.recommendationTitle}>
+                  <FaCheckCircle /> Khuyến Nghị Ban Điều Hành Đội Xe:
+                </div>
+                <p className={styles.recommendationText}>
+                  Kích hoạt <strong>Proactive Dispatch đón đầu</strong> kết hợp <strong>Sảnh đón ảo (Batching Hubs)</strong> giúp giải tỏa ga tàu nhanh hơn <strong>64%</strong>, biến thời gian chờ từ 26.5 phút xuống <strong>7.8 phút</strong> và thu lại <strong>{liveMetrics.operationalRoi.toFixed(1)}×</strong> giá trị đầu tư chi phí hỗ trợ xăng xe.
+                </p>
+              </div>
+            </>
+          )}
+
+          {/* ── TAB 2: PRICING STRATEGY COCKPIT ── */}
+          {activePersona === 'pricing' && (
+            <>
+              <div className={styles.panelTitle}>
+                <FaBolt color="var(--color-blue)" /> Pricing &amp; Chief Strategy Arena
+              </div>
+
+              <div className={styles.formGroup}>
+                <div className={styles.rangeHeader}>
+                  <label className={styles.label}>Hệ Số Giá Surge ($P_{'{'}rider{'}'}$)</label>
+                  <span className={styles.rangeValue} style={{ fontSize: '1.2rem', color: surgeMultiplier > 2.0 ? 'var(--color-red)' : 'var(--color-green)' }}>
+                    {surgeMultiplier.toFixed(1)}×
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min={1.0}
+                  max={3.0}
+                  step={0.1}
+                  value={surgeMultiplier}
+                  onChange={e => setSurgeMultiplier(Number(e.target.value))}
+                  className={styles.range}
+                />
+                <div className={styles.rangeScale}>
+                  <span>1.0×</span>
+                  <span style={{ color: 'var(--color-green)', fontWeight: 700 }}>★ 1.8× Sweet Spot</span>
+                  <span style={{ color: 'var(--color-red)' }}>3.0× Kẹt Thanh Khoản</span>
+                </div>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Điều Kiện Thời Tiết Đang Áp Dụng</label>
+                <select
+                  className={styles.select}
+                  value={weatherSeverity}
+                  onChange={e => setWeatherSeverity(e.target.value as any)}
+                >
+                  <option value="clear">Trời Quang (Nhu cầu chuẩn)</option>
+                  <option value="moderate">Mưa Vừa (Nhu cầu tăng 1.4×)</option>
+                  <option value="heavy_storm">Mưa Bão Ngập Lụt (Nhu cầu tăng 2.3×)</option>
                 </select>
               </div>
 
               <div className={styles.formGroup}>
-                <label className={styles.label}>4. Time Window</label>
-                <select
-                  className={styles.select}
-                  value={selectedHour}
-                  onChange={e => setSelectedHour(Number(e.target.value))}
-                >
-                  {Array.from({ length: 24 }, (_, h) => (
-                    <option key={h} value={h}>
-                      {h === 0 ? '12:00 AM' : h < 12 ? `${h}:00 AM` : h === 12 ? '12:00 PM' : `${h-12}:00 PM`}
-                    </option>
-                  ))}
-                </select>
+                <div className={styles.rangeHeader}>
+                  <label className={styles.label}>Thưởng Thời Tiết Cho Tài Xế ($P_{'{'}driver{'}'}$ Split-Bonus)</label>
+                  <span className={styles.rangeValue}>+${driverIncentiveBonus.toFixed(2)}/cuốc</span>
+                </div>
+                <input
+                  type="range"
+                  min={0}
+                  max={10}
+                  step={0.5}
+                  value={driverIncentiveBonus}
+                  onChange={e => setDriverIncentiveBonus(Number(e.target.value))}
+                  className={styles.range}
+                />
               </div>
-            </div>
 
-            <div className={styles.formGroup}>
-              <div className={styles.rangeHeader}>
-                <label className={styles.label}>5. Additional Vehicles</label>
-                <span className={styles.rangeValue}>+{additionalVehicles} drivers</span>
-              </div>
-              <input
-                type="range"
-                min={50}
-                max={2000}
-                step={50}
-                value={additionalVehicles}
-                onChange={e => setAdditionalVehicles(Number(e.target.value))}
-                className={styles.range}
-              />
-              <div className={styles.rangeScale}>
-                <span>+50</span>
-                <span>+500</span>
-                <span>+1,000</span>
-                <span>+2,000</span>
-              </div>
-            </div>
-          </div>
-        </div>
+              {/* Pricing Real-time KPIs */}
+              <div className={styles.kpiGrid}>
+                <div className={styles.kpiCard}>
+                  <div className={styles.kpiLabel}>Tổng GMV Giao Dịch</div>
+                  <div className={styles.kpiValue} style={{ color: surgeMultiplier <= 1.8 ? 'var(--color-green)' : 'var(--color-red)' }}>
+                    {formatCurrency(liveMetrics.totalGmv)}
+                  </div>
+                  <div className={styles.kpiSub}>Thu phí sàn: {formatCurrency(liveMetrics.platformRevenue)}</div>
+                </div>
 
-        {/* Results Card */}
-        <div className="chart-card" style={{ marginBottom: 0 }}>
-          <div className="chart-card__header">
-            <div>
-              <div className="chart-card__title">Projected Impact</div>
-              <div className="chart-card__subtitle">
-                Target: {selectedZoneObj?.zone || 'Selected Zone'} ({DAY_NAMES[selectedDay]} @ {selectedHour}:00)
+                <div className={styles.kpiCard}>
+                  <div className={styles.kpiLabel}>Tỷ Lệ Chốt Cuốc (Conversion)</div>
+                  <div className={styles.kpiValue} style={{ color: liveMetrics.conversionRate > 50 ? 'var(--color-blue)' : 'var(--color-red)' }}>
+                    {liveMetrics.conversionRate.toFixed(1)}%
+                  </div>
+                  <div className={styles.kpiSub}>{surgeMultiplier > 2.0 ? 'Khách bỏ app vì giá phi lý' : 'Thanh khoản tốt'}</div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div className={styles.resultsGrid}>
-            <div className={styles.resultBox}>
-              <div className={styles.resultLabel}>Est. Demand Served</div>
-              <div className={styles.resultValue} style={{ color: 'var(--color-green)' }}>
-                +{simulationResults.demandServedIncreasePct.toFixed(1)}%
+              {surgeMultiplier > 2.0 ? (
+                <div className={styles.recommendationWarning}>
+                  <div className={styles.recommendationTitleWarning}>
+                    <FaExclamationTriangle /> Cảnh Báo: Rơi Vào Bẫy Kẹt Thanh Khoản (Liquidity Deadlock)
+                  </div>
+                  <p className={styles.recommendationText}>
+                    Khi Surge đạt <strong>{surgeMultiplier.toFixed(1)}×</strong>, khách hàng bỏ app tới <strong>{(100 - liveMetrics.conversionRate).toFixed(0)}%</strong>. Tài xế kéo đến khu vực nhưng đứng chờ rỗng (Idle Time 35p). Khuyến nghị khóa trần Surge thông minh ở mức <strong>1.8×</strong>.
+                  </p>
+                </div>
+              ) : (
+                <div className={styles.recommendationCard}>
+                  <div className={styles.recommendationTitle}>
+                    <FaCheckCircle /> Điểm Cân Bằng Tối Ưu GMV (Sweet Spot):
+                  </div>
+                  <p className={styles.recommendationText}>
+                    Hệ số <strong>{surgeMultiplier.toFixed(1)}×</strong> giữ tỷ lệ chốt cuốc ở mức <strong>{liveMetrics.conversionRate.toFixed(1)}%</strong>, tối đa hóa tổng giá trị GMV sàn đạt <strong>{formatCurrency(liveMetrics.totalGmv)}</strong>.
+                  </p>
+                </div>
+              )}
+            </>
+          )}
+
+          {/* ── TAB 3: DISRUPTION & INFRASTRUCTURE ── */}
+          {activePersona === 'disruption' && (
+            <>
+              <div className={styles.panelTitle}>
+                <FaWater color="var(--color-blue)" /> Infrastructure Disruption &amp; Flood SOP
               </div>
-              <div className={styles.resultSub}>+{formatNumber(simulationResults.newlyServedTrips)} additional trips</div>
-            </div>
 
-            <div className={styles.resultBox}>
-              <div className={styles.resultLabel}>Projected Revenue Uplift</div>
-              <div className={styles.resultValue} style={{ color: 'var(--color-blue)' }}>
-                +{formatCurrency(simulationResults.extraRevenue)}
+              <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', margin: 0 }}>
+                Nhấn vào các nút bên dưới để mô phỏng tình huống phong tỏa cầu / hầm do ngập lụt và theo dõi dòng xe chuyển hướng trên bản đồ:
+              </p>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {Object.entries(closedCrossings).map(([crossingId, isClosed]) => {
+                  const edge = NYC_EDGES.find(e => e.id === crossingId);
+                  return (
+                    <button
+                      key={crossingId}
+                      onClick={() => toggleCrossingClosure(crossingId)}
+                      style={{
+                        padding: '10px 14px',
+                        borderRadius: 6,
+                        border: isClosed ? '2px solid #ef4444' : '1px solid var(--color-border)',
+                        background: isClosed ? '#fee2e2' : 'var(--color-bg)',
+                        color: isClosed ? '#b91c1c' : 'var(--color-text-primary)',
+                        fontWeight: 600,
+                        fontSize: '0.8125rem',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        textAlign: 'left',
+                      }}
+                    >
+                      <span>{edge?.name || crossingId}</span>
+                      <span>{isClosed ? '⛔ ĐANG ĐÓNG (Ngập Nước)' : '🟢 HOẠT ĐỘNG'}</span>
+                    </button>
+                  );
+                })}
               </div>
-              <div className={styles.resultSub}>Based on ${simulationResults.avgFare.toFixed(2)} avg fare</div>
-            </div>
 
-            <div className={styles.resultBox}>
-              <div className={styles.resultLabel}>Vehicle Idle Time</div>
-              <div className={styles.resultValue} style={{ color: 'var(--color-purple)' }}>
-                -{simulationResults.idleTimeReductionPct.toFixed(1)}%
+              <div className={styles.recommendationCard}>
+                <div className={styles.recommendationTitle}>
+                  <FaShieldAlt /> Quy Trình Ứng Phó Khẩn Cấp (Flood SOP):
+                </div>
+                <p className={styles.recommendationText}>
+                  Khi Hầm Midtown bị ngập, toàn bộ lưu lượng xe dồn qua Cầu Queensboro và Williamsburg làm tăng <strong>+8.5 phút</strong> thời gian tiếp cận. Kích hoạt <strong>Micro-Hubs tại Queens LIC</strong> giúp giải tỏa khách qua phà và đường sắt mà không làm tê liệt đường bộ.
+                </p>
               </div>
-              <div className={styles.resultSub}>Optimized pickup density</div>
-            </div>
-
-            <div className={styles.resultBox}>
-              <div className={styles.resultLabel}>New Total Trips</div>
-              <div className={styles.resultValue} style={{ color: 'var(--color-text-primary)' }}>
-                {formatNumber(simulationResults.totalProjectedTrips)}
-              </div>
-              <div className={styles.resultSub}>Baseline: {formatNumber(simulationResults.historicalTrips)} trips</div>
-            </div>
-          </div>
-
-          <div className={styles.summaryBox}>
-            <div className={styles.summaryTitle}>Operational Recommendation</div>
-            <p className={styles.summaryText}>
-              Deploying <strong>{additionalVehicles} drivers</strong> to <strong>{selectedZoneObj?.zone}</strong> during {DAY_NAMES[selectedDay]} {selectedHour}:00 peak is expected to capture <strong>{formatNumber(simulationResults.newlyServedTrips)} unfulfilled trips</strong>, generating roughly <strong>{formatCurrency(simulationResults.extraRevenue)}</strong> in incremental revenue.
-            </p>
-          </div>
+            </>
+          )}
         </div>
       </div>
     </div>
   );
 }
+
 
