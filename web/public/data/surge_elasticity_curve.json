@@ -1,0 +1,110 @@
+[
+  {
+    "surge_multiplier": 1.0,
+    "customer_conversion_rate_pct": 92.5,
+    "driver_supply_count": 3200,
+    "completed_trips": 14800,
+    "avg_fare_paid": 21.5,
+    "total_gmv": 318200.0,
+    "platform_revenue": 63640.0,
+    "customer_abandonment_pct": 7.5,
+    "driver_idle_time_min": 12.5,
+    "market_state": "Cung C\u1ea7u B\u00ecnh Th\u01b0\u1eddng"
+  },
+  {
+    "surge_multiplier": 1.2,
+    "customer_conversion_rate_pct": 88.0,
+    "driver_supply_count": 3800,
+    "completed_trips": 16200,
+    "avg_fare_paid": 25.8,
+    "total_gmv": 417960.0,
+    "platform_revenue": 83592.0,
+    "customer_abandonment_pct": 12.0,
+    "driver_idle_time_min": 9.2,
+    "market_state": "Thanh Kho\u1ea3n T\u1ed1t"
+  },
+  {
+    "surge_multiplier": 1.4,
+    "customer_conversion_rate_pct": 82.5,
+    "driver_supply_count": 4400,
+    "completed_trips": 17800,
+    "avg_fare_paid": 30.1,
+    "total_gmv": 535780.0,
+    "platform_revenue": 107156.0,
+    "customer_abandonment_pct": 17.5,
+    "driver_idle_time_min": 6.8,
+    "market_state": "Thanh Kho\u1ea3n T\u0103ng Tr\u01b0\u1edfng"
+  },
+  {
+    "surge_multiplier": 1.6,
+    "customer_conversion_rate_pct": 76.0,
+    "driver_supply_count": 4900,
+    "completed_trips": 18900,
+    "avg_fare_paid": 34.4,
+    "total_gmv": 650160.0,
+    "platform_revenue": 130032.0,
+    "customer_abandonment_pct": 24.0,
+    "driver_idle_time_min": 5.2,
+    "market_state": "Ti\u1ec7m C\u1eadn \u0110i\u1ec3m T\u1ed1i \u01afu"
+  },
+  {
+    "surge_multiplier": 1.8,
+    "customer_conversion_rate_pct": 69.5,
+    "driver_supply_count": 5300,
+    "completed_trips": 19200,
+    "avg_fare_paid": 38.7,
+    "total_gmv": 743040.0,
+    "platform_revenue": 148608.0,
+    "customer_abandonment_pct": 30.5,
+    "driver_idle_time_min": 4.5,
+    "market_state": "\u0110I\u1ec2M V\u00c0NG GMV (Sweet Spot S*)"
+  },
+  {
+    "surge_multiplier": 2.0,
+    "customer_conversion_rate_pct": 52.0,
+    "driver_supply_count": 5600,
+    "completed_trips": 15600,
+    "avg_fare_paid": 43.0,
+    "total_gmv": 670800.0,
+    "platform_revenue": 134160.0,
+    "customer_abandonment_pct": 48.0,
+    "driver_idle_time_min": 8.5,
+    "market_state": "\u0110I\u1ec2M G\u00c3Y C\u1ea6U (Kh\u00e1ch B\u1eaft \u0110\u1ea7u B\u1ecf App)"
+  },
+  {
+    "surge_multiplier": 2.2,
+    "customer_conversion_rate_pct": 38.5,
+    "driver_supply_count": 5800,
+    "completed_trips": 12100,
+    "avg_fare_paid": 47.3,
+    "total_gmv": 572330.0,
+    "platform_revenue": 114466.0,
+    "customer_abandonment_pct": 61.5,
+    "driver_idle_time_min": 14.0,
+    "market_state": "S\u1ee5t Gi\u1ea3m GMV Nhanh"
+  },
+  {
+    "surge_multiplier": 2.5,
+    "customer_conversion_rate_pct": 24.0,
+    "driver_supply_count": 6100,
+    "completed_trips": 8200,
+    "avg_fare_paid": 53.75,
+    "total_gmv": 440750.0,
+    "platform_revenue": 88150.0,
+    "customer_abandonment_pct": 76.0,
+    "driver_idle_time_min": 22.5,
+    "market_state": "B\u1eaaY SURGE \u1ea2O (T\u00e0i X\u1ebf \u0110\u1ebfn Nh\u01b0ng Kh\u00f4ng C\u00f3 Kh\u00e1ch)"
+  },
+  {
+    "surge_multiplier": 3.0,
+    "customer_conversion_rate_pct": 11.5,
+    "driver_supply_count": 6400,
+    "completed_trips": 4100,
+    "avg_fare_paid": 64.5,
+    "total_gmv": 264450.0,
+    "platform_revenue": 52890.0,
+    "customer_abandonment_pct": 88.5,
+    "driver_idle_time_min": 38.0,
+    "market_state": "T\u00ca LI\u1ec6T THANH KHO\u1ea2N (Liquidity Deadlock)"
+  }
+]

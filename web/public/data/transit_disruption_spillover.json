@@ -1,0 +1,74 @@
+[
+  {
+    "hub_name": "Penn Station (34th St)",
+    "disruption_event": "A/C/E & 1/2/3 Track Flooding",
+    "subway_lines_affected": "A, C, E, 1, 2, 3",
+    "passenger_spillover_volume": 28500,
+    "baseline_taxi_pickups": 4800,
+    "surge_taxi_pickups": 11200,
+    "spillover_ratio": 2.33,
+    "unmet_demand_pct": 60.7,
+    "virtual_hub_capacity": 6500,
+    "evacuation_time_min_standard": 45.0,
+    "evacuation_time_min_batching": 16.5,
+    "efficiency_gain_pct": 63.3,
+    "recommended_virtual_hubs": [
+      "Moynihan Train Hall Plaza (33rd St)",
+      "Penn Plaza South Bay (31st St)"
+    ]
+  },
+  {
+    "hub_name": "Grand Central Terminal",
+    "disruption_event": "Flushing Line (7) & Lexington (4/5/6) Signal Delays",
+    "subway_lines_affected": "4, 5, 6, 7, S",
+    "passenger_spillover_volume": 24000,
+    "baseline_taxi_pickups": 4200,
+    "surge_taxi_pickups": 10500,
+    "spillover_ratio": 2.5,
+    "unmet_demand_pct": 56.2,
+    "virtual_hub_capacity": 5800,
+    "evacuation_time_min_standard": 42.0,
+    "evacuation_time_min_batching": 15.0,
+    "efficiency_gain_pct": 64.3,
+    "recommended_virtual_hubs": [
+      "Vanderbilt Ave Pedestrian Plaza",
+      "Pershing Square South (41st St)"
+    ]
+  },
+  {
+    "hub_name": "Union Square & Canal St Hubs",
+    "disruption_event": "Broadway Line (N/Q/R/W) Pump Failure",
+    "subway_lines_affected": "L, N, Q, R, W, 4, 5, 6",
+    "passenger_spillover_volume": 19500,
+    "baseline_taxi_pickups": 3100,
+    "surge_taxi_pickups": 7600,
+    "spillover_ratio": 2.45,
+    "unmet_demand_pct": 61.0,
+    "virtual_hub_capacity": 4200,
+    "evacuation_time_min_standard": 38.0,
+    "evacuation_time_min_batching": 13.5,
+    "efficiency_gain_pct": 64.5,
+    "recommended_virtual_hubs": [
+      "14th St Transit Mall East",
+      "Union Sq West Staging Bay"
+    ]
+  },
+  {
+    "hub_name": "Atlantic Ave / Barclays Center",
+    "disruption_event": "LIRR Terminal Stalling & B/Q Power Cut",
+    "subway_lines_affected": "B, D, N, Q, R, 2, 3, 4, 5, LIRR",
+    "passenger_spillover_volume": 16000,
+    "baseline_taxi_pickups": 1800,
+    "surge_taxi_pickups": 4900,
+    "spillover_ratio": 2.72,
+    "unmet_demand_pct": 69.4,
+    "virtual_hub_capacity": 3500,
+    "evacuation_time_min_standard": 35.0,
+    "evacuation_time_min_batching": 12.0,
+    "efficiency_gain_pct": 65.7,
+    "recommended_virtual_hubs": [
+      "Barclays Plaza Flatbush Loop",
+      "Atlantic Terminal Mall Loading Bay"
+    ]
+  }
+]

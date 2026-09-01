@@ -41,6 +41,9 @@ export const getData = {
   weatherSurgeTrap:   () => fetchJson<import('@/types').WeatherSurgeTrap[]>('weather_surge_trap.json'),
   tippingWeatherSegments: () => fetchJson<import('@/types').TippingWeatherSegment[]>('tipping_weather_segments.json'),
   transitHubBottleneck: () => fetchJson<import('@/types').TransitHubBottleneck[]>('transit_hub_bottleneck.json'),
+  transitDisruptionSpillover: () => fetchJson<import('@/types').TransitDisruptionSpillover[]>('transit_disruption_spillover.json'),
+  surgeElasticityCurve: () => fetchJson<import('@/types').SurgeElasticityPoint[]>('surge_elasticity_curve.json'),
+  boundaryZoneStarvation: () => fetchJson<import('@/types').BoundaryZoneStarvation[]>('boundary_zone_starvation.json'),
 };
 
 export const MONTH_NAMES = [

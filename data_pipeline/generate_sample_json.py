@@ -725,6 +725,272 @@ def generate_sample_data():
   with open(PUBLIC_DATA_DIR / "transit_hub_bottleneck.json", "w") as f:
     json.dump(transit_hub_bottleneck, f, indent=2)
 
+  # 24. Transit Disruption Spillover (Idea 1)
+  transit_disruption_spillover = [
+    {
+      'hub_name': 'Penn Station (34th St)',
+      'disruption_event': 'A/C/E & 1/2/3 Track Flooding',
+      'subway_lines_affected': 'A, C, E, 1, 2, 3',
+      'passenger_spillover_volume': 28500,
+      'baseline_taxi_pickups': 4800,
+      'surge_taxi_pickups': 11200,
+      'spillover_ratio': 2.33,
+      'unmet_demand_pct': 60.7,
+      'virtual_hub_capacity': 6500,
+      'evacuation_time_min_standard': 45.0,
+      'evacuation_time_min_batching': 16.5,
+      'efficiency_gain_pct': 63.3,
+      'recommended_virtual_hubs': [
+        'Moynihan Train Hall Plaza (33rd St)',
+        'Penn Plaza South Bay (31st St)'
+      ]
+    },
+    {
+      'hub_name': 'Grand Central Terminal',
+      'disruption_event': 'Flushing Line (7) & Lexington (4/5/6) Signal Delays',
+      'subway_lines_affected': '4, 5, 6, 7, S',
+      'passenger_spillover_volume': 24000,
+      'baseline_taxi_pickups': 4200,
+      'surge_taxi_pickups': 10500,
+      'spillover_ratio': 2.50,
+      'unmet_demand_pct': 56.2,
+      'virtual_hub_capacity': 5800,
+      'evacuation_time_min_standard': 42.0,
+      'evacuation_time_min_batching': 15.0,
+      'efficiency_gain_pct': 64.3,
+      'recommended_virtual_hubs': [
+        'Vanderbilt Ave Pedestrian Plaza',
+        'Pershing Square South (41st St)'
+      ]
+    },
+    {
+      'hub_name': 'Union Square & Canal St Hubs',
+      'disruption_event': 'Broadway Line (N/Q/R/W) Pump Failure',
+      'subway_lines_affected': 'L, N, Q, R, W, 4, 5, 6',
+      'passenger_spillover_volume': 19500,
+      'baseline_taxi_pickups': 3100,
+      'surge_taxi_pickups': 7600,
+      'spillover_ratio': 2.45,
+      'unmet_demand_pct': 61.0,
+      'virtual_hub_capacity': 4200,
+      'evacuation_time_min_standard': 38.0,
+      'evacuation_time_min_batching': 13.5,
+      'efficiency_gain_pct': 64.5,
+      'recommended_virtual_hubs': [
+        '14th St Transit Mall East',
+        'Union Sq West Staging Bay'
+      ]
+    },
+    {
+      'hub_name': 'Atlantic Ave / Barclays Center',
+      'disruption_event': 'LIRR Terminal Stalling & B/Q Power Cut',
+      'subway_lines_affected': 'B, D, N, Q, R, 2, 3, 4, 5, LIRR',
+      'passenger_spillover_volume': 16000,
+      'baseline_taxi_pickups': 1800,
+      'surge_taxi_pickups': 4900,
+      'spillover_ratio': 2.72,
+      'unmet_demand_pct': 69.4,
+      'virtual_hub_capacity': 3500,
+      'evacuation_time_min_standard': 35.0,
+      'evacuation_time_min_batching': 12.0,
+      'efficiency_gain_pct': 65.7,
+      'recommended_virtual_hubs': [
+        'Barclays Plaza Flatbush Loop',
+        'Atlantic Terminal Mall Loading Bay'
+      ]
+    }
+  ]
+  with open(PUBLIC_DATA_DIR / "transit_disruption_spillover.json", "w") as f:
+    json.dump(transit_disruption_spillover, f, indent=2)
+
+  # 25. Surge Elasticity Curve (Idea 2)
+  surge_elasticity_curve = [
+    {
+      'surge_multiplier': 1.0,
+      'customer_conversion_rate_pct': 92.5,
+      'driver_supply_count': 3200,
+      'completed_trips': 14800,
+      'avg_fare_paid': 21.50,
+      'total_gmv': 318200.0,
+      'platform_revenue': 63640.0,
+      'customer_abandonment_pct': 7.5,
+      'driver_idle_time_min': 12.5,
+      'market_state': 'Cung Cầu Bình Thường'
+    },
+    {
+      'surge_multiplier': 1.2,
+      'customer_conversion_rate_pct': 88.0,
+      'driver_supply_count': 3800,
+      'completed_trips': 16200,
+      'avg_fare_paid': 25.80,
+      'total_gmv': 417960.0,
+      'platform_revenue': 83592.0,
+      'customer_abandonment_pct': 12.0,
+      'driver_idle_time_min': 9.2,
+      'market_state': 'Thanh Khoản Tốt'
+    },
+    {
+      'surge_multiplier': 1.4,
+      'customer_conversion_rate_pct': 82.5,
+      'driver_supply_count': 4400,
+      'completed_trips': 17800,
+      'avg_fare_paid': 30.10,
+      'total_gmv': 535780.0,
+      'platform_revenue': 107156.0,
+      'customer_abandonment_pct': 17.5,
+      'driver_idle_time_min': 6.8,
+      'market_state': 'Thanh Khoản Tăng Trưởng'
+    },
+    {
+      'surge_multiplier': 1.6,
+      'customer_conversion_rate_pct': 76.0,
+      'driver_supply_count': 4900,
+      'completed_trips': 18900,
+      'avg_fare_paid': 34.40,
+      'total_gmv': 650160.0,
+      'platform_revenue': 130032.0,
+      'customer_abandonment_pct': 24.0,
+      'driver_idle_time_min': 5.2,
+      'market_state': 'Tiệm Cận Điểm Tối Ưu'
+    },
+    {
+      'surge_multiplier': 1.8,
+      'customer_conversion_rate_pct': 69.5,
+      'driver_supply_count': 5300,
+      'completed_trips': 19200,
+      'avg_fare_paid': 38.70,
+      'total_gmv': 743040.0,
+      'platform_revenue': 148608.0,
+      'customer_abandonment_pct': 30.5,
+      'driver_idle_time_min': 4.5,
+      'market_state': 'ĐIỂM VÀNG GMV (Sweet Spot S*)'
+    },
+    {
+      'surge_multiplier': 2.0,
+      'customer_conversion_rate_pct': 52.0,
+      'driver_supply_count': 5600,
+      'completed_trips': 15600,
+      'avg_fare_paid': 43.00,
+      'total_gmv': 670800.0,
+      'platform_revenue': 134160.0,
+      'customer_abandonment_pct': 48.0,
+      'driver_idle_time_min': 8.5,
+      'market_state': 'ĐIỂM GÃY CẦU (Khách Bắt Đầu Bỏ App)'
+    },
+    {
+      'surge_multiplier': 2.2,
+      'customer_conversion_rate_pct': 38.5,
+      'driver_supply_count': 5800,
+      'completed_trips': 12100,
+      'avg_fare_paid': 47.30,
+      'total_gmv': 572330.0,
+      'platform_revenue': 114466.0,
+      'customer_abandonment_pct': 61.5,
+      'driver_idle_time_min': 14.0,
+      'market_state': 'Sụt Giảm GMV Nhanh'
+    },
+    {
+      'surge_multiplier': 2.5,
+      'customer_conversion_rate_pct': 24.0,
+      'driver_supply_count': 6100,
+      'completed_trips': 8200,
+      'avg_fare_paid': 53.75,
+      'total_gmv': 440750.0,
+      'platform_revenue': 88150.0,
+      'customer_abandonment_pct': 76.0,
+      'driver_idle_time_min': 22.5,
+      'market_state': 'BẪY SURGE ẢO (Tài Xế Đến Nhưng Không Có Khách)'
+    },
+    {
+      'surge_multiplier': 3.0,
+      'customer_conversion_rate_pct': 11.5,
+      'driver_supply_count': 6400,
+      'completed_trips': 4100,
+      'avg_fare_paid': 64.50,
+      'total_gmv': 264450.0,
+      'platform_revenue': 52890.0,
+      'customer_abandonment_pct': 88.5,
+      'driver_idle_time_min': 38.0,
+      'market_state': 'TÊ LIỆT THANH KHOẢN (Liquidity Deadlock)'
+    }
+  ]
+  with open(PUBLIC_DATA_DIR / "surge_elasticity_curve.json", "w") as f:
+    json.dump(surge_elasticity_curve, f, indent=2)
+
+  # 26. Boundary Zone Starvation (Idea 3)
+  boundary_zone_starvation = [
+    {
+      'boundary_zone': 'Long Island City (LIC)',
+      'core_borough': 'Manhattan (Midtown East)',
+      'outer_borough': 'Queens',
+      'corridor_crossing': 'Queensboro Bridge / Midtown Tunnel',
+      'normal_wait_min': 4.2,
+      'rain_wait_min': 28.5,
+      'wait_time_multiplier': 6.79,
+      'rejection_rate_pct': 58.4,
+      'starvation_index': 3.96,
+      'inbound_trips': 14500,
+      'outbound_trips': 3200,
+      'fleet_deficit_pct': 77.9,
+      'buffer_incentive_payout': 4.50,
+      'recovery_eta_min': 8.5,
+      'recommendation': 'Ưu tiên cuốc hồi Manhattan + Thưởng $4.50/cuốc sang LIC'
+    },
+    {
+      'boundary_zone': 'Williamsburg (North/South)',
+      'core_borough': 'Manhattan (Lower East Side / East Village)',
+      'outer_borough': 'Brooklyn',
+      'corridor_crossing': 'Williamsburg Bridge',
+      'normal_wait_min': 3.8,
+      'rain_wait_min': 26.0,
+      'wait_time_multiplier': 6.84,
+      'rejection_rate_pct': 54.2,
+      'starvation_index': 3.71,
+      'inbound_trips': 16200,
+      'outbound_trips': 4100,
+      'fleet_deficit_pct': 74.7,
+      'buffer_incentive_payout': 4.00,
+      'recovery_eta_min': 7.8,
+      'recommendation': 'Xếp lốt ưu tiên đón khách quay về Manhattan tại Bedford Ave'
+    },
+    {
+      'boundary_zone': 'Greenpoint',
+      'core_borough': 'Manhattan (Midtown / East Side)',
+      'outer_borough': 'Brooklyn / Queens border',
+      'corridor_crossing': 'Pulaski Bridge / Queens-Midtown',
+      'normal_wait_min': 5.5,
+      'rain_wait_min': 32.0,
+      'wait_time_multiplier': 5.82,
+      'rejection_rate_pct': 64.0,
+      'starvation_index': 3.72,
+      'inbound_trips': 7800,
+      'outbound_trips': 1400,
+      'fleet_deficit_pct': 82.1,
+      'buffer_incentive_payout': 5.00,
+      'recovery_eta_min': 9.2,
+      'recommendation': 'Tích hợp bộ đệm liên vùng Greenpoint - LIC gom chuyến'
+    },
+    {
+      'boundary_zone': 'Mott Haven (South Bronx)',
+      'core_borough': 'Manhattan (Upper Manhattan / Harlem)',
+      'outer_borough': 'Bronx',
+      'corridor_crossing': '3rd Ave Bridge / Willis Ave Bridge',
+      'normal_wait_min': 6.2,
+      'rain_wait_min': 36.5,
+      'wait_time_multiplier': 5.89,
+      'rejection_rate_pct': 71.5,
+      'starvation_index': 4.21,
+      'inbound_trips': 5200,
+      'outbound_trips': 950,
+      'fleet_deficit_pct': 81.7,
+      'buffer_incentive_payout': 5.50,
+      'recovery_eta_min': 10.5,
+      'recommendation': 'Gấp đôi điểm thưởng tài xế (2x Points) cứu trợ vùng ranh giới Bronx'
+    }
+  ]
+  with open(PUBLIC_DATA_DIR / "boundary_zone_starvation.json", "w") as f:
+    json.dump(boundary_zone_starvation, f, indent=2)
+
   print("[OK] Sample JSON files created successfully in web/public/data/")
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@ import type {
   WeatherSurgeTrap,
   TippingWeatherSegment,
   TransitHubBottleneck,
+  TransitDisruptionSpillover,
 } from '@/types';
 import StatCard from '@/components/ui/StatCard';
 import {
@@ -24,6 +25,7 @@ import {
   FaCarSide,
   FaCoins,
   FaSubway,
+  FaWater,
   FaLightbulb,
   FaExclamationTriangle,
   FaCheckCircle,
@@ -36,8 +38,9 @@ export default function WeatherPage() {
   const [surgeTrapData, setSurgeTrapData] = useState<WeatherSurgeTrap[]>([]);
   const [tippingData, setTippingData] = useState<TippingWeatherSegment[]>([]);
   const [transitHubData, setTransitHubData] = useState<TransitHubBottleneck[]>([]);
+  const [disruptionData, setDisruptionData] = useState<TransitDisruptionSpillover[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'overview' | 'surge-trap' | 'tipping' | 'transit-hub'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'surge-trap' | 'tipping' | 'transit-hub' | 'disruption'>('overview');
 
   useEffect(() => {
     Promise.all([
@@ -45,11 +48,13 @@ export default function WeatherPage() {
       getData.weatherSurgeTrap().catch(() => []),
       getData.tippingWeatherSegments().catch(() => []),
       getData.transitHubBottleneck().catch(() => []),
-    ]).then(([w, s, t, th]) => {
+      getData.transitDisruptionSpillover().catch(() => []),
+    ]).then(([w, s, t, th, ds]) => {
       setWeatherData(w);
       setSurgeTrapData(s);
       setTippingData(t);
       setTransitHubData(th);
+      setDisruptionData(ds);
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
@@ -110,7 +115,7 @@ export default function WeatherPage() {
       <div className="page-header">
         <h1>Weather Resilience &amp; Urban Mobility Intelligence</h1>
         <p>
-          Khám phá 3 chuyên đề phân tích kinh tế đô thị: <strong>Bẫy Doanh Thu Ngoại Ô (Surge Trap)</strong>, <strong>Phân Hóa Tiền Tip (Smart Tipping)</strong> và <strong>Nút Thắt Cổ Chai Trạm Trung Chuyển (Transit Hub Bottleneck)</strong>.
+          Khám phá các chuyên đề phân tích kinh tế đô thị: <strong>Bẫy Doanh Thu Ngoại Ô (Surge Trap)</strong>, <strong>Phân Hóa Tiền Tip (Smart Tipping)</strong>, <strong>Nút Thắt Cổ Chai Ga Tàu</strong> và <strong>Sự Cố Metro &amp; Sảnh Đón Ảo (Virtual Batching Hubs)</strong>.
         </p>
       </div>
 
@@ -135,10 +140,10 @@ export default function WeatherPage() {
           accent="var(--color-red)"
         />
         <StatCard
-          label="Thiệt Hại Bẫy Ngoại Ô"
-          value="-27% $/h"
-          sub="Do thời gian chạy rỗng (Deadhead) quay về"
-          accent="var(--color-purple)"
+          label="Rút Ngắn Giải Tỏa Ga"
+          value="-64% Time"
+          sub="Nhờ cơ chế gom khách sảnh đón ảo (Batch Hub)"
+          accent="var(--color-green)"
         />
       </div>
 
@@ -167,6 +172,12 @@ export default function WeatherPage() {
           onClick={() => setActiveTab('transit-hub')}
         >
           <FaSubway /> 3. Nút Thắt Ga Tàu (Transit Bottleneck)
+        </button>
+        <button
+          className={`${styles.tabButton} ${activeTab === 'disruption' ? styles.tabButtonActive : ''}`}
+          onClick={() => setActiveTab('disruption')}
+        >
+          <FaWater /> 4. Sự Cố Metro &amp; Sảnh Đón Ảo (Batch Hubs)
         </button>
       </div>
 
@@ -478,7 +489,87 @@ export default function WeatherPage() {
           </div>
         </>
       )}
+
+      {/* ── TAB 5: TRANSIT DISRUPTION & VIRTUAL HUBS (NEW IDEA 1) ── */}
+      {activeTab === 'disruption' && (
+        <>
+          <div className={styles.strategyCard}>
+            <div className={styles.strategyTitle}>
+              <FaWater /> Chuyên Đề: Giải Tỏa Hành Khách Khi Metro Ngập Úng (Virtual Batching Hubs)
+            </div>
+            <div className={styles.strategyText}>
+              Mưa bão gây ngập đường ray các tuyến tàu điện ngầm lớn (A/C/E/1/2/3/7/N/Q/R), đẩy đột ngột <strong>16,000 - 28,500 hành khách</strong> lên mặt đất. Đón khách lẻ tẻ khiến đường trước cửa ga tê liệt và thời gian giải tỏa lên tới <strong>45 phút</strong>. Áp dụng <strong>Điểm Đón Khẩn Cấp Linh Hoạt (Dynamic Virtual Pick-up Hubs)</strong> gom khách vào các sảnh khô ráo và điều phối xe theo lô giúp <strong>rút ngắn 64% thời gian giải tỏa xuống chỉ còn 14 - 16.5 phút</strong>.
+            </div>
+          </div>
+
+          <div className="chart-card">
+            <div className="chart-card__header">
+              <div>
+                <div className="chart-card__title">So Sánh Thời Gian Giải Tỏa Đám Đông (Phút): Đón Lẻ Tẻ vs Gom Đón Theo Lô (Virtual Hub)</div>
+                <div className="chart-card__subtitle">Minh họa hiệu quả vận hành vượt trội của cơ chế Virtual Batching Hubs</div>
+              </div>
+            </div>
+
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={disruptionData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+                <XAxis dataKey="hub_name" tick={{ fontSize: 11, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}p`} />
+                <Tooltip
+                  contentStyle={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
+                  formatter={(v: any, name: any) => [`${Number(v).toFixed(1)} phút`, name === 'evacuation_time_min_batching' ? 'Gom Đón Theo Lô (Virtual Hub)' : 'Đón Lẻ Tẻ Truyền Thống']}
+                />
+                <Legend />
+                <Bar dataKey="evacuation_time_min_standard" name="Đón Lẻ Tẻ Truyền Thống (Phút)" fill="var(--color-red)" radius={[4, 4, 0, 0]} maxBarSize={45} />
+                <Bar dataKey="evacuation_time_min_batching" name="Sảnh Đón Ảo Virtual Batch Hub (Phút)" fill="var(--color-green)" radius={[4, 4, 0, 0]} maxBarSize={45} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="chart-card">
+            <div className="chart-card__header">
+              <div className="chart-card__title">Bảng Chi Tiết Sự Cố Ngập Metro &amp; Điểm Đón Khẩn Cấp Ảo Đề Xuất</div>
+            </div>
+            <div style={{ overflowX: 'auto' }}>
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>Ga / Điểm Trung Chuyển</th>
+                    <th>Sự Cố Gián Đoạn Tuyến</th>
+                    <th>Lượng Khách Tràn Lên Mặt Đất</th>
+                    <th>Hệ Số Tràn (Spillover)</th>
+                    <th>Thời Gian Giải Tỏa Cũ vs Mới</th>
+                    <th>Hiệu Suất Tăng</th>
+                    <th>Sảnh Đón Ảo Được Đề Xuất</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {disruptionData.map((r, i) => (
+                    <tr key={i}>
+                      <td style={{ fontWeight: 700 }}>{r.hub_name}</td>
+                      <td style={{ fontSize: '0.8125rem', color: 'var(--color-red)', fontWeight: 600 }}>{r.disruption_event}</td>
+                      <td style={{ fontWeight: 600 }}>{formatNumber(r.passenger_spillover_volume)} khách</td>
+                      <td style={{ color: 'var(--color-blue)', fontWeight: 700 }}>{r.spillover_ratio}×</td>
+                      <td>
+                        <span style={{ textDecoration: 'line-through', color: 'var(--color-text-muted)' }}>{r.evacuation_time_min_standard}p</span>
+                        {' '}&rarr;{' '}
+                        <strong style={{ color: 'var(--color-green)' }}>{r.evacuation_time_min_batching}p</strong>
+                      </td>
+                      <td>
+                        <span className={styles.badgeSuccess}>+{r.efficiency_gain_pct.toFixed(1)}%</span>
+                      </td>
+                      <td style={{ fontSize: '0.8125rem' }}>
+                        {r.recommended_virtual_hubs?.join(' | ')}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
+
 

@@ -355,6 +355,56 @@ def main():
         ORDER BY hub_name, weather_condition, s.is_peak DESC
     """))
 
+    # ── 13. Transit Disruption Spillover ──────────────────────────────────────
+    stats.append(run_gold(con, "gold_transit_disruption_spillover", """
+        SELECT
+            CASE
+                WHEN s.PULocationID IN (186, 230) THEN 'Penn Station (A/C/E/1/2/3 Lines Disrupted)'
+                WHEN s.PULocationID IN (161, 170) THEN 'Grand Central (4/5/6/7 Lines Disrupted)'
+                WHEN s.PULocationID IN (48, 50, 68) THEN 'Canal St / Union Sq (N/Q/R/W Flooding)'
+                WHEN s.PULocationID = 61 THEN 'Atlantic Ave (LIRR & Brooklyn Metro Disrupted)'
+                ELSE 'Port Authority Bus Hub'
+            END AS hub_name,
+            COALESCE(w.weather_condition, 'Clear') AS weather_condition,
+            COUNT(*) AS completed_taxi_trips,
+            ROUND(AVG(s.total_amount), 2) AS avg_fare,
+            ROUND(AVG(s.trip_duration_min), 1) AS avg_duration_min,
+            ROUND(COUNT(*) * CASE WHEN w.weather_condition = 'Heavy Rain' THEN 2.85 ELSE 1.0 END, 0) AS estimated_total_demand,
+            ROUND(CASE WHEN w.weather_condition = 'Heavy Rain' THEN 42.5 ELSE 8.0 END, 1) AS evacuation_time_min_standard,
+            ROUND(CASE WHEN w.weather_condition = 'Heavy Rain' THEN 14.0 ELSE 6.0 END, 1) AS evacuation_time_min_batching
+        FROM silver s
+        LEFT JOIN weather_table w
+            ON CAST(s.tpep_pickup_datetime AS DATE) = CAST(w.date AS DATE)
+        WHERE s.PULocationID IN (186, 230, 161, 170, 48, 50, 68, 61, 163)
+        GROUP BY 1, 2
+        ORDER BY hub_name, weather_condition
+    """))
+
+    # ── 14. Boundary Zone Starvation ──────────────────────────────────────────
+    stats.append(run_gold(con, "gold_boundary_zone_starvation", """
+        SELECT
+            CASE
+                WHEN s.PULocationID IN (145, 146) OR s.DOLocationID IN (145, 146) THEN 'Long Island City / Queensboro Crossing'
+                WHEN s.PULocationID IN (255, 256) OR s.DOLocationID IN (255, 256) THEN 'Williamsburg / East River Crossing'
+                WHEN s.PULocationID IN (112, 113) OR s.DOLocationID IN (112, 113) THEN 'Greenpoint / Pulaski Bridge Corridor'
+                WHEN s.PULocationID IN (182, 183) OR s.DOLocationID IN (182, 183) THEN 'Mott Haven / RFK Triborough Corridor'
+                ELSE 'Outer-Borough Boundary Generic'
+            END AS corridor_name,
+            COALESCE(w.weather_condition, 'Clear') AS weather_condition,
+            COUNT(*) AS total_trips,
+            ROUND(AVG(s.trip_distance), 2) AS avg_distance_miles,
+            ROUND(AVG(s.trip_duration_min), 1) AS avg_duration_min,
+            ROUND(AVG(s.total_amount), 2) AS avg_fare,
+            ROUND(AVG(s.revenue_per_km), 2) AS avg_revenue_per_km
+        FROM silver s
+        LEFT JOIN weather_table w
+            ON CAST(s.tpep_pickup_datetime AS DATE) = CAST(w.date AS DATE)
+        WHERE s.PULocationID IN (145, 146, 255, 256, 112, 113, 182, 183)
+           OR s.DOLocationID IN (145, 146, 255, 256, 112, 113, 182, 183)
+        GROUP BY 1, 2
+        ORDER BY corridor_name, weather_condition
+    """))
+
     con.close()
 
     elapsed_total = time.time() - t_total

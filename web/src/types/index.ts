@@ -305,6 +305,54 @@ export interface TransitHubBottleneck {
   dispatch_action?: string;
 }
 
+export interface TransitDisruptionSpillover {
+  hub_name: string;
+  disruption_event: string;
+  subway_lines_affected: string;
+  passenger_spillover_volume: number;
+  baseline_taxi_pickups: number;
+  surge_taxi_pickups: number;
+  spillover_ratio: number;
+  unmet_demand_pct: number;
+  virtual_hub_capacity: number;
+  evacuation_time_min_standard: number;
+  evacuation_time_min_batching: number;
+  efficiency_gain_pct: number;
+  recommended_virtual_hubs?: string[];
+}
+
+export interface SurgeElasticityPoint {
+  surge_multiplier: number;
+  customer_conversion_rate_pct: number;
+  driver_supply_count: number;
+  completed_trips: number;
+  avg_fare_paid: number;
+  total_gmv: number;
+  platform_revenue: number;
+  customer_abandonment_pct: number;
+  driver_idle_time_min: number;
+  market_state: string;
+}
+
+export interface BoundaryZoneStarvation {
+  boundary_zone: string;
+  core_borough: string;
+  outer_borough: string;
+  corridor_crossing: string;
+  normal_wait_min: number;
+  rain_wait_min: number;
+  wait_time_multiplier: number;
+  rejection_rate_pct: number;
+  starvation_index: number;
+  inbound_trips: number;
+  outbound_trips: number;
+  fleet_deficit_pct: number;
+  buffer_incentive_payout: number;
+  recovery_eta_min: number;
+  recommendation?: string;
+}
+
+
 
 
 
