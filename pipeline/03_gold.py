@@ -369,9 +369,9 @@ def main():
             COUNT(*) AS completed_taxi_trips,
             ROUND(AVG(s.total_amount), 2) AS avg_fare,
             ROUND(AVG(s.trip_duration_min), 1) AS avg_duration_min,
-            ROUND(COUNT(*) * CASE WHEN w.weather_condition = 'Heavy Rain' THEN 2.85 ELSE 1.0 END, 0) AS estimated_total_demand,
-            ROUND(CASE WHEN w.weather_condition = 'Heavy Rain' THEN 42.5 ELSE 8.0 END, 1) AS evacuation_time_min_standard,
-            ROUND(CASE WHEN w.weather_condition = 'Heavy Rain' THEN 14.0 ELSE 6.0 END, 1) AS evacuation_time_min_batching
+            ROUND(COUNT(*) * CASE WHEN COALESCE(w.weather_condition, 'Clear') = 'Heavy Rain' THEN 2.85 ELSE 1.0 END, 0) AS estimated_total_demand,
+            ROUND(CASE WHEN COALESCE(w.weather_condition, 'Clear') = 'Heavy Rain' THEN 42.5 ELSE 8.0 END, 1) AS evacuation_time_min_standard,
+            ROUND(CASE WHEN COALESCE(w.weather_condition, 'Clear') = 'Heavy Rain' THEN 14.0 ELSE 6.0 END, 1) AS evacuation_time_min_batching
         FROM silver s
         LEFT JOIN weather_table w
             ON CAST(s.tpep_pickup_datetime AS DATE) = CAST(w.date AS DATE)
