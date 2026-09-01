@@ -387,3 +387,158 @@ input:checked + .slider:before {
   margin: 0;
 }
 
+/* ── SHADOW LOST REVENUE TICKER ── */
+.lostRevenueCard {
+  background: linear-gradient(135deg, #450a0a 0%, #1f0404 100%);
+  border: 1px solid #dc2626;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  color: #fef2f2;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.lostRevenueHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lostRevenueTitle {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #fca5a5;
+}
+
+.lostRevenueSubtitle {
+  font-size: 0.75rem;
+  color: #fecaca;
+}
+
+.lostRevenueValue {
+  font-size: 1.75rem;
+  font-weight: 900;
+  font-family: 'JetBrains Mono', 'Roboto Mono', monospace;
+  color: #ef4444;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+/* ── URBAN SHOCK CENTER TOOLBAR ── */
+.shockSection {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.shockHeader {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.shockGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.shockBtn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition);
+  text-align: left;
+}
+
+.shockBtn:hover {
+  background: var(--color-surface-2);
+  border-color: var(--color-blue);
+  color: var(--color-text-primary);
+}
+
+.shockBtnActive {
+  background: #fef2f2;
+  border-color: #ef4444;
+  color: #b91c1c;
+  font-weight: 700;
+}
+
+/* ── STAMINA METER ── */
+.staminaWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.staminaHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.staminaBarBg {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.staminaBarFill {
+  height: 100%;
+  transition: width 0.4s ease;
+  border-radius: 4px;
+}
+
+/* ── ROUTE YIELD & ACCEPTANCE CARD ── */
+.routeYieldCard {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.yieldMetric {
+  display: flex;
+  flex-direction: column;
+}
+
+.yieldLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.yieldValue {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+
