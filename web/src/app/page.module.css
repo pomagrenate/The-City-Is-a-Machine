@@ -1,4 +1,4 @@
-/* page.module.css — Overview */
+/* page.module.css — Overview & Guided Storytelling */
 .hero {
   margin-bottom: 24px;
   padding: 36px 40px;
@@ -50,6 +50,222 @@
   font-size: 0.8125rem;
   color: var(--color-text-muted);
   font-weight: 500;
+}
+
+/* Mode Switcher Header */
+.modeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.modeToggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  background: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modeToggleBtn:hover {
+  border-color: var(--color-blue);
+  background: var(--color-blue-bg);
+  color: var(--color-blue);
+}
+
+.modeToggleActive {
+  background: var(--color-blue) !important;
+  color: #ffffff !important;
+  border-color: var(--color-blue) !important;
+}
+
+/* Storytelling Chapter Navigation Stepper */
+.stepperBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.stepItem:hover {
+  background: #f1f5f9;
+  color: var(--color-text-primary);
+}
+
+.stepActive {
+  background: var(--color-blue-bg) !important;
+  color: var(--color-blue) !important;
+  border-color: rgba(26, 86, 219, 0.2) !important;
+  font-weight: 700 !important;
+}
+
+.stepNum {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: var(--color-text-primary);
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepActive .stepNum {
+  background: var(--color-blue);
+  color: #ffffff;
+}
+
+/* Chapter Card Frame */
+.chapterCard {
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.chapterHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: 16px;
+}
+
+.chapterTag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-blue);
+  background: var(--color-blue-bg);
+  padding: 6px 12px;
+  border-radius: 16px;
+}
+
+.chapterTitle {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+
+.chapterNarrative {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.insightCallout {
+  display: flex;
+  gap: 16px;
+  background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+  border-left: 4px solid var(--color-blue);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 16px 20px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.insightIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.insightTitle {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.insightText {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.chapterNavFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navBtn:hover:not(:disabled) {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+  background: var(--color-blue-bg);
+}
+
+.navBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.deepLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-blue);
+  text-decoration: none;
+}
+
+.deepLink:hover {
+  text-decoration: underline;
 }
 
 /* 3 Door Entry Cards */
