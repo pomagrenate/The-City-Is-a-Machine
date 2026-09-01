@@ -1,7 +1,7 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next';
 import './globals.css';
-import Sidebar from '@/components/layout/Sidebar';
+import AppShell from '@/components/layout/AppShell';
 
 export const metadata: Metadata = {
   title: 'The City Is a Machine',
@@ -13,13 +13,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <div className="app-shell">
-          <Sidebar />
-          <div className="main-content">
-            {children}
-          </div>
-        </div>
+        <AppShell>
+          {children}
+        </AppShell>
       </body>
     </html>
   );
 }
+
