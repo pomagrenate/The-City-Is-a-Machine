@@ -1,9 +1,8 @@
 'use client';
 
 import { useEffect, useState, useMemo, useRef } from 'react';
-import { getData, formatCurrency, formatNumber, DAY_NAMES } from '@/lib/data';
+import { getData, formatCurrency, formatNumber } from '@/lib/data';
 import type { SimulatorBase, ZoneRevenue, SurgeElasticityPoint } from '@/types';
-import StatCard from '@/components/ui/StatCard';
 import {
   ComposedChart,
   Line,
@@ -16,15 +15,11 @@ import {
   ReferenceLine,
 } from 'recharts';
 import {
-  FaSlidersH,
   FaPlay,
   FaPause,
-  FaRedo,
   FaBolt,
   FaTaxi,
-  FaSubway,
   FaWater,
-  FaShieldAlt,
   FaExclamationTriangle,
   FaLightbulb,
   FaCheckCircle,
@@ -49,14 +44,14 @@ interface NodeDef {
 }
 
 const NYC_NODES: Record<string, NodeDef> = {
-  upper: { id: 'upper', name: 'Upper Manhattan / Harlem', shortName: 'Upper Manh', x: 220, y: 80, baseDemand: 120, borough: 'Manhattan' },
-  midtown: { id: 'midtown', name: 'Midtown (Penn & Grand Central & MSG)', shortName: 'Midtown Hub', x: 210, y: 170, baseDemand: 450, borough: 'Manhattan' },
-  financial: { id: 'financial', name: 'Financial District / Wall St', shortName: 'FiDi / Downtown', x: 190, y: 290, baseDemand: 260, borough: 'Manhattan' },
-  lic: { id: 'lic', name: 'Long Island City (Queens)', shortName: 'Queens LIC', x: 330, y: 150, baseDemand: 180, borough: 'Queens' },
-  lga: { id: 'lga', name: 'LaGuardia Airport (LGA)', shortName: 'LGA Airport', x: 420, y: 90, baseDemand: 220, borough: 'Queens' },
-  williamsburg: { id: 'williamsburg', name: 'Williamsburg / DUMBO', shortName: 'Williamsburg', x: 300, y: 260, baseDemand: 210, borough: 'Brooklyn' },
-  atlantic: { id: 'atlantic', name: 'Atlantic Terminal / Barclays Center', shortName: 'Atlantic Hub', x: 280, y: 350, baseDemand: 240, borough: 'Brooklyn' },
-  jfk: { id: 'jfk', name: 'JFK International Airport', shortName: 'JFK Airport', x: 450, y: 340, baseDemand: 320, borough: 'Queens' },
+  upper: { id: 'upper', name: 'Upper Manhattan / Harlem', shortName: 'Upper Manh', x: 220, y: 75, baseDemand: 120, borough: 'Manhattan' },
+  midtown: { id: 'midtown', name: 'Midtown (Penn & Grand Central & MSG)', shortName: 'Midtown Hub', x: 210, y: 165, baseDemand: 450, borough: 'Manhattan' },
+  financial: { id: 'financial', name: 'Financial District / Wall St', shortName: 'FiDi / Downtown', x: 190, y: 285, baseDemand: 260, borough: 'Manhattan' },
+  lic: { id: 'lic', name: 'Long Island City (Queens)', shortName: 'Queens LIC', x: 330, y: 145, baseDemand: 180, borough: 'Queens' },
+  lga: { id: 'lga', name: 'LaGuardia Airport (LGA)', shortName: 'LGA Airport', x: 420, y: 85, baseDemand: 220, borough: 'Queens' },
+  williamsburg: { id: 'williamsburg', name: 'Williamsburg / DUMBO', shortName: 'Williamsburg', x: 300, y: 255, baseDemand: 210, borough: 'Brooklyn' },
+  atlantic: { id: 'atlantic', name: 'Atlantic Terminal / Barclays Center', shortName: 'Atlantic Hub', x: 280, y: 345, baseDemand: 240, borough: 'Brooklyn' },
+  jfk: { id: 'jfk', name: 'JFK International Airport', shortName: 'JFK Airport', x: 450, y: 335, baseDemand: 320, borough: 'Queens' },
 };
 
 interface EdgeDef {
@@ -113,7 +108,7 @@ export default function SimulatorPage() {
   const [activeShock, setActiveShock] = useState<'none' | 'msg_concert' | 'lincoln_accident' | 'gas_price_spike' | 'flash_flood'>('none');
 
   // ── Cumulative Shadow Lost Revenue Ticker ───────────────────────────────────
-  const [cumulativeLostRevenue, setCumulativeLostRevenue] = useState<number>(2450.0);
+  const [cumulativeLostRevenue, setCumulativeLostRevenue] = useState<number>(2840.0);
 
   // ── Fleet Ops Controls ──────────────────────────────────────────────────────
   const [selectedScenario, setSelectedScenario] = useState<'penn_rain' | 'yankee_egress' | 'lic_starvation'>('penn_rain');
@@ -127,20 +122,19 @@ export default function SimulatorPage() {
   const [driverIncentiveBonus, setDriverIncentiveBonus] = useState<number>(4.5);
 
   // ── Driver Fatigue & Jam Subsidy Controls ───────────────────────────────────
-  const [trafficJamSubsidy, setTrafficJamSubsidy] = useState<number>(4.0); // $4 per 15 min jam
+  const [trafficJamSubsidy, setTrafficJamSubsidy] = useState<number>(4.0);
 
   // ── Micro-Surge & Route Acceptance Controls ─────────────────────────────────
   const [selectedRouteKey, setSelectedRouteKey] = useState<string>('midtown_lic');
-  const [hazardSurcharge, setHazardSurcharge] = useState<number>(3.50); // $3.50 hazard surcharge
+  const [hazardSurcharge, setHazardSurcharge] = useState<number>(3.50);
 
-  // ── Disruption Controls ─────────────────────────────────────────────────────
+  // ── Disruption Crossings State ──────────────────────────────────────────────
   const [closedCrossings, setClosedCrossings] = useState<Record<string, boolean>>({
     queensboro_bridge: false,
     midtown_tunnel: true,
     williamsburg_bridge: false,
   });
 
-  // Canvas Reference & Agents
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const agentsRef = useRef<Agent[]>([]);
 
@@ -190,15 +184,7 @@ export default function SimulatorPage() {
     agentsRef.current = initialAgents;
   }, []);
 
-  // Toggle Bridge / Tunnel Closure
-  const toggleCrossingClosure = (crossingId: string) => {
-    setClosedCrossings(prev => ({
-      ...prev,
-      [crossingId]: !prev[crossingId],
-    }));
-  };
-
-  // ── Canvas Live Animation Loop ──────────────────────────────────────────────
+  // ── Canvas Live Animation Loop (Light Theme) ────────────────────────────────
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -209,6 +195,26 @@ export default function SimulatorPage() {
 
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Light background fill
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Light background grid lines
+      ctx.strokeStyle = '#f1f5f9';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 30) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 30) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
 
       // 1. Draw Network Connections (Edges)
       NYC_EDGES.forEach(edge => {
@@ -229,12 +235,12 @@ export default function SimulatorPage() {
           ctx.lineWidth = 3;
           ctx.setLineDash([6, 6]);
         } else if (edge.isCrossing) {
-          ctx.strokeStyle = '#38bdf8';
+          ctx.strokeStyle = '#60a5fa';
           ctx.lineWidth = 2.5;
           ctx.setLineDash([]);
         } else {
-          ctx.strokeStyle = '#334155';
-          ctx.lineWidth = 1.8;
+          ctx.strokeStyle = '#cbd5e1';
+          ctx.lineWidth = 2;
           ctx.setLineDash([]);
         }
         ctx.stroke();
@@ -251,7 +257,7 @@ export default function SimulatorPage() {
           ctx.font = 'bold 8px sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillText(isClosed ? '✕' : '⚠', midX, midY);
+          ctx.fillText(isClosed ? '✕' : '!', midX, midY);
         }
       });
 
@@ -263,7 +269,7 @@ export default function SimulatorPage() {
         const midtown = NYC_NODES.midtown;
         ctx.beginPath();
         ctx.arc(midtown.x, midtown.y, pulseRadius + 6, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)';
+        ctx.strokeStyle = 'rgba(37, 99, 235, 0.4)';
         ctx.lineWidth = 2;
         ctx.stroke();
       }
@@ -272,7 +278,7 @@ export default function SimulatorPage() {
         const midtown = NYC_NODES.midtown;
         ctx.beginPath();
         ctx.arc(midtown.x, midtown.y, pulseRadius + 14, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(239, 68, 68, 0.7)';
+        ctx.strokeStyle = 'rgba(239, 68, 68, 0.6)';
         ctx.lineWidth = 2.5;
         ctx.stroke();
       }
@@ -281,7 +287,7 @@ export default function SimulatorPage() {
         [NYC_NODES.lic, NYC_NODES.atlantic].forEach(hub => {
           ctx.beginPath();
           ctx.arc(hub.x, hub.y, pulseRadius, 0, Math.PI * 2);
-          ctx.strokeStyle = 'rgba(34, 197, 94, 0.6)';
+          ctx.strokeStyle = 'rgba(16, 185, 129, 0.5)';
           ctx.lineWidth = 1.5;
           ctx.stroke();
         });
@@ -291,19 +297,19 @@ export default function SimulatorPage() {
       Object.values(NYC_NODES).forEach(node => {
         ctx.beginPath();
         ctx.arc(node.x, node.y, 11, 0, Math.PI * 2);
-        ctx.fillStyle = node.borough === 'Manhattan' ? '#1e293b' : '#0f172a';
+        ctx.fillStyle = '#ffffff';
         ctx.fill();
-        ctx.strokeStyle = node.id === 'midtown' ? (activeShock === 'msg_concert' ? '#ef4444' : '#38bdf8') : '#64748b';
+        ctx.strokeStyle = node.id === 'midtown' ? (activeShock === 'msg_concert' ? '#ef4444' : '#2563eb') : '#94a3b8';
         ctx.lineWidth = 2;
         ctx.stroke();
 
         ctx.beginPath();
         ctx.arc(node.x, node.y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = node.id === 'midtown' ? '#38bdf8' : '#94a3b8';
+        ctx.fillStyle = node.id === 'midtown' ? '#2563eb' : '#64748b';
         ctx.fill();
 
-        ctx.font = 'bold 10px sans-serif';
-        ctx.fillStyle = '#f8fafc';
+        ctx.font = 'bold 10px Inter, sans-serif';
+        ctx.fillStyle = '#1e293b';
         ctx.textAlign = 'center';
         ctx.fillText(node.shortName, node.x, node.y - 15);
       });
@@ -327,7 +333,6 @@ export default function SimulatorPage() {
           if (pathEdge && (closedCrossings[pathEdge.id] || (activeShock === 'flash_flood' && pathEdge.isCrossing))) {
             agent.status = 'stuck';
             currentSpeed *= 0.15;
-            // Stamina decays rapidly when stuck
             const staminaDrain = Math.max(0.02, 0.08 - trafficJamSubsidy * 0.012);
             agent.stamina = Math.max(0, agent.stamina - staminaDrain * simSpeed);
           } else if (proactiveDispatch && agent.toNode === 'midtown') {
@@ -338,7 +343,6 @@ export default function SimulatorPage() {
             agent.stamina = Math.max(0, agent.stamina - staminaDrain * simSpeed);
           }
 
-          // If stamina depleted, agent goes offline (churns)
           if (agent.stamina <= 0) {
             agent.status = 'offline';
           }
@@ -376,24 +380,23 @@ export default function SimulatorPage() {
         const curX = from.x + (to.x - from.x) * agent.progress;
         const curY = from.y + (to.y - from.y) * agent.progress;
 
-        let dotColor = '#eab308';
-        if (agent.status === 'in_trip') dotColor = '#22c55e';
-        if (agent.status === 'stuck') dotColor = '#ef4444';
-        if (agent.status === 'dispatched') dotColor = '#38bdf8';
+        let dotColor = '#f59e0b'; // cruising amber
+        if (agent.status === 'in_trip') dotColor = '#10b981'; // in-trip green
+        if (agent.status === 'stuck') dotColor = '#ef4444'; // stuck red
+        if (agent.status === 'dispatched') dotColor = '#2563eb'; // proactive blue
 
         ctx.beginPath();
         ctx.arc(curX, curY, agent.status === 'in_trip' ? 3.5 : 2.8, 0, Math.PI * 2);
         ctx.fillStyle = dotColor;
         ctx.fill();
-        ctx.strokeStyle = '#0f172a';
-        ctx.lineWidth = 0.8;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1;
         ctx.stroke();
 
-        // Stamina micro-halo
         if (agent.stamina < 30) {
           ctx.beginPath();
-          ctx.arc(curX, curY, 5, 0, Math.PI * 2);
-          ctx.strokeStyle = 'rgba(239, 68, 68, 0.6)';
+          ctx.arc(curX, curY, 5.5, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
           ctx.lineWidth = 1;
           ctx.stroke();
         }
@@ -401,7 +404,6 @@ export default function SimulatorPage() {
 
       if (isPlaying) {
         setSimTick(t => t + 1);
-        // Accumulate shadow lost revenue if unserved demand exists
         if (!proactiveDispatch || surgeMultiplier > 2.2) {
           setCumulativeLostRevenue(prev => prev + (0.45 * simSpeed));
         }
@@ -432,12 +434,10 @@ export default function SimulatorPage() {
     const platformTakeRate = 0.20;
     const platformRevenue = totalGmv * platformTakeRate;
 
-    // Subsidy & Operational ROI
     const dispatchSubsidyCost = proactiveDispatch ? additionalFleetCount * 3.50 : 0;
     const grossRevenueUplift = proactiveDispatch ? (completedTrips - baselineTrips * 0.75) * effectiveAvgFare : 0;
     const operationalRoi = dispatchSubsidyCost > 0 ? (grossRevenueUplift / dispatchSubsidyCost) : 0;
 
-    // Wait time & Disruption Delay
     let avgWaitTimeMin = proactiveDispatch ? 7.8 : 26.5;
     if (closedCrossings.queensboro_bridge || closedCrossings.midtown_tunnel || activeShock === 'lincoln_accident') {
       avgWaitTimeMin += 8.5;
@@ -446,13 +446,11 @@ export default function SimulatorPage() {
       avgWaitTimeMin = Math.max(5.5, avgWaitTimeMin * 0.55);
     }
 
-    // Driver fleet online health
     const totalAgents = agentsRef.current.length || 150;
     const onlineAgents = agentsRef.current.filter(a => a.status !== 'offline').length || 135;
     const fleetOnlinePct = Math.round((onlineAgents / totalAgents) * 100);
     const avgStamina = Math.round(agentsRef.current.reduce((s, a) => s + a.stamina, 0) / totalAgents) || 72;
 
-    // Micro-surge calculations for selected route
     const routeBaselineDuration = selectedRouteKey === 'midtown_lic' ? 32 : (selectedRouteKey === 'fidi_jfk' ? 48 : 24);
     const routeBaselineFare = selectedRouteKey === 'midtown_lic' ? 28.5 : (selectedRouteKey === 'fidi_jfk' ? 62.0 : 21.0);
     const expectedYieldPerMin = (routeBaselineFare + hazardSurcharge) / (routeBaselineDuration + (weatherSeverity === 'heavy_storm' ? 12 : 4));
@@ -483,475 +481,510 @@ export default function SimulatorPage() {
 
   return (
     <div className="page-content">
-      <div className="page-header">
-        <h1>The City Machine Arena v2.0 — Stochastic Agent &amp; Pricing Sandbox</h1>
-        <p>
-          Trình giả lập kinh tế vi mô &amp; vật lý giao thông thời gian thực: <strong>Đồng hồ Doanh thu bóng thất thoát</strong>, <strong>Mô hình thể lực tài xế (Fatigue &amp; Churn)</strong>, <strong>Đấu thầu chặng vi mô ($/min)</strong> và <strong>Trung tâm biến cố đô thị (Urban Shocks)</strong>.
-        </p>
-      </div>
-
-      {/* ── TOP LIVE SHADOW LOST REVENUE TICKER ── */}
-      <div className={styles.lostRevenueCard}>
-        <div className={styles.lostRevenueHeader}>
-          <FaMoneyBillWave size={28} color="#ef4444" />
-          <div>
-            <div className={styles.lostRevenueTitle}>
-              Tổn Thất Doanh Thu Bóng Tích Lũy (Shadow Lost Revenue Radar)
-            </div>
-            <div className={styles.lostRevenueSubtitle}>
-              Ước tính số tiền sàn và tài xế đang &quot;để rơi&quot; do thiếu hụt xe &amp; khách bỏ app
-            </div>
-          </div>
-        </div>
-        <div className={styles.lostRevenueValue}>
-          -${formatNumber(Math.round(cumulativeLostRevenue))} USD
-        </div>
-      </div>
-
-      {/* ── Role & Persona Switcher ── */}
-      <div className={styles.tabContainer}>
-        <button
-          className={`${styles.tabButton} ${activePersona === 'fleet' ? styles.tabButtonActive : ''}`}
-          onClick={() => setActivePersona('fleet')}
-        >
-          <FaTaxi /> 1. Điều Phối Đội Xe (Fleet Ops)
-        </button>
-        <button
-          className={`${styles.tabButton} ${activePersona === 'pricing' ? styles.tabButtonActive : ''}`}
-          onClick={() => setActivePersona('pricing')}
-        >
-          <FaBolt /> 2. Surge Pricing &amp; Điểm Gãy Cầu (Pricing Arena)
-        </button>
-        <button
-          className={`${styles.tabButton} ${activePersona === 'fatigue' ? styles.tabButtonActive : ''}`}
-          onClick={() => setActivePersona('fatigue')}
-        >
-          <FaBatteryHalf /> 3. Thể Lực Tài Xế &amp; Trợ Cấp Kẹt Xe (Driver Fatigue &amp; Churn)
-        </button>
-        <button
-          className={`${styles.tabButton} ${activePersona === 'micro_surge' ? styles.tabButtonActive : ''}`}
-          onClick={() => setActivePersona('micro_surge')}
-        >
-          <FaTrafficLight /> 4. Đấu Thầu Chặng Vi Mô &amp; Biến Cố Đô Thị (Micro-Surge &amp; Shocks)
-        </button>
-      </div>
-
-      {/* ── Main Arena Dual-Screen Layout ── */}
-      <div className={styles.arenaLayout}>
-        {/* LEFT COLUMN: LIVE CANVAS GRID MAP */}
-        <div className={styles.canvasCard}>
-          <div className={styles.canvasHeader}>
-            <div className={styles.canvasTitle}>
-              <FaMapMarkedAlt color="var(--color-blue)" /> Stochastic Agent Grid Simulation
-            </div>
-            <div className={styles.canvasSubtitle}>
-              {isPlaying ? '● LIVE ENGINE 60 FPS' : '❚❚ PAUSED'} ({liveMetrics.onlineAgents}/{liveMetrics.totalAgents} Online)
-            </div>
-          </div>
-
-          <div className={styles.canvasWrapper}>
-            <canvas
-              ref={canvasRef}
-              width={520}
-              height={420}
-              className={styles.canvasElement}
-            />
-          </div>
-
-          {/* Playback Control Bar */}
-          <div className={styles.playbackBar}>
-            <div className={styles.playbackControls}>
-              <button
-                className={`${styles.controlBtn} ${isPlaying ? styles.controlBtnActive : ''}`}
-                onClick={() => setIsPlaying(!isPlaying)}
-              >
-                {isPlaying ? <><FaPause /> Tạm Dừng</> : <><FaPlay /> Tiếp Tục</>}
-              </button>
-              <button
-                className={`${styles.controlBtn} ${simSpeed === 1 ? styles.controlBtnActive : ''}`}
-                onClick={() => setSimSpeed(1)}
-              >
-                1×
-              </button>
-              <button
-                className={`${styles.controlBtn} ${simSpeed === 2 ? styles.controlBtnActive : ''}`}
-                onClick={() => setSimSpeed(2)}
-              >
-                2×
-              </button>
-              <button
-                className={`${styles.controlBtn} ${simSpeed === 4 ? styles.controlBtnActive : ''}`}
-                onClick={() => setSimSpeed(4)}
-              >
-                4× Speed
-              </button>
-            </div>
-
-            <div style={{ color: '#94a3b8' }}>
-              Tick: <strong>{simTick}</strong> | Thể Lực TB: <strong>{liveMetrics.avgStamina}%</strong>
-            </div>
-          </div>
-
-          {/* Map Legend */}
-          <div className={styles.legendBar}>
-            <div className={styles.legendItem}>
-              <span className={styles.legendDot} style={{ background: '#22c55e' }} />
-              <span>Đang chở khách (In-Trip)</span>
-            </div>
-            <div className={styles.legendItem}>
-              <span className={styles.legendDot} style={{ background: '#eab308' }} />
-              <span>Chạy rỗng (Cruising)</span>
-            </div>
-            <div className={styles.legendItem}>
-              <span className={styles.legendDot} style={{ background: '#ef4444' }} />
-              <span>Kẹt cầu / Ngập (Stuck)</span>
-            </div>
-            <div className={styles.legendItem}>
-              <span className={styles.legendDot} style={{ background: '#38bdf8' }} />
-              <span>Dẫn dòng đón đầu (Dispatched)</span>
-            </div>
-          </div>
+      <div className={styles.container}>
+        {/* ── Header ── */}
+        <div className="page-header">
+          <h1>The City Machine Arena — Spatial Fleet &amp; Pricing Simulator</h1>
+          <p>
+            Real-time stochastic agent-based modeling of urban mobility supply-demand equilibria, surge price elasticity, driver stamina churn, and infrastructure disruption response.
+          </p>
         </div>
 
-        {/* RIGHT COLUMN: SCENARIO & PARAMETER COCKPIT */}
-        <div className={styles.panelCard}>
-          {/* ── TAB 1: FLEET OPS COCKPIT ── */}
-          {activePersona === 'fleet' && (
-            <>
-              <div className={styles.panelTitle}>
-                <FaTaxi color="var(--color-blue)" /> Fleet Ops &amp; Dispatch Cockpit
+        {/* ── TOP LIVE SHADOW LOST REVENUE TICKER ── */}
+        <div className={styles.lostRevenueCard}>
+          <div className={styles.lostRevenueHeader}>
+            <div className={styles.lostRevenueIconBox}>
+              <FaMoneyBillWave size={22} />
+            </div>
+            <div>
+              <div className={styles.lostRevenueTitle}>
+                Cumulative Shadow Lost Revenue Radar
               </div>
+              <div className={styles.lostRevenueSubtitle}>
+                Estimated uncaptured Gross Merchandise Value (GMV) due to localized supply deficits &amp; customer abandonment
+              </div>
+            </div>
+          </div>
+          <div className={styles.lostRevenueValue}>
+            -${formatNumber(Math.round(cumulativeLostRevenue))} USD
+          </div>
+        </div>
 
-              <div className={styles.formGroup}>
-                <label className={styles.label}>1. Kịch Bản Vận Hành Cần Mô Phỏng</label>
-                <select
-                  className={styles.select}
-                  value={selectedScenario}
-                  onChange={e => setSelectedScenario(e.target.value as any)}
+        {/* ── Navigation Tabs ── */}
+        <div className={styles.tabContainer}>
+          <button
+            className={`${styles.tabButton} ${activePersona === 'fleet' ? styles.tabButtonActive : ''}`}
+            onClick={() => setActivePersona('fleet')}
+          >
+            <FaTaxi /> 1. Fleet Operations &amp; Dispatch
+          </button>
+          <button
+            className={`${styles.tabButton} ${activePersona === 'pricing' ? styles.tabButtonActive : ''}`}
+            onClick={() => setActivePersona('pricing')}
+          >
+            <FaBolt /> 2. Surge Pricing &amp; Demand Evaporation
+          </button>
+          <button
+            className={`${styles.tabButton} ${activePersona === 'fatigue' ? styles.tabButtonActive : ''}`}
+            onClick={() => setActivePersona('fatigue')}
+          >
+            <FaBatteryHalf /> 3. Driver Fatigue &amp; Jam Subsidy
+          </button>
+          <button
+            className={`${styles.tabButton} ${activePersona === 'micro_surge' ? styles.tabButtonActive : ''}`}
+            onClick={() => setActivePersona('micro_surge')}
+          >
+            <FaTrafficLight /> 4. Micro-Surge Yield &amp; Urban Shocks
+          </button>
+        </div>
+
+        {/* ── Main Dual-Screen Layout ── */}
+        <div className={styles.arenaLayout}>
+          {/* LEFT: CANVAS GRID MAP */}
+          <div className={styles.canvasCard}>
+            <div className={styles.canvasHeader}>
+              <div className={styles.canvasTitle}>
+                <FaMapMarkedAlt color="var(--color-blue)" /> NYC Spatial Agent-Based Grid Simulation
+              </div>
+              <div className={`${styles.canvasStatusBadge} ${!isPlaying ? styles.canvasStatusBadgePaused : ''}`}>
+                {isPlaying ? <><FaPlay size={10} /> Live 60 FPS Engine</> : <><FaPause size={10} /> Paused</>} ({liveMetrics.onlineAgents}/{liveMetrics.totalAgents} Online)
+              </div>
+            </div>
+
+            <div className={styles.canvasWrapper}>
+              <canvas
+                ref={canvasRef}
+                width={520}
+                height={420}
+                className={styles.canvasElement}
+              />
+            </div>
+
+            {/* Playback Controls */}
+            <div className={styles.playbackBar}>
+              <div className={styles.playbackControls}>
+                <button
+                  className={`${styles.controlBtn} ${isPlaying ? styles.controlBtnActive : ''}`}
+                  onClick={() => setIsPlaying(!isPlaying)}
                 >
-                  <option value="penn_rain">Sự Cố Tan Tầm Mưa Bão tại Penn Station</option>
-                  <option value="lic_starvation">Đói Xe Vùng Giáp Ranh Long Island City</option>
-                  <option value="yankee_egress">Tan Trận Sân Vận Động Yankee Egress</option>
-                </select>
-              </div>
-
-              <div className={styles.toggleRow}>
-                <div className={styles.toggleLabel}>
-                  <span className={styles.toggleTitle}>Dẫn Dòng Chủ Động (Proactive Dispatch)</span>
-                  <span className={styles.toggleSub}>Gợi ý gom xe đón đầu trước 20 phút kèm bù xăng $3.50/xe</span>
-                </div>
-                <label className={styles.switch}>
-                  <input
-                    type="checkbox"
-                    checked={proactiveDispatch}
-                    onChange={e => setProactiveDispatch(e.target.checked)}
-                  />
-                  <span className={styles.slider} />
-                </label>
-              </div>
-
-              <div className={styles.toggleRow}>
-                <div className={styles.toggleLabel}>
-                  <span className={styles.toggleTitle}>Sảnh Đón Ảo (Virtual Batching Hubs)</span>
-                  <span className={styles.toggleSub}>Gom khách tại sảnh khô ráo, xuất xe theo lô 1 chiều</span>
-                </div>
-                <label className={styles.switch}>
-                  <input
-                    type="checkbox"
-                    checked={virtualBatchingHubs}
-                    onChange={e => setVirtualBatchingHubs(e.target.checked)}
-                  />
-                  <span className={styles.slider} />
-                </label>
-              </div>
-
-              <div className={styles.formGroup}>
-                <div className={styles.rangeHeader}>
-                  <label className={styles.label}>Số Xe Tái Điều Phối Bổ Sung</label>
-                  <span className={styles.rangeValue}>+{additionalFleetCount} xe</span>
-                </div>
-                <input
-                  type="range"
-                  min={100}
-                  max={1500}
-                  step={50}
-                  value={additionalFleetCount}
-                  onChange={e => setAdditionalFleetCount(Number(e.target.value))}
-                  className={styles.range}
-                />
-              </div>
-
-              <div className={styles.kpiGrid}>
-                <div className={styles.kpiCard}>
-                  <div className={styles.kpiLabel}>Thời Gian Chờ (ETA)</div>
-                  <div className={styles.kpiValue} style={{ color: proactiveDispatch ? 'var(--color-green)' : 'var(--color-red)' }}>
-                    {liveMetrics.avgWaitTimeMin.toFixed(1)}p
-                  </div>
-                  <div className={styles.kpiSub}>{proactiveDispatch ? 'Giảm -68% so với tự do' : 'Khách chờ lâu dưới mưa'}</div>
-                </div>
-
-                <div className={styles.kpiCard}>
-                  <div className={styles.kpiLabel}>Tỷ Lệ Đáp Ứng Cuốc</div>
-                  <div className={styles.kpiValue} style={{ color: 'var(--color-blue)' }}>
-                    {liveMetrics.fulfillmentRatePct.toFixed(1)}%
-                  </div>
-                  <div className={styles.kpiSub}>{formatNumber(liveMetrics.completedTrips)} cuốc hoàn thành</div>
-                </div>
-
-                <div className={styles.kpiCard}>
-                  <div className={styles.kpiLabel}>Giảm Chạy Rỗng (Deadhead)</div>
-                  <div className={styles.kpiValue} style={{ color: 'var(--color-purple)' }}>
-                    -{liveMetrics.deadheadReductionPct.toFixed(1)}%
-                  </div>
-                  <div className={styles.kpiSub}>Nhờ gom chuyến khứ hồi</div>
-                </div>
-
-                <div className={styles.kpiCard}>
-                  <div className={styles.kpiLabel}>ROI Bù Xăng Điều Phối</div>
-                  <div className={styles.kpiValue} style={{ color: 'var(--color-green)' }}>
-                    {liveMetrics.operationalRoi.toFixed(1)}×
-                  </div>
-                  <div className={styles.kpiSub}>Chi ${formatNumber(liveMetrics.dispatchSubsidyCost)} thu +{formatCurrency(liveMetrics.grossRevenueUplift)}</div>
-                </div>
-              </div>
-            </>
-          )}
-
-          {/* ── TAB 2: PRICING STRATEGY COCKPIT ── */}
-          {activePersona === 'pricing' && (
-            <>
-              <div className={styles.panelTitle}>
-                <FaBolt color="var(--color-blue)" /> Pricing &amp; Chief Strategy Arena
-              </div>
-
-              <div className={styles.formGroup}>
-                <div className={styles.rangeHeader}>
-                  <label className={styles.label}>Hệ Số Giá Surge ($P_{'{'}rider{'}'}$)</label>
-                  <span className={styles.rangeValue} style={{ fontSize: '1.2rem', color: surgeMultiplier > 2.0 ? 'var(--color-red)' : 'var(--color-green)' }}>
-                    {surgeMultiplier.toFixed(1)}×
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={1.0}
-                  max={3.0}
-                  step={0.1}
-                  value={surgeMultiplier}
-                  onChange={e => setSurgeMultiplier(Number(e.target.value))}
-                  className={styles.range}
-                />
-                <div className={styles.rangeScale}>
-                  <span>1.0×</span>
-                  <span style={{ color: 'var(--color-green)', fontWeight: 700 }}>★ 1.8× Sweet Spot</span>
-                  <span style={{ color: 'var(--color-red)' }}>3.0× Kẹt Thanh Khoản</span>
-                </div>
-              </div>
-
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Điều Kiện Thời Tiết Đang Áp Dụng</label>
-                <select
-                  className={styles.select}
-                  value={weatherSeverity}
-                  onChange={e => setWeatherSeverity(e.target.value as any)}
+                  {isPlaying ? <><FaPause /> Pause</> : <><FaPlay /> Resume</>}
+                </button>
+                <button
+                  className={`${styles.controlBtn} ${simSpeed === 1 ? styles.controlBtnActive : ''}`}
+                  onClick={() => setSimSpeed(1)}
                 >
-                  <option value="clear">Trời Quang (Nhu cầu chuẩn)</option>
-                  <option value="moderate">Mưa Vừa (Nhu cầu tăng 1.4×)</option>
-                  <option value="heavy_storm">Mưa Bão Ngập Lụt (Nhu cầu tăng 2.3×)</option>
-                </select>
+                  1x
+                </button>
+                <button
+                  className={`${styles.controlBtn} ${simSpeed === 2 ? styles.controlBtnActive : ''}`}
+                  onClick={() => setSimSpeed(2)}
+                >
+                  2x
+                </button>
+                <button
+                  className={`${styles.controlBtn} ${simSpeed === 4 ? styles.controlBtnActive : ''}`}
+                  onClick={() => setSimSpeed(4)}
+                >
+                  4x Speed
+                </button>
               </div>
 
-              <div className={styles.formGroup}>
-                <div className={styles.rangeHeader}>
-                  <label className={styles.label}>Thưởng Thời Tiết Cho Tài Xế ($P_{'{'}driver{'}'}$ Split-Bonus)</label>
-                  <span className={styles.rangeValue}>+${driverIncentiveBonus.toFixed(2)}/cuốc</span>
+              <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.75rem' }}>
+                Simulation Tick: <strong>{simTick}</strong> | Avg Fleet Stamina: <strong>{liveMetrics.avgStamina}%</strong>
+              </div>
+            </div>
+
+            {/* Map Legend */}
+            <div className={styles.legendBar}>
+              <div className={styles.legendItem}>
+                <span className={styles.legendDot} style={{ background: '#10b981' }} />
+                <span>In-Trip (Generating Revenue)</span>
+              </div>
+              <div className={styles.legendItem}>
+                <span className={styles.legendDot} style={{ background: '#f59e0b' }} />
+                <span>Cruising / Seeking (Deadheading)</span>
+              </div>
+              <div className={styles.legendItem}>
+                <span className={styles.legendDot} style={{ background: '#ef4444' }} />
+                <span>Gridlocked / Flooded (Delayed)</span>
+              </div>
+              <div className={styles.legendItem}>
+                <span className={styles.legendDot} style={{ background: '#2563eb' }} />
+                <span>Proactive Forward Staged</span>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: CONTROL COCKPIT */}
+          <div className={styles.panelCard}>
+            {/* ── TAB 1: FLEET OPS COCKPIT ── */}
+            {activePersona === 'fleet' && (
+              <>
+                <div className={styles.panelTitle}>
+                  <FaTaxi color="var(--color-blue)" /> Fleet Operations &amp; Forward Staging
                 </div>
-                <input
-                  type="range"
-                  min={0}
-                  max={10}
-                  step={0.5}
-                  value={driverIncentiveBonus}
-                  onChange={e => setDriverIncentiveBonus(Number(e.target.value))}
-                  className={styles.range}
-                />
-              </div>
 
-              <div className={styles.kpiGrid}>
-                <div className={styles.kpiCard}>
-                  <div className={styles.kpiLabel}>Tổng GMV Giao Dịch</div>
-                  <div className={styles.kpiValue} style={{ color: surgeMultiplier <= 1.8 ? 'var(--color-green)' : 'var(--color-red)' }}>
-                    {formatCurrency(liveMetrics.totalGmv)}
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>1. Operational Scenario Preset</label>
+                  <select
+                    className={styles.select}
+                    value={selectedScenario}
+                    onChange={e => setSelectedScenario(e.target.value as any)}
+                  >
+                    <option value="penn_rain">Penn Station Severe Storm Egress (High Transit Spillover)</option>
+                    <option value="lic_starvation">Long Island City Boundary Starvation (Bridge Deficit)</option>
+                    <option value="yankee_egress">Yankee Stadium Post-Game Surge (Rapid Outflow Egress)</option>
+                  </select>
+                </div>
+
+                <div className={styles.toggleRow}>
+                  <div className={styles.toggleLabel}>
+                    <span className={styles.toggleTitle}>Proactive Dispatch (-20 min Staging)</span>
+                    <span className={styles.toggleSub}>Forward-stage vacant vehicles with $3.50 deadhead subsidy</span>
                   </div>
-                  <div className={styles.kpiSub}>Thu phí sàn: {formatCurrency(liveMetrics.platformRevenue)}</div>
+                  <label className={styles.switch}>
+                    <input
+                      type="checkbox"
+                      checked={proactiveDispatch}
+                      onChange={e => setProactiveDispatch(e.target.checked)}
+                    />
+                    <span className={styles.slider} />
+                  </label>
                 </div>
 
-                <div className={styles.kpiCard}>
-                  <div className={styles.kpiLabel}>Tỷ Lệ Chốt Cuốc (Conversion)</div>
-                  <div className={styles.kpiValue} style={{ color: liveMetrics.conversionRate > 50 ? 'var(--color-blue)' : 'var(--color-red)' }}>
-                    {liveMetrics.conversionRate.toFixed(1)}%
+                <div className={styles.toggleRow}>
+                  <div className={styles.toggleLabel}>
+                    <span className={styles.toggleTitle}>Virtual Batching Hubs</span>
+                    <span className={styles.toggleSub}>Consolidate rider queues at sheltered hubs &amp; dispatch batches</span>
                   </div>
-                  <div className={styles.kpiSub}>{surgeMultiplier > 2.0 ? 'Khách bỏ app vì giá phi lý' : 'Thanh khoản tốt'}</div>
+                  <label className={styles.switch}>
+                    <input
+                      type="checkbox"
+                      checked={virtualBatchingHubs}
+                      onChange={e => setVirtualBatchingHubs(e.target.checked)}
+                    />
+                    <span className={styles.slider} />
+                  </label>
                 </div>
-              </div>
-            </>
-          )}
 
-          {/* ── TAB 3: DRIVER FATIGUE & CHURN ENGINE ── */}
-          {activePersona === 'fatigue' && (
-            <>
-              <div className={styles.panelTitle}>
-                <FaBatteryHalf color="var(--color-blue)" /> Driver Fatigue &amp; Churn Probability Engine
-              </div>
-
-              <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-                Mô phỏng thể lực tài xế: Kẹt xe &amp; chạy rỗng làm tiêu hao thể lực. Khi tụt về 0%, tài xế <strong>tắt app về nhà (Offline Churn)</strong> làm sụp đổ nguồn cung toàn mạng lưới.
-              </p>
-
-              {/* Fleet Health Meter */}
-              <div className={styles.staminaWrapper}>
-                <div className={styles.staminaHeader}>
-                  <span>Tỷ Lệ Đội Xe Còn Online:</span>
-                  <strong style={{ color: liveMetrics.fleetOnlinePct > 70 ? 'var(--color-green)' : 'var(--color-red)' }}>
-                    {liveMetrics.fleetOnlinePct}% ({liveMetrics.onlineAgents}/{liveMetrics.totalAgents} xe)
-                  </strong>
-                </div>
-                <div className={styles.staminaBarBg}>
-                  <div
-                    className={styles.staminaBarFill}
-                    style={{
-                      width: `${liveMetrics.fleetOnlinePct}%`,
-                      background: liveMetrics.fleetOnlinePct > 70 ? 'var(--color-green)' : (liveMetrics.fleetOnlinePct > 40 ? 'var(--color-amber)' : 'var(--color-red)'),
-                    }}
+                <div className={styles.formGroup}>
+                  <div className={styles.rangeHeader}>
+                    <label className={styles.label}>Additional Fleet Deployment</label>
+                    <span className={styles.rangeValue}>+{additionalFleetCount} drivers</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={100}
+                    max={1500}
+                    step={50}
+                    value={additionalFleetCount}
+                    onChange={e => setAdditionalFleetCount(Number(e.target.value))}
+                    className={styles.range}
                   />
                 </div>
-              </div>
 
-              {/* Traffic Jam Subsidy Slider */}
-              <div className={styles.formGroup} style={{ marginTop: 12 }}>
-                <div className={styles.rangeHeader}>
-                  <label className={styles.label}>Trợ Cấp Chống Kẹt Xe (Traffic Jam Subsidy)</label>
-                  <span className={styles.rangeValue}>+${trafficJamSubsidy.toFixed(2)} / 15p kẹt</span>
-                </div>
-                <input
-                  type="range"
-                  min={0}
-                  max={8}
-                  step={0.5}
-                  value={trafficJamSubsidy}
-                  onChange={e => setTrafficJamSubsidy(Number(e.target.value))}
-                  className={styles.range}
-                />
-                <div className={styles.rangeScale}>
-                  <span>$0 (Không trợ cấp)</span>
-                  <span>$4.00 (Chuẩn)</span>
-                  <span>$8.00 (Tối Đa)</span>
-                </div>
-              </div>
+                <div className={styles.kpiGrid}>
+                  <div className={styles.kpiCard}>
+                    <div className={styles.kpiLabel}>Customer Wait Time (ETA)</div>
+                    <div className={styles.kpiValue} style={{ color: proactiveDispatch ? 'var(--color-green)' : 'var(--color-red)' }}>
+                      {liveMetrics.avgWaitTimeMin.toFixed(1)}m
+                    </div>
+                    <div className={styles.kpiSub}>{proactiveDispatch ? '-68% reduction vs baseline' : 'Elevated storm queuing'}</div>
+                  </div>
 
-              <div className={styles.recommendationCard}>
-                <div className={styles.recommendationTitle}>
-                  <FaLightbulb color="var(--color-amber)" /> Bài Toán Đánh Đổi Operations:
+                  <div className={styles.kpiCard}>
+                    <div className={styles.kpiLabel}>Fulfillment Rate</div>
+                    <div className={styles.kpiValue} style={{ color: 'var(--color-blue)' }}>
+                      {liveMetrics.fulfillmentRatePct.toFixed(1)}%
+                    </div>
+                    <div className={styles.kpiSub}>{formatNumber(liveMetrics.completedTrips)} completed trips</div>
+                  </div>
+
+                  <div className={styles.kpiCard}>
+                    <div className={styles.kpiLabel}>Deadhead Reduction</div>
+                    <div className={styles.kpiValue} style={{ color: 'var(--color-purple)' }}>
+                      -{liveMetrics.deadheadReductionPct.toFixed(1)}%
+                    </div>
+                    <div className={styles.kpiSub}>Optimized return corridors</div>
+                  </div>
+
+                  <div className={styles.kpiCard}>
+                    <div className={styles.kpiLabel}>Dispatch Subsidy ROI</div>
+                    <div className={styles.kpiValue} style={{ color: 'var(--color-green)' }}>
+                      {liveMetrics.operationalRoi.toFixed(1)}x
+                    </div>
+                    <div className={styles.kpiSub}>Spend ${formatNumber(liveMetrics.dispatchSubsidyCost)} get +{formatCurrency(liveMetrics.grossRevenueUplift)}</div>
+                  </div>
                 </div>
-                <p className={styles.recommendationText}>
-                  Trợ cấp <strong>${trafficJamSubsidy.toFixed(2)}/15 phút kẹt xe</strong> giúp bảo vệ thể lực tài xế, giữ chân <strong>{liveMetrics.fleetOnlinePct}% đội xe online</strong> trong giờ bão, ngăn chặn tổn thất doanh thu bóng bị mất lên tới <strong>{formatCurrency(cumulativeLostRevenue)}</strong>.
+
+                <div className={styles.recommendationCard}>
+                  <div className={styles.recommendationTitle}>
+                    <FaCheckCircle /> Operations Recommendation:
+                  </div>
+                  <p className={styles.recommendationText}>
+                    Enabling <strong>Proactive Dispatch</strong> with <strong>Virtual Batching Hubs</strong> clears high-density transit bottlenecks <strong>64% faster</strong>, shortening passenger wait time from 26.5m down to <strong>7.8m</strong> and yielding a <strong>{liveMetrics.operationalRoi.toFixed(1)}x ROI</strong> on deadhead subsidies.
+                  </p>
+                </div>
+              </>
+            )}
+
+            {/* ── TAB 2: PRICING STRATEGY COCKPIT ── */}
+            {activePersona === 'pricing' && (
+              <>
+                <div className={styles.panelTitle}>
+                  <FaBolt color="var(--color-blue)" /> Dynamic Surge Pricing &amp; Liquidity Arena
+                </div>
+
+                <div className={styles.formGroup}>
+                  <div className={styles.rangeHeader}>
+                    <label className={styles.label}>Surge Pricing Multiplier (P_rider)</label>
+                    <span className={styles.rangeValue} style={{ fontSize: '1.2rem', color: surgeMultiplier > 2.0 ? 'var(--color-red)' : 'var(--color-green)' }}>
+                      {surgeMultiplier.toFixed(1)}x
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min={1.0}
+                    max={3.0}
+                    step={0.1}
+                    value={surgeMultiplier}
+                    onChange={e => setSurgeMultiplier(Number(e.target.value))}
+                    className={styles.range}
+                  />
+                  <div className={styles.rangeScale}>
+                    <span>1.0x (Base)</span>
+                    <span style={{ color: 'var(--color-green)', fontWeight: 700 }}>1.8x GMV Sweet Spot</span>
+                    <span style={{ color: 'var(--color-red)' }}>3.0x Liquidity Lockout</span>
+                  </div>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Applied Weather Condition</label>
+                  <select
+                    className={styles.select}
+                    value={weatherSeverity}
+                    onChange={e => setWeatherSeverity(e.target.value as any)}
+                  >
+                    <option value="clear">Clear Skies (Standard baseline demand)</option>
+                    <option value="moderate">Moderate Rain (1.4x demand surge)</option>
+                    <option value="heavy_storm">Severe Flood Storm (2.3x demand spike)</option>
+                  </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <div className={styles.rangeHeader}>
+                    <label className={styles.label}>Driver Weather Bonus (P_driver Split-Rate)</label>
+                    <span className={styles.rangeValue}>+${driverIncentiveBonus.toFixed(2)} / trip</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={0}
+                    max={10}
+                    step={0.5}
+                    value={driverIncentiveBonus}
+                    onChange={e => setDriverIncentiveBonus(Number(e.target.value))}
+                    className={styles.range}
+                  />
+                </div>
+
+                <div className={styles.kpiGrid}>
+                  <div className={styles.kpiCard}>
+                    <div className={styles.kpiLabel}>Projected Gross Merchandise Value</div>
+                    <div className={styles.kpiValue} style={{ color: surgeMultiplier <= 1.8 ? 'var(--color-green)' : 'var(--color-red)' }}>
+                      {formatCurrency(liveMetrics.totalGmv)}
+                    </div>
+                    <div className={styles.kpiSub}>Platform take: {formatCurrency(liveMetrics.platformRevenue)}</div>
+                  </div>
+
+                  <div className={styles.kpiCard}>
+                    <div className={styles.kpiLabel}>Conversion Rate</div>
+                    <div className={styles.kpiValue} style={{ color: liveMetrics.conversionRate > 50 ? 'var(--color-blue)' : 'var(--color-red)' }}>
+                      {liveMetrics.conversionRate.toFixed(1)}%
+                    </div>
+                    <div className={styles.kpiSub}>{surgeMultiplier > 2.0 ? 'Elevated price resistance drop-off' : 'High market liquidity'}</div>
+                  </div>
+                </div>
+
+                {surgeMultiplier > 2.0 ? (
+                  <div className={styles.recommendationWarning}>
+                    <div className={styles.recommendationTitleWarning}>
+                      <FaExclamationTriangle /> Warning: Liquidity Deadlock Threshold Exceeded
+                    </div>
+                    <p className={styles.recommendationText}>
+                      When surge exceeds <strong>2.0x</strong>, customer drop-off rises to <strong>{(100 - liveMetrics.conversionRate).toFixed(0)}%</strong>. Drivers rush into high-priced zones only to sit idle for 35+ minutes. Recommended policy: Enforce a dynamic surge cap at <strong>1.8x</strong> paired with targeted micro-subsidies.
+                    </p>
+                  </div>
+                ) : (
+                  <div className={styles.recommendationCard}>
+                    <div className={styles.recommendationTitle}>
+                      <FaCheckCircle /> GMV Optimization Equilibrium:
+                    </div>
+                    <p className={styles.recommendationText}>
+                      A surge of <strong>{surgeMultiplier.toFixed(1)}x</strong> sustains rider conversion at <strong>{liveMetrics.conversionRate.toFixed(1)}%</strong>, maximizing platform GMV at <strong>{formatCurrency(liveMetrics.totalGmv)}</strong> without triggering customer evaporation.
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+
+            {/* ── TAB 3: DRIVER FATIGUE & CHURN ENGINE ── */}
+            {activePersona === 'fatigue' && (
+              <>
+                <div className={styles.panelTitle}>
+                  <FaBatteryHalf color="var(--color-blue)" /> Driver Fatigue &amp; Churn Probability Engine
+                </div>
+
+                <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', margin: 0 }}>
+                  Stochastic fatigue model: Prolonged gridlock and deadheading deplete driver stamina. When stamina drops to 0%, drivers <strong>switch offline (churn)</strong>, causing catastrophic network supply failure.
                 </p>
-              </div>
-            </>
-          )}
 
-          {/* ── TAB 4: MICRO-SURGE & URBAN SHOCK ARENA ── */}
-          {activePersona === 'micro_surge' && (
-            <>
-              <div className={styles.panelTitle}>
-                <FaTrafficLight color="var(--color-blue)" /> Micro-Surge &amp; Urban Shock Arena
-              </div>
-
-              {/* Urban Shock Center */}
-              <div className={styles.shockSection}>
-                <div className={styles.shockHeader}>
-                  <FaExclamationTriangle color="var(--color-amber)" /> Kích Hoạt Biến Cố Đô Thị (Urban Shock Events):
+                {/* Fleet Health Meter */}
+                <div className={styles.staminaWrapper}>
+                  <div className={styles.staminaHeader}>
+                    <span>Active Online Fleet Share:</span>
+                    <strong style={{ color: liveMetrics.fleetOnlinePct > 70 ? 'var(--color-green)' : 'var(--color-red)' }}>
+                      {liveMetrics.fleetOnlinePct}% ({liveMetrics.onlineAgents}/{liveMetrics.totalAgents} vehicles active)
+                    </strong>
+                  </div>
+                  <div className={styles.staminaBarBg}>
+                    <div
+                      className={styles.staminaBarFill}
+                      style={{
+                        width: `${liveMetrics.fleetOnlinePct}%`,
+                        background: liveMetrics.fleetOnlinePct > 70 ? 'var(--color-green)' : (liveMetrics.fleetOnlinePct > 40 ? 'var(--color-amber)' : 'var(--color-red)'),
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className={styles.shockGrid}>
-                  <button
-                    className={`${styles.shockBtn} ${activeShock === 'msg_concert' ? styles.shockBtnActive : ''}`}
-                    onClick={() => setActiveShock(activeShock === 'msg_concert' ? 'none' : 'msg_concert')}
+
+                {/* Traffic Jam Subsidy Slider */}
+                <div className={styles.formGroup} style={{ marginTop: 8 }}>
+                  <div className={styles.rangeHeader}>
+                    <label className={styles.label}>Traffic Jam Relief Subsidy</label>
+                    <span className={styles.rangeValue}>+${trafficJamSubsidy.toFixed(2)} / 15 min delay</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={0}
+                    max={8}
+                    step={0.5}
+                    value={trafficJamSubsidy}
+                    onChange={e => setTrafficJamSubsidy(Number(e.target.value))}
+                    className={styles.range}
+                  />
+                  <div className={styles.rangeScale}>
+                    <span>$0 (No relief)</span>
+                    <span>$4.00 (Standard benchmark)</span>
+                    <span>$8.00 (Maximum retention)</span>
+                  </div>
+                </div>
+
+                <div className={styles.recommendationCard}>
+                  <div className={styles.recommendationTitle}>
+                    <FaLightbulb color="var(--color-amber)" /> Strategic Trade-Off Analysis:
+                  </div>
+                  <p className={styles.recommendationText}>
+                    Offering a <strong>${trafficJamSubsidy.toFixed(2)} / 15 min relief payment</strong> preserves driver stamina, retaining <strong>{liveMetrics.fleetOnlinePct}% of the active fleet</strong> during severe storm events and mitigating up to <strong>{formatCurrency(cumulativeLostRevenue)}</strong> in shadow revenue leakage.
+                  </p>
+                </div>
+              </>
+            )}
+
+            {/* ── TAB 4: MICRO-SURGE & URBAN SHOCKS ── */}
+            {activePersona === 'micro_surge' && (
+              <>
+                <div className={styles.panelTitle}>
+                  <FaTrafficLight color="var(--color-blue)" /> Micro-Surge Yield &amp; Urban Shock Center
+                </div>
+
+                {/* Urban Shock Center */}
+                <div className={styles.shockSection}>
+                  <div className={styles.shockHeader}>
+                    <FaExclamationTriangle color="var(--color-amber)" /> Urban Shock Triggers:
+                  </div>
+                  <div className={styles.shockGrid}>
+                    <button
+                      className={`${styles.shockBtn} ${activeShock === 'msg_concert' ? styles.shockBtnActive : ''}`}
+                      onClick={() => setActiveShock(activeShock === 'msg_concert' ? 'none' : 'msg_concert')}
+                    >
+                      <FaMusic color="var(--color-red)" /> MSG Concert Egress (+300% Demand)
+                    </button>
+                    <button
+                      className={`${styles.shockBtn} ${activeShock === 'lincoln_accident' ? styles.shockBtnActive : ''}`}
+                      onClick={() => setActiveShock(activeShock === 'lincoln_accident' ? 'none' : 'lincoln_accident')}
+                    >
+                      <FaTrafficLight color="var(--color-amber)" /> Lincoln Tunnel Incident (-65% Speed)
+                    </button>
+                    <button
+                      className={`${styles.shockBtn} ${activeShock === 'gas_price_spike' ? styles.shockBtnActive : ''}`}
+                      onClick={() => setActiveShock(activeShock === 'gas_price_spike' ? 'none' : 'gas_price_spike')}
+                    >
+                      <FaGasPump color="var(--color-blue)" /> Fuel Price Spike (+25% Cost)
+                    </button>
+                    <button
+                      className={`${styles.shockBtn} ${activeShock === 'flash_flood' ? styles.shockBtnActive : ''}`}
+                      onClick={() => setActiveShock(activeShock === 'flash_flood' ? 'none' : 'flash_flood')}
+                    >
+                      <FaWater color="var(--color-purple)" /> Bridge Flood Lockout
+                    </button>
+                  </div>
+                </div>
+
+                {/* Micro-surge Route Selector */}
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>1. Select Target Corridor for Yield Pricing</label>
+                  <select
+                    className={styles.select}
+                    value={selectedRouteKey}
+                    onChange={e => setSelectedRouteKey(e.target.value)}
                   >
-                    <FaMusic color="var(--color-red)" /> 🏟️ Hòa Nhạc MSG Tan Trận (+300% Cầu)
-                  </button>
-                  <button
-                    className={`${styles.shockBtn} ${activeShock === 'lincoln_accident' ? styles.shockBtnActive : ''}`}
-                    onClick={() => setActiveShock(activeShock === 'lincoln_accident' ? 'none' : 'lincoln_accident')}
-                  >
-                    <FaTrafficLight color="var(--color-amber)" /> 🚧 Tai Nạn Hầm Lincoln (-65% Vận Tốc)
-                  </button>
-                  <button
-                    className={`${styles.shockBtn} ${activeShock === 'gas_price_spike' ? styles.shockBtnActive : ''}`}
-                    onClick={() => setActiveShock(activeShock === 'gas_price_spike' ? 'none' : 'gas_price_spike')}
-                  >
-                    <FaGasPump color="var(--color-blue)" /> ⛽ Cú Sốc Giá Xăng (+25% Chi Phí)
-                  </button>
-                  <button
-                    className={`${styles.shockBtn} ${activeShock === 'flash_flood' ? styles.shockBtnActive : ''}`}
-                    onClick={() => setActiveShock(activeShock === 'flash_flood' ? 'none' : 'flash_flood')}
-                  >
-                    <FaWater color="var(--color-purple)" /> 🌊 Bão Lụt Toàn Cầu Vượt Sông
-                  </button>
+                    <option value="midtown_lic">Midtown &rarr; Long Island City (Flood Hazard Route)</option>
+                    <option value="fidi_jfk">FiDi Downtown &rarr; JFK Airport (Deadhead Risk Corridor)</option>
+                    <option value="upper_lic">Upper Manhattan &rarr; Queens LIC (Triborough Bypass)</option>
+                  </select>
                 </div>
-              </div>
 
-              {/* Micro-surge Route Selector */}
-              <div className={styles.formGroup}>
-                <label className={styles.label}>1. Chọn Tuyến Đường Cần Định Giá Chặng</label>
-                <select
-                  className={styles.select}
-                  value={selectedRouteKey}
-                  onChange={e => setSelectedRouteKey(e.target.value)}
-                >
-                  <option value="midtown_lic">Midtown &rarr; Long Island City (Vùng Ngập Đầy Rủi Ro)</option>
-                  <option value="fidi_jfk">FiDi Downtown &rarr; JFK Airport (Chặng Dài Nguy Cơ Deadhead)</option>
-                  <option value="upper_lic">Upper Manhattan &rarr; Queens LIC (Qua Cầu Triborough)</option>
-                </select>
-              </div>
+                {/* Hazard Surcharge Slider */}
+                <div className={styles.formGroup}>
+                  <div className={styles.rangeHeader}>
+                    <label className={styles.label}>Hazard Road Surcharge</label>
+                    <span className={styles.rangeValue}>+${hazardSurcharge.toFixed(2)} / trip</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={0}
+                    max={8}
+                    step={0.5}
+                    value={hazardSurcharge}
+                    onChange={e => setHazardSurcharge(Number(e.target.value))}
+                    className={styles.range}
+                  />
+                </div>
 
-              {/* Hazard Surcharge Slider */}
-              <div className={styles.formGroup}>
-                <div className={styles.rangeHeader}>
-                  <label className={styles.label}>Phụ Phí Bù Hao Mòn Đường Ngập (Hazard Surcharge)</label>
-                  <span className={styles.rangeValue}>+${hazardSurcharge.toFixed(2)}/cuốc</span>
+                {/* Route Yield & Acceptance Output */}
+                <div className={styles.routeYieldCard}>
+                  <div className={styles.yieldMetric}>
+                    <span className={styles.yieldLabel}>Expected Yield Per Minute:</span>
+                    <span className={styles.yieldValue} style={{ color: 'var(--color-blue)' }}>
+                      ${liveMetrics.expectedYieldPerMin.toFixed(2)} / min
+                    </span>
+                  </div>
+                  <div className={styles.yieldMetric}>
+                    <span className={styles.yieldLabel}>Driver Acceptance Probability:</span>
+                    <span className={styles.yieldValue} style={{ color: liveMetrics.routeAcceptanceRate > 70 ? 'var(--color-green)' : 'var(--color-red)' }}>
+                      {liveMetrics.routeAcceptanceRate}%
+                    </span>
+                  </div>
                 </div>
-                <input
-                  type="range"
-                  min={0}
-                  max={8}
-                  step={0.5}
-                  value={hazardSurcharge}
-                  onChange={e => setHazardSurcharge(Number(e.target.value))}
-                  className={styles.range}
-                />
-              </div>
-
-              {/* Route Yield & Acceptance Output */}
-              <div className={styles.routeYieldCard}>
-                <div className={styles.yieldMetric}>
-                  <span className={styles.yieldLabel}>Thu Nhập Kỳ Vọng Tuyến:</span>
-                  <span className={styles.yieldValue} style={{ color: 'var(--color-blue)' }}>
-                    ${liveMetrics.expectedYieldPerMin.toFixed(2)} / phút
-                  </span>
-                </div>
-                <div className={styles.yieldMetric}>
-                  <span className={styles.yieldLabel}>Tỷ Lệ Tài Xế Nhận Cuốc:</span>
-                  <span className={styles.yieldValue} style={{ color: liveMetrics.routeAcceptanceRate > 70 ? 'var(--color-green)' : 'var(--color-red)' }}>
-                    {liveMetrics.routeAcceptanceRate}%
-                  </span>
-                </div>
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
 
 
 
